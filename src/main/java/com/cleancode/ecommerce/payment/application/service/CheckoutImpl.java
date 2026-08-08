@@ -99,7 +99,7 @@ public class CheckoutImpl implements Checkout {
 	}
 
 	private void addDescriptionPayment(PaymentDetails dto, Payment payment) {
-		if (dto.numberCard() != null && dto.paymentCard().compareTo(BigDecimal.ZERO) > 0) {
+		if (dto.numberCardOne() != null && dto.amountCardOne().compareTo(BigDecimal.ZERO) > 0) {
 			payment.addDescriptionPayment(dto.typePayment());
 		}
 		if (dto.voucherId() != null) {
