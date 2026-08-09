@@ -3,9 +3,9 @@ package com.cleancode.ecommerce.order.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Collections;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.order.domain.state.OrderState;
@@ -26,6 +26,7 @@ public final class Order {
 	private OrderState orderState;
 	private OrderStatus orderStatus;
 
+	// Construtor para CRIAÇÃO de novos pedidos (Cria ID novo e Data atual)
 	public Order(String customerId, String deliveryId) {
 		this.orderId = new OrderId();
 		this.customerId = new CustomerId(customerId);
@@ -33,6 +34,46 @@ public final class Order {
 		this.createdAt = LocalDateTime.now();
 		this.orderState = new PendingState();
 		this.orderStatus = OrderStatus.PENDING;
+	}
+
+	// Construtor para RECONSTITUIÇÃO do banco de dados (OrderMapper)
+	public Order(
+			String orderId, 
+			String customerId, 
+			String deliveryId, 
+			LocalDateTime createdAt, 
+			OrderStatus orderStatus, 
+			OrderState orderState
+	) {
+		this.orderId = new OrderId(orderId);
+		this.customerId = new CustomerId(customerId);
+		this.deliveryId = deliveryId;
+		this.createdAt = createdAt;
+		this.orderStatus = orderStatus;
+		this.orderState = orderState;
+	}
+
+	// Método correto para popular a lista vinda da infra/mapper
+	public void addOrderItem(List<OrderItem> newItems) {
+		if (newItems != null && !newItems.isEmpty()) {
+			this.items.addAll(newItems);
+			calculateTotal(); // Recalcula o valor total com os itens recebidos
+		}
+	}
+
+	public void addItem(String name, BigDecimal price, int quantity, String reservationId) {
+		OrderItem item = new OrderItem(name, price, quantity, reservationId);
+		this.items.add(item);
+		calculateTotal();
+	}
+
+	public Total calculateTotal() {
+		BigDecimal totalValue = items.stream()
+				.map(OrderItem::getSubtotal)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		this.total = new Total(totalValue, TypeCoin.DOLAR);
+		return this.total;
 	}
 
 	public void setOrderState(OrderState orderState) {
@@ -58,19 +99,6 @@ public final class Order {
 
 	public OrderStatus getOrderStatus() {
 		return orderStatus;
-	}
-
-	public void addItem(String name, BigDecimal price, int quantity, String reservationId) {
-		OrderItem item = new OrderItem(name, price, quantity, reservationId);
-		this.items.add(item);
-		calculateTotal();
-	}
-
-	public Total calculateTotal() {
-		BigDecimal totalValue = items.stream().map(OrderItem::getSubtotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-		this.total = new Total(totalValue, TypeCoin.DOLAR);
-		return this.total;
 	}
 
 	public OrderId getOrderId() {
@@ -99,10 +127,6 @@ public final class Order {
 
 	public String getDeliveryId() {
 		return deliveryId;
-	}
-
-	public void addOrderItem(List<OrderItem> collect) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override

@@ -28,4 +28,11 @@ public interface CustomerJpa extends JpaRepository<CustomerEntity, String> {
 	Page<CustomerEntity> findAllCustomer(Pageable pageable);
 
 	Optional<CustomerEntity> findByEmail_Email(String email);
+
+	@Query("""
+			    SELECT c.id
+			    FROM CustomerEntity c
+			    WHERE c.email.email = :email
+			""")
+	Optional<String> findCustomerIdByEmail(@Param("email") String email);
 }

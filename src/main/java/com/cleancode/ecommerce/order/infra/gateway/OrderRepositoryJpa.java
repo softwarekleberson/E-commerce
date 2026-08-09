@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.order.infra.gateway;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.cleancode.ecommerce.order.domain.Order;
@@ -23,5 +25,11 @@ public class OrderRepositoryJpa implements OrderRepository{
 	public void save(Order order) {
 		OrderEntity entity = OrderMapper.toEntity(order);
 		jpa.save(entity);
+	}
+
+	@Override
+	public Page<Order> getOrdersByCustomer(String customerId, Pageable pageable) {
+		return jpa.findByCustomerId(customerId, pageable)
+				.map(OrderMapper::toDomain);
 	}
 }
