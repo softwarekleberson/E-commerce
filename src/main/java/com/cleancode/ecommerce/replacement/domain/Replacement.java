@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.replacement.domain;
 
 import java.util.Objects;
 
+import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
 import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
 
 public class Replacement {
@@ -20,12 +21,33 @@ public class Replacement {
 		this.status = Status.OPEN;
 	}
 	
-	public Replacement(String id, String reservationId, Reason reason, String explain, Status status) {
-		this.id = new Id(id);
-		this.reservationId = new ReservationId(reservationId);
-		this.reason = reason;
-		this.explain = new Explain(explain);
-		this.status = status;
+	public Replacement(Id id, ReservationId reservationId, Reason reason, Explain explain, Status status) {
+	    this.id = id;
+	    this.reservationId = reservationId;
+	    this.reason = reason;
+	    this.explain = explain;
+	    this.status = status;
+	}
+	
+	public Replacement accept() {
+		ensureIsOpen();
+		return new Replacement(this.id, this.reservationId, this.reason, this.explain, Status.ACCEPTS);	
+	}
+	
+	public Replacement negate() {
+		ensureIsOpen();
+		return new Replacement(this.id, this.reservationId, this.reason, this.explain, Status.NEGATED);
+	}
+	
+	public Replacement cancel() {
+		ensureIsOpen();
+		return new Replacement(this.id, this.reservationId, this.reason, this.explain, Status.CLOSE);
+	}
+	
+	private void ensureIsOpen() {
+		if(this.status != Status.OPEN) {
+			throw new IllegalReplacementException("Only requests with the status OPEN can be modified.");
+		}
 	}
 
 	public Id getId() {
