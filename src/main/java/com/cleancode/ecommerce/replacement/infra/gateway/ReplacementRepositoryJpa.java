@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.replacement.infra.gateway;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -7,12 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cleancode.ecommerce.replacement.domain.Replacement;
 import com.cleancode.ecommerce.replacement.domain.repository.ReplacementRepository;
+import com.cleancode.ecommerce.replacement.infra.mapper.ReplacementMapper;
+import com.cleancode.ecommerce.replacement.infra.persistece.ReplacementEntity;
+import com.cleancode.ecommerce.replacement.infra.persistece.StatusEntity;
 
 @Repository
-public class ReplacementRepositoryJpa implements ReplacementRepository{
+public class ReplacementRepositoryJpa implements ReplacementRepository {
 
 	private final ReplacementJpa jpa;
-	
+
 	public ReplacementRepositoryJpa(ReplacementJpa jpa) {
 		this.jpa = jpa;
 	}
@@ -20,12 +25,26 @@ public class ReplacementRepositoryJpa implements ReplacementRepository{
 	@Transactional
 	@Override
 	public void save(Replacement replacement) {
-		// TODO Auto-generated method stub
+	
+		Optional<ReplacementEntity> optionEntity = jpa.findByReservationId(replacement.getReservationId().getReservationId());
+		System.out.println(replacement.getStatus() + "Jpa");
+		
+		ReplacementEntity entity = optionEntity
+				.map(existingEntity -> ReplacementMapper.toEntity(replacement, existingEntity))
+				.orElseGet(() -> ReplacementMapper.toEntity(replacement));
+
+		jpa.save(entity);
 	}
 
 	@Override
 	public Page<Replacement> getReplacementOpen(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return jpa.findByStatus(StatusEntity.OPEN, pageable)
+			   .map(ReplacementMapper::toDomain);
+		
+	}
+
+	@Override
+	public Optional<Replacement> getReplacementById(String reservationId) {
+		return jpa.findByReservationId(reservationId).map(ReplacementMapper::toDomain);
 	}
 }

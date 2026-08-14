@@ -86,4 +86,11 @@ public class Replacement {
 		Replacement other = (Replacement) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Replacement [id=" + id + ", reservationId=" + reservationId + ", reason=" + reason + ", explain="
+				+ explain + ", status=" + status + "]";
+	}
+	
 }

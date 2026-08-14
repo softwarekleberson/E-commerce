@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateReplacementDto {
 
-	@NotBlank(message = "The Reservation Id need this format : xxx.xxx.xxx-xx")
+	@NotBlank(message = "The Reservation Id need present")
 	private String reservationId;
 	
 	@NotNull(message = "CHANGE OF MIND, DEFECT, DIFFERENT ITEM, MISSING ITEM")
@@ -15,6 +15,8 @@ public class CreateReplacementDto {
 	
 	@NotBlank(message = "You need inform the reason")
 	private String explain;
+	
+	public CreateReplacementDto() {}
 	
 	public CreateReplacementDto(String reservationId, Reason reason, String explain) {
 		this.reservationId = reservationId;
