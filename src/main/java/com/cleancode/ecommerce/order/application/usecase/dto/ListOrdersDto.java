@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.order.domain.Order;
+import com.cleancode.ecommerce.order.domain.OrderStatus;
 
 public record ListOrdersDto(
 		
 		String orderId, String customerId, List<ListItensDto> itens,
-		BigDecimal total, String currency
+		BigDecimal total, String currency, OrderStatus orderStatus
 		
 		) {
 
@@ -20,7 +21,8 @@ public record ListOrdersDto(
 			o.getItems() == null ? List.of() :
 			o.getItems().stream().map(ListItensDto::new).collect(Collectors.toList()),
 			o.getTotal().getTotalValue(),
-			o.getTotal().getTypeCoin().toString()
+			o.getTotal().getTypeCoin().toString(),
+			o.getOrderStatus()
 		);
 	}
 }
