@@ -17,7 +17,7 @@ import com.cleancode.ecommerce.order.application.usecase.dto.ListOrdersDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/customer/orders")
 @CrossOrigin(origins = "*")
 public class OrderController {
 

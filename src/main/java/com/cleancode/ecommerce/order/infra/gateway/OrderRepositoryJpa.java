@@ -32,4 +32,10 @@ public class OrderRepositoryJpa implements OrderRepository{
 		return jpa.findByCustomerId(customerId, pageable)
 				.map(OrderMapper::toDomain);
 	}
+
+	@Override
+	public Page<Order> getAllOrders(Pageable pageable) {
+		return jpa.findAll(pageable)
+				.map(OrderMapper::toDomain);
+	}
 }
