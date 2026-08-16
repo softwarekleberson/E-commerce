@@ -9,4 +9,5 @@ public interface OrderRepository {
 
 	void save (Order order);
 	Page <Order> getOrdersByCustomer (String customerId, Pageable pageable);
+	Page <Order> getAllOrders (Pageable pageable);
 }

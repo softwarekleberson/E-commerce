@@ -27,7 +27,6 @@ public class ReplacementRepositoryJpa implements ReplacementRepository {
 	public void save(Replacement replacement) {
 	
 		Optional<ReplacementEntity> optionEntity = jpa.findByReservationId(replacement.getReservationId().getReservationId());
-		System.out.println(replacement.getStatus() + "Jpa");
 		
 		ReplacementEntity entity = optionEntity
 				.map(existingEntity -> ReplacementMapper.toEntity(replacement, existingEntity))

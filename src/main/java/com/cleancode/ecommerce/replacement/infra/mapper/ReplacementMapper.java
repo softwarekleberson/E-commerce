@@ -46,7 +46,6 @@ public class ReplacementMapper {
 	}
 
 	public static ReplacementEntity updateEntityFromDomain(Replacement domain, ReplacementEntity entity) {
-		System.out.println(domain + "Mapper");
 		entity.setId(domain.getId().getId());
 		entity.setReservationId(domain.getReservationId().getReservationId());
 		entity.setReason(ReasonEntity.valueOf(domain.getReason().name()));
