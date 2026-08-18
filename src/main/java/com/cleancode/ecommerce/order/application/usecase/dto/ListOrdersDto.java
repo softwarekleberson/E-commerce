@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.order.application.usecase.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,8 @@ import com.cleancode.ecommerce.order.domain.OrderStatus;
 public record ListOrdersDto(
 		
 		String orderId, String customerId, List<ListItensDto> itens,
-		BigDecimal total, String currency, OrderStatus orderStatus
+		BigDecimal total, String currency, OrderStatus orderStatus,
+		LocalDateTime data
 		
 		) {
 
@@ -22,7 +24,8 @@ public record ListOrdersDto(
 			o.getItems().stream().map(ListItensDto::new).collect(Collectors.toList()),
 			o.getTotal().getTotalValue(),
 			o.getTotal().getTypeCoin().toString(),
-			o.getOrderStatus()
+			o.getOrderStatus(),
+			o.getCreatedAt()
 		);
 	}
 }

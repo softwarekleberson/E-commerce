@@ -8,6 +8,15 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
 
+/*
+ * Essa classe serve para configurar as regras globais de CORS
+ * (Cross-Origin Resource Sharing) da API. O CORS é um mecanismo
+ * de segurança dos navegadores que, por padrão, bloqueia requisições
+ * HTTP vindas de origens (domínios ou portas) diferentes de onde a API
+ * está hospedada.
+ * 
+ * */
+
 @Configuration
 public class GlobalCorsConfig {
 
