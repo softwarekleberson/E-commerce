@@ -12,6 +12,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+/*
+ * Essa classe define a configuração do Spring Cache utilizando
+ * o Redis como armazenamento centralizado, determinando regras
+ * de expiração, prefixo de chaves e a forma como os dados do Java
+ * são convertidos em JSON para serem salvos.
+ * 
+ */
+
 @Configuration
 public class RedisConfig {
 

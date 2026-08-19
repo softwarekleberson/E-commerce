@@ -7,6 +7,15 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 import java.nio.charset.StandardCharsets;
 
+/*
+ * Essa classe é um serializador customizado para o Redis. Ela implementa
+ * a interface RedisSerializer<Object> do Spring Data Redis para converter
+ * objetos Java em bytes (no formato JSON) ao salvar no Redis e fazer o
+ * caminho inverso (converter os bytes do Redis de volta para objetos Java)
+ * ao ler os dados.
+ *
+ * */
+
 public class GenericFastJsonRedisSerializer implements RedisSerializer<Object> {
 
 	private static final byte[] EMPTY_ARRAY = new byte[0];
