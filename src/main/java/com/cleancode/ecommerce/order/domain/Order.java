@@ -92,11 +92,15 @@ public final class Order {
 	public void cancel() {
 		orderState.cancel(this);
 	}
-
+	
 	public void ship() {
 		orderState.ship(this);
 	}
-
+	
+	public void delivered() {
+		orderState.delivered(this);
+	}
+	
 	public OrderStatus getOrderStatus() {
 		return orderStatus;
 	}

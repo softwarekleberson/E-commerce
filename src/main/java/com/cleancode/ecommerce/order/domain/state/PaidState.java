@@ -4,16 +4,16 @@ import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.OrderStatus;
 import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
 
-public class PendingState implements OrderState {
+public class PaidState implements OrderState {
 
 	@Override
 	public OrderStatus getOrderStatus() {
-		return OrderStatus.PENDING;
+		return OrderStatus.PAID;
 	}
 
 	@Override
 	public void pay(Order order) {
-		order.setOrderState(new PaidState());
+		throw new IllegalDomainOrder("Order is already paid.");
 	}
 
 	@Override
@@ -23,16 +23,16 @@ public class PendingState implements OrderState {
 
 	@Override
 	public void ship(Order order) {
-		throw new IllegalDomainOrder("Cannot ship a pending order.");
+		order.setOrderState(new InTransitState());
 	}
 
 	@Override
 	public void delivered(Order order) {
-		throw new IllegalDomainOrder("Cannot deliver a pending order.");
+		throw new IllegalDomainOrder("Order cannot move directly from Paid to Delivered.");
 	}
 
 	@Override
 	public void pending(Order order) {
-		throw new IllegalDomainOrder("Order is already pending.");
+		throw new IllegalDomainOrder("Cannot revert a paid order back to pending.");
 	}
 }

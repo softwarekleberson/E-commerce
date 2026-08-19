@@ -4,35 +4,35 @@ import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.OrderStatus;
 import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
 
-public class PendingState implements OrderState {
+public class DeliveredState implements OrderState {
 
 	@Override
 	public OrderStatus getOrderStatus() {
-		return OrderStatus.PENDING;
+		return OrderStatus.DELIVERED;
 	}
 
 	@Override
 	public void pay(Order order) {
-		order.setOrderState(new PaidState());
+		throw new IllegalDomainOrder("Cannot pay an order that has already been delivered.");
 	}
 
 	@Override
 	public void cancel(Order order) {
-		order.setOrderState(new CancelledState());
+		throw new IllegalDomainOrder("A delivered order cannot be cancelled.");
 	}
 
 	@Override
 	public void ship(Order order) {
-		throw new IllegalDomainOrder("Cannot ship a pending order.");
+		throw new IllegalDomainOrder("A delivered order cannot be shipped again.");
 	}
 
 	@Override
 	public void delivered(Order order) {
-		throw new IllegalDomainOrder("Cannot deliver a pending order.");
+		throw new IllegalDomainOrder("A delivered order cannot be delivered again.");
 	}
 
 	@Override
 	public void pending(Order order) {
-		throw new IllegalDomainOrder("Order is already pending.");
+		throw new IllegalDomainOrder("Cannot revert a delivered order back to pending.");
 	}
 }

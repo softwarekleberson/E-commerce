@@ -2,8 +2,10 @@ package com.cleancode.ecommerce.order.domain;
 
 public enum OrderStatus {
 
-	PAY,
-	CANCEL,
+	PAID,
+	CANCELLED,
 	SHIP,
-	PENDING
+	PENDING,
+	INTRANSIT,
+	DELIVERED
 }

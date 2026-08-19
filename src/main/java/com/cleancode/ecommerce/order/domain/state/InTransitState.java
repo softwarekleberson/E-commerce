@@ -4,35 +4,35 @@ import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.OrderStatus;
 import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
 
-public class PendingState implements OrderState {
+public class InTransitState implements OrderState {
 
 	@Override
 	public OrderStatus getOrderStatus() {
-		return OrderStatus.PENDING;
+		return OrderStatus.INTRANSIT; // ou OrderStatus.SHIPPED
 	}
 
 	@Override
 	public void pay(Order order) {
-		order.setOrderState(new PaidState());
+		throw new IllegalDomainOrder("Order has already been paid and shipped.");
 	}
 
 	@Override
 	public void cancel(Order order) {
-		order.setOrderState(new CancelledState());
+		throw new IllegalDomainOrder("Cannot cancel an order that has already been shipped.");
 	}
 
 	@Override
 	public void ship(Order order) {
-		throw new IllegalDomainOrder("Cannot ship a pending order.");
+		throw new IllegalDomainOrder("Order is already in transit.");
 	}
 
 	@Override
 	public void delivered(Order order) {
-		throw new IllegalDomainOrder("Cannot deliver a pending order.");
+		order.setOrderState(new DeliveredState());
 	}
 
 	@Override
 	public void pending(Order order) {
-		throw new IllegalDomainOrder("Order is already pending.");
+		throw new IllegalDomainOrder("Cannot revert an order in transit back to pending.");
 	}
 }

@@ -6,7 +6,7 @@ CREATE TABLE tb_orders (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the order was created.',
     value DECIMAL(19, 2) NOT NULL COMMENT 'Total order value',
     type_coin VARCHAR(10) NOT NULL COMMENT 'Currency of the total order',
-    status ENUM('PAY', 'CANCEL', 'SHIP', 'PENDING') NOT NULL DEFAULT 'PENDING' COMMENT 'Current order status'
+    status ENUM('PAID', 'CANCELLED', 'SHIP', 'PENDING', 'INTRANSIT', 'DELIVERED') NOT NULL DEFAULT 'PENDING' COMMENT 'Current order status'
 ) COMMENT = 'Table that stores orders placed by customers.';
 
 CREATE INDEX idx_orders_customer_id ON tb_orders(customer_id);

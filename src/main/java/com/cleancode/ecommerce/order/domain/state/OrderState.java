@@ -8,8 +8,12 @@ public interface OrderState {
 	void pay(Order order);
 
     void cancel(Order order);
-
+    
+    void pending (Order order);
+    
     void ship(Order order);
+    
+    void delivered(Order order);
     
 	OrderStatus getOrderStatus();
 }
