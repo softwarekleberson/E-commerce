@@ -51,4 +51,6 @@ public class OrderEntity {
 	
     @Enumerated(EnumType.STRING)
 	private OrderStatusEntity status;
+    
+    private boolean delivered;
 }

@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import com.cleancode.ecommerce.cart.infra.persistence.TypeCoinEntity;
 import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.OrderItem;
-import com.cleancode.ecommerce.order.domain.OrderStatus;
-import com.cleancode.ecommerce.order.domain.state.PendingState; 
+import com.cleancode.ecommerce.order.domain.state.order.OrderStatus;
+import com.cleancode.ecommerce.order.domain.state.order.PendingState;
 import com.cleancode.ecommerce.order.infra.persistencia.OrderEntity;
 import com.cleancode.ecommerce.order.infra.persistencia.OrderStatusEntity;
 import com.cleancode.ecommerce.payment.infra.mapper.OrderItensMapper;
@@ -26,7 +26,8 @@ public class OrderMapper {
 			    entity.getDelivery_Id(),
 			    entity.getCreated_At(),
 			    entity.getStatus() != null ? OrderStatus.valueOf(entity.getStatus().name()) : null,
-			    new PendingState() // Ou recrie o State com base no OrderStatus
+			    new PendingState(), // Ou recrie o State com base no OrderStatus
+			    entity.isDelivered()
 			);
 		
 		// 2. Mapeia e adiciona os itens
@@ -54,6 +55,7 @@ public class OrderMapper {
 		entity.setValue(order.getTotal() != null ? order.getTotal().getTotalValue() : null);
 		entity.setType_Coin(TypeCoinEntity.valueOf(order.getTotal().getTypeCoin().name()));
 		entity.setStatus(OrderStatusEntity.valueOf(order.getOrderStatus().name()));
+		entity.setDelivered(order.isDeliverd());
 		
 		if (order.getItems() != null && !order.getItems().isEmpty()) {
 			entity.setOrder_itens(

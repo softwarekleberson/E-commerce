@@ -1,3 +1,4 @@
+/*
 package com.cleancode.ecommerce.payment.application.service;
 
 import java.math.BigDecimal;
@@ -7,6 +8,8 @@ import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.address.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.event.transport.EventTransportPublisher;
+import com.cleancode.ecommerce.event.transport.TransportEvent;
 import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
 import com.cleancode.ecommerce.payment.application.dto.PaymentDetails;
@@ -20,7 +23,7 @@ import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.payment.domain.repository.PaymentRepository;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 
-public class CheckoutImpl implements Checkout {
+public class CheckoutImpl implements Checkout     {
 
 	private final CustomerRepository customerRepository;
 	private final CartRepository cartRepository;
@@ -28,10 +31,11 @@ public class CheckoutImpl implements Checkout {
 	private final PaymentRepository paymentRepository;
 	private final OrderRepository orderRepository;
 	private final PaymentMethodFactory paymentMethodFactory;
+	private final EventTransportPublisher eventTransportPublisher;
 
 	public CheckoutImpl(CustomerRepository customerRepository, CartRepository cartRepository,
 			StockRepository stockRepository, PaymentRepository paymentRepository, OrderRepository orderRepository,
-			PaymentMethodFactory paymentMethodFactory) {
+			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher) {
 
 		this.customerRepository = customerRepository;
 		this.cartRepository = cartRepository;
@@ -39,6 +43,7 @@ public class CheckoutImpl implements Checkout {
 		this.paymentRepository = paymentRepository;
 		this.orderRepository = orderRepository;
 		this.paymentMethodFactory = paymentMethodFactory;
+		this.eventTransportPublisher = eventTransportPublisher;
 	}
 
 	@Override
@@ -92,6 +97,9 @@ public class CheckoutImpl implements Checkout {
 		// 9️⃣ Persistir pedido e pagamento
 		orderRepository.save(order);
 		paymentRepository.save(payment);
+		
+		// Evento para separar todos os itens e deixar de ser esperando pagamento
+		eventTransportPublisher.publish(new TransportEvent(order.getOrderId().getOrderId()));
 
 		// 🔟 Limpar carrinho
 		cart.removeAllProducts();
@@ -130,3 +138,4 @@ public class CheckoutImpl implements Checkout {
 				.orElseThrow(() -> new IllegalDomainPayment("Customer not found with email: " + email));
 	}
 }
+*/
