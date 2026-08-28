@@ -4,8 +4,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.cleancode.ecommerce.order.application.usecase.contract.ListAllOrder;
-import com.cleancode.ecommerce.order.application.usecase.dto.ListOrdersDto;
+import com.cleancode.ecommerce.order.application.usecase.order.contract.ListAllOrder;
+import com.cleancode.ecommerce.order.application.usecase.order.dto.ListOrdersDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
 
 @Service

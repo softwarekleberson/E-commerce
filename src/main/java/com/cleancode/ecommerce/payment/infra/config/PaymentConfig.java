@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.event.order.EventTransportPublisher;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
 import com.cleancode.ecommerce.payment.application.service.payment.CheckoutImpl;
 import com.cleancode.ecommerce.payment.application.service.payment.PaymentMethodFactoryImpl;
@@ -32,9 +33,9 @@ public class PaymentConfig {
 	@Bean
 	public Checkout checkout(CustomerRepository customerRepository, CartRepository cartRepository,
 			StockRepository stockRepository, PaymentRepository paymentRepository,OrderRepository orderRepository,
-			PaymentMethodFactory paymentMethodFactory) {
+			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher) {
 		return new CheckoutImpl(customerRepository, cartRepository, stockRepository, paymentRepository,
-				orderRepository ,paymentMethodFactory);
+				orderRepository ,paymentMethodFactory, eventTransportPublisher);
 	}
 	
 	@Bean

@@ -7,6 +7,8 @@ import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.address.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.event.order.EventTransportPublisher;
+import com.cleancode.ecommerce.event.order.OrderEvent;
 import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
 import com.cleancode.ecommerce.payment.application.dto.PaymentDetails;
@@ -28,10 +30,12 @@ public class CheckoutImpl implements Checkout {
 	private final PaymentRepository paymentRepository;
 	private final OrderRepository orderRepository;
 	private final PaymentMethodFactory paymentMethodFactory;
+	private final EventTransportPublisher eventTransportPublisher;
+
 
 	public CheckoutImpl(CustomerRepository customerRepository, CartRepository cartRepository,
 			StockRepository stockRepository, PaymentRepository paymentRepository, OrderRepository orderRepository,
-			PaymentMethodFactory paymentMethodFactory) {
+			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher) {
 
 		this.customerRepository = customerRepository;
 		this.cartRepository = cartRepository;
@@ -39,6 +43,7 @@ public class CheckoutImpl implements Checkout {
 		this.paymentRepository = paymentRepository;
 		this.orderRepository = orderRepository;
 		this.paymentMethodFactory = paymentMethodFactory;
+		this.eventTransportPublisher = eventTransportPublisher;
 	}
 
 	@Override
@@ -92,10 +97,14 @@ public class CheckoutImpl implements Checkout {
 		// 9️⃣ Persistir pedido e pagamento
 		orderRepository.save(order);
 		paymentRepository.save(payment);
-
+		
 		// 🔟 Limpar carrinho
 		cart.removeAllProducts();
 		cartRepository.save(cart);
+		
+		// Evento para atualizar todos os itens do pedido de eperando pagamento para em separação
+		eventTransportPublisher.publish(new OrderEvent(order.getOrderId().getOrderId()));
+
 	}
 
 	private void addDescriptionPayment(PaymentDetails dto, Payment payment) {

@@ -6,7 +6,8 @@ CREATE TABLE tb_orders (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date and time the order was created.',
     value DECIMAL(19, 2) NOT NULL COMMENT 'Total order value',
     type_coin VARCHAR(10) NOT NULL COMMENT 'Currency of the total order',
-    status ENUM('PAY', 'CANCEL', 'SHIP', 'PENDING') NOT NULL DEFAULT 'PENDING' COMMENT 'Current order status'
+    status ENUM('PAID', 'CANCELLED', 'SHIP', 'PENDING', 'INTRANSIT', 'DELIVERED') NOT NULL DEFAULT 'PENDING' COMMENT 'Current order status',
+    delivered BOOLEAN NOT NULL
 ) COMMENT = 'Table that stores orders placed by customers.';
 
 CREATE INDEX idx_orders_customer_id ON tb_orders(customer_id);
@@ -21,6 +22,7 @@ CREATE TABLE tb_order_items (
     price DECIMAL(19, 2) NOT NULL COMMENT 'Unit price of the item',
     quantity INT NOT NULL COMMENT 'Quantity purchased',
     subtotal DECIMAL(19, 2) NOT NULL COMMENT 'Item subtotal (price x quantity)',
+    item_status ENUM('AWAITING_PAYMENT', 'CANCELLED', 'SEPARATING', 'SHIPPED', 'DELIVERED') NOT NULL DEFAULT 'AWAITING_PAYMENT',
     reservation_id VARCHAR(36) NOT NULL COMMENT 'Reference to the stock outflow record',
 
     CONSTRAINT fk_order_items_tb_orders 

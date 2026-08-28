@@ -7,7 +7,7 @@ import com.cleancode.ecommerce.replacement.domain.Status;
 public record ListReplacementOpenDto(
 	
 	String id, String reservationId, Reason reason,
-	String explain, Status status
+	int quantity, String explain, Status status
 		
 		)
 {
@@ -15,6 +15,7 @@ public record ListReplacementOpenDto(
 		this(rep.getId().getId(),
 			 rep.getReservationId().getReservationId(),
 			 rep.getReason(),
+			 rep.getQuantity().getQuantity(),
 			 rep.getExplain().getExplain(),
 			 rep.getStatus()
 		);

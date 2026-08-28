@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.order.domain.state.OrderState;
-import com.cleancode.ecommerce.order.domain.state.PendingState;
+import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
+import com.cleancode.ecommerce.order.domain.state.order.OrderState;
+import com.cleancode.ecommerce.order.domain.state.order.OrderStatus;
+import com.cleancode.ecommerce.order.domain.state.order.PendingState;
 import com.cleancode.ecommerce.payment.domain.Total;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
@@ -25,6 +27,7 @@ public final class Order {
 	private Total total;
 	private OrderState orderState;
 	private OrderStatus orderStatus;
+	private boolean deliverd;
 
 	// Construtor para CRIAÇÃO de novos pedidos (Cria ID novo e Data atual)
 	public Order(String customerId, String deliveryId) {
@@ -34,6 +37,7 @@ public final class Order {
 		this.createdAt = LocalDateTime.now();
 		this.orderState = new PendingState();
 		this.orderStatus = OrderStatus.PENDING;
+		this.deliverd = false;
 	}
 
 	// Construtor para RECONSTITUIÇÃO do banco de dados (OrderMapper)
@@ -43,7 +47,8 @@ public final class Order {
 			String deliveryId, 
 			LocalDateTime createdAt, 
 			OrderStatus orderStatus, 
-			OrderState orderState
+			OrderState orderState,
+			boolean deliverd
 	) {
 		this.orderId = new OrderId(orderId);
 		this.customerId = new CustomerId(customerId);
@@ -51,6 +56,45 @@ public final class Order {
 		this.createdAt = createdAt;
 		this.orderStatus = orderStatus;
 		this.orderState = orderState;
+		this.deliverd = deliverd;
+	}
+	
+	public void separateItems() {
+		this.items.stream().forEach(item -> item.separating());
+	}
+	
+	public void transportItem(String reservationId) {
+		OrderItem item = this.items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+		
+		item.ship();
+	}
+	
+	public void deliveredItem(String reservationId) {
+		OrderItem item = this.items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+
+		item.delivered();
+	}
+	
+	public void cancelledItem(String reservationId) {
+		OrderItem item = this.items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+
+		item.cancelled();
+	}
+	
+	public OrderItem findItemByReservationId(String reservationId) {
+		if(reservationId == null || reservationId.isBlank()) {
+			throw new IllegalDomainOrder("Item not find by reservation id :" + reservationId);
+		}
+		
+		return items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
+				.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+	}
+	
+	public void customerConfirmDeliverd() {
+		this.deliverd = true;
 	}
 
 	// Método correto para popular a lista vinda da infra/mapper
@@ -88,15 +132,7 @@ public final class Order {
 
 		orderState.pay(this);
 	}
-
-	public void cancel() {
-		orderState.cancel(this);
-	}
-
-	public void ship() {
-		orderState.ship(this);
-	}
-
+		
 	public OrderStatus getOrderStatus() {
 		return orderStatus;
 	}
@@ -111,6 +147,10 @@ public final class Order {
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
+	}
+	
+	public boolean isDeliverd() {
+		return deliverd;
 	}
 
 	public List<OrderItem> getItems() {

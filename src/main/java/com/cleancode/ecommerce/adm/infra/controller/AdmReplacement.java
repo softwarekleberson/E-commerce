@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cleancode.ecommerce.replacement.application.dto.ListReplacementOpenDto;
-import com.cleancode.ecommerce.replacement.application.usecase.AcceptReplacement;
-import com.cleancode.ecommerce.replacement.application.usecase.ListReplacement;
-import com.cleancode.ecommerce.replacement.application.usecase.NegateReplacement;
+import com.cleancode.ecommerce.replacement.application.usecase.contract.AcceptReplacement;
+import com.cleancode.ecommerce.replacement.application.usecase.contract.ListReplacement;
+import com.cleancode.ecommerce.replacement.application.usecase.contract.NegateReplacement;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
 
 @RestController
