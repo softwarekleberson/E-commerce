@@ -44,8 +44,9 @@ public final class OrderItem {
 		this.quantity = quantity;
 		this.reservationId = reservationId;
 		this.subtotal = subTotal();
-		this.itemState = new AwaitingPaymentState();
-		this.itemStatus = itemStatus;
+		
+		this.itemStatus = itemStatus != null ? itemStatus : ItemStatus.AWAITING_PAYMENT;	    
+	    this.itemState = this.itemStatus.createState();
 	}
 	
 	public void setItemState(ItemState itemState) {
@@ -66,6 +67,7 @@ public final class OrderItem {
 	}
 	
 	public void ship () {
+		System.out.println("Metodo ship chamado em orderitem");
 		itemState.ship(this);
 	}
 	

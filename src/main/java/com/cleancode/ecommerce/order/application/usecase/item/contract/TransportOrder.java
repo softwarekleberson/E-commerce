@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.order.application.usecase.item.contract;
 
-public interface TransitOrder {
+public interface TransportOrder {
 
 	public void execute (String orderId, String reservationId);
 }

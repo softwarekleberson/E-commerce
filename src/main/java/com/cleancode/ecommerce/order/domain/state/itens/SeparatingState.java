@@ -22,7 +22,7 @@ public class SeparatingState implements ItemState {
 
     @Override
     public void ship(OrderItem item) {
-        item.setItemState(new SeparatingState());
+        item.setItemState(new ShippedState());
     }
 
     @Override

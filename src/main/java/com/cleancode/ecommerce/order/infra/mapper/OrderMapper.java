@@ -10,7 +10,6 @@ import com.cleancode.ecommerce.order.domain.state.order.OrderStatus;
 import com.cleancode.ecommerce.order.domain.state.order.PendingState;
 import com.cleancode.ecommerce.order.infra.persistencia.OrderEntity;
 import com.cleancode.ecommerce.order.infra.persistencia.OrderStatusEntity;
-import com.cleancode.ecommerce.payment.infra.mapper.OrderItensMapper;
 
 public class OrderMapper {
 

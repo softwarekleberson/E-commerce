@@ -7,7 +7,7 @@ public class ShippedState implements ItemState {
 
     @Override
     public ItemStatus getItemState() {
-        return ItemStatus.SHIPPED;
+    	return ItemStatus.SHIPPED;
     }
     
     @Override

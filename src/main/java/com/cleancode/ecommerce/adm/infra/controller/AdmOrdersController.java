@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cleancode.ecommerce.adm.infra.service.AdmOrdersCacheService;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.DeliveredOrder;
-import com.cleancode.ecommerce.order.application.usecase.item.contract.TransitOrder;
+import com.cleancode.ecommerce.order.application.usecase.item.contract.TransportOrder;
 import com.cleancode.ecommerce.order.application.usecase.order.contract.ListOrderByTransport;
 import com.cleancode.ecommerce.order.application.usecase.order.dto.ListOrdersDto;
 import com.cleancode.ecommerce.order.domain.state.itens.ItemStatus;
@@ -27,10 +27,10 @@ public class AdmOrdersController {
 
 	private final AdmOrdersCacheService ordersCacheService;
 	private final DeliveredOrder deliveredOrder;
-	private final TransitOrder transitOrder;
+	private final TransportOrder transitOrder;
 	private final ListOrderByTransport listOrderByTransport;
 	
-	public AdmOrdersController(AdmOrdersCacheService ordersCacheService, DeliveredOrder deliveredOrder, TransitOrder transitOrder, ListOrderByTransport listOrderByTransport) {
+	public AdmOrdersController(AdmOrdersCacheService ordersCacheService, DeliveredOrder deliveredOrder, TransportOrder transitOrder, ListOrderByTransport listOrderByTransport) {
 		this.ordersCacheService = ordersCacheService;
 		this.deliveredOrder = deliveredOrder;
 		this.transitOrder = transitOrder;

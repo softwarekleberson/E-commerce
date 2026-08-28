@@ -8,12 +8,12 @@ import com.cleancode.ecommerce.order.application.usecase.item.AwaitingPaymentImp
 import com.cleancode.ecommerce.order.application.usecase.item.CancelledOrderImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.DeliveredOrderImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.SeparationOrderImpl;
-import com.cleancode.ecommerce.order.application.usecase.item.TransitOrderImpl;
+import com.cleancode.ecommerce.order.application.usecase.item.TransportOrderImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.AwaitingPayment;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.CancelledOrder;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.DeliveredOrder;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.SeparationOrder;
-import com.cleancode.ecommerce.order.application.usecase.item.contract.TransitOrder;
+import com.cleancode.ecommerce.order.application.usecase.item.contract.TransportOrder;
 import com.cleancode.ecommerce.order.application.usecase.order.ListAllOrdersImpl;
 import com.cleancode.ecommerce.order.application.usecase.order.ListOrderByTransportImpl;
 import com.cleancode.ecommerce.order.application.usecase.order.ListOrdersImpl;
@@ -56,8 +56,8 @@ public class OrderConfig {
 	}
 
 	@Bean
-	public TransitOrder transitOrder (OrderRepository repository) {
-		return new TransitOrderImpl(repository);
+	public TransportOrder transitOrder (OrderRepository repository) {
+		return new TransportOrderImpl(repository);
 	}
 	
 	@Bean
