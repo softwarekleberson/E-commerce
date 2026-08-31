@@ -1,0 +1,61 @@
+;;(horas);(horas);(horas);:(;:|;:);
+ID;Atividade;Otimista;Realista;Pessimista;Certeza;;;Descrição
+;Planejamento e Documentoação;;;;;;;
+1;Levantamento e organização de requisitos;4;8;12;;;:);"Levantamento dos requisitos realizado pelo professor, seguido da organização e estruturação do Backlog, também conduzida pelo docente.
+"
+2;Documento de Visão (DVS);4;8;12;;;:);"O único ponto de atenção identificado é a necessidade de adaptação aos princípios e à estrutura da Arquitetura Limpa.
+"
+4;Estimativa detalhada;2;4;6;;;:);"As estimativas são consideradas consistentes, pois o projeto já está estruturado e os principais pontos de atenção e aprendizado foram previamente identificados, trabalhados e solucionados.
+"
+5;Criação do Kanban;1;2;3;;;:);Criação do Backlog granular usando o Backolog do professor.
+6;Preparação de Slides (por entrega);4;8;12;;;:);"Utilização de ferramentas de Inteligência Artificial do Google para auxiliar na criação e definição do visual da apresentação.
+"
+;Banco de Dados;;;;;;;
+1;Modelagem do banco (DER + regras);3,5;7;10,5;;;:);Sem problema
+2;Criação das tabelas e migrations;3;6;9;;;:);Sem problema
+3;Scripts iniciais (categorias, grupos, etc.);2;4;6;;;:);"O único ponto de atenção está relacionado à quantidade de tokens necessários para que a Inteligência Artificial realize os inserts no banco de dados.
+"
+;Backend;;;;;;;
+1;Configuração do ambiente;3;6;9;;;:);Sem problema
+2;Autenticação (login, JWT, criptografia);4,5;9;13,5;;;:);Sem problema
+3;API CRUD Cliente: Análise e modelagem;0,5;1;1,5;;;:);"A adaptação aos princípios de DDD e Object Calisthenics exige uma estruturação mais detalhada do domínio, o que consequentemente aumenta a complexidade e o tamanho da diagramação.
+"
+4;API CRUD Cliente: Implementação CRUD;3;6;9;;;:);"Exige atenção devido à estrutura da Arquitetura Limpa, especialmente na organização e separação das responsabilidades na camada de infraestrutura (Infra), que contempla componentes como Controller, Config, Gateway, Mapper e Persistence.
+"
+5;API CRUD Cliente: Validações e regras;0,5;1;1,5;;;:);"A validação das regras de negócio torna-se mais simples, pois cada caso de uso possui uma responsabilidade bem definida e implementa uma regra específica do sistema. Além disso, a utilização de um domínio rico, aliada à cobertura por testes unitários, aumenta a confiabilidade da aplicação e reduz significativamente a probabilidade de erros.
+"
+6;API CRUD Cliente: Testes;0,5;1;1,5;;;:);"Exige maior atenção no início do desenvolvimento, principalmente durante a adaptação à estrutura e aos padrões definidos. Após essa etapa inicial, não foram identificados problemas ou pontos de atenção relevantes.
+"
+7;API CRUD Produto: Análise e modelagem;0,5;1;1,5;;;:);"Utilização dos princípios de POO e de DTOs para permitir o cadastro de diferentes tipos de produtos de forma flexível, reutilizável e escalável.
+"
+8;API CRUD Produto: Implementação CRUD;3;6;9;;;:);"Utilização dos princípios de POO e de DTOs para permitir o cadastro de diferentes tipos de produtos de forma flexível, reutilizável e escalável.
+"
+9;API CRUD Produto: Validações e regras;0,5;1;1,5;;;:);"Após a implementação de um domínio rico e a criação dos testes unitários, as demais etapas do desenvolvimento tornam-se mais simples e procedimentais, seguindo um fluxo bem definido e previsível.
+"
+10;API CRUD Produto: Testes;0,5;1;1,5;;;:);"Utilização de Inteligência Artificial para auxiliar na criação e geração dos testes automatizados, contribuindo para maior agilidade e cobertura durante o desenvolvimento.
+"
+11;Carrinho e Checkout;9,5;19;28,5;;;:);"Este ponto demanda maior atenção devido ao elevado número de interações necessárias para garantir que todas as etapas sejam executadas corretamente e que os resultados estejam de acordo com o esperado.
+"
+12;Regras de pagamento e cupons;6,5;13;19,5;;;:);"Implementação de um domínio rico, com as regras de negócio centralizadas e bem definidas, aliada à utilização de testes unitários para garantir a consistência, a confiabilidade e a qualidade do sistema.
+"
+13;Controle de estoque e lote;5;10;15;;;:);Criação do dominio e utiização de Eventos 
+14;Testes básicos backend;5,5;11;16,5;;;:);Sem problema
+;Frontend;;;;;;;
+1;Protótipos (Figma/HTML);4,5;9;13,5;;;:);Sem problema
+2;Estrutura base e layout;4,5;9;13,5;;;:);Sem problema
+3;Front CRUD Cliente;5,5;11;16,5;;;:);Sem problema
+4;Front CRUD Produto;5,5;11;16,5;;;:);Sem problema
+5;Tela Carrinho e Checkout;8,5;17;25,5;;;:);Sem problema
+6;Painel Admin (Pedidos/Estoque);6,5;13;19,5;;;:);Sem problema
+7;Responsividade e ajustes finais;6,5;13;19,5;;;:);O único ponto de atenção está relacionado ao fluxo do usuário quando ele não está autenticado, garantindo que o sistema trate corretamente as permissões e os acessos às funcionalidades.
+;Deploy e Integração;;;;;;;
+1;Configuração CI/CD;4,5;9;13,5;;;:(;"É o principal ponto de atenção, pois ainda não tive experiência prática com essa atividade. No entanto, possuo todo o material e os recursos necessários para estudá-la, implementá-la e superar esse desafio.
+"
+2;Deploy (frontend + backend + banco);3;6;9;;;:|;Com a implementação do pipeline de CI/CD, esse ponto de atenção deixa de ser um problema, pois o processo passa a ser automatizado, padronizado e mais confiável.
+;;56;112;168;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;
+;;;;;;;;

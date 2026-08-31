@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.replacement.application.usecase;
 
+import com.cleancode.ecommerce.replacement.application.usecase.contract.NegateReplacement;
 import com.cleancode.ecommerce.replacement.domain.Replacement;
 import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
 import com.cleancode.ecommerce.replacement.domain.repository.ReplacementRepository;

@@ -14,9 +14,12 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import com.cleancode.ecommerce.cart.domain.exception.IllegalCartException;
 import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
+import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.product.domain.exception.IllegalDimensionException;
 import com.cleancode.ecommerce.product.domain.exception.IllegalPricingException;
+import com.cleancode.ecommerce.promotional.domain.exception.IllegalVoucherException;
+import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalReservationException;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
 
@@ -91,6 +94,27 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(IllegalCardException.class)
 	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalCardException ex) {
 		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception card",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalReplacementException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalReplacementException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception replacement",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalVoucherException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalVoucherException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception voucher",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalDomainOrder.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalDomainOrder ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception order",
 				ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.cleancode.ecommerce.replacement.application.dto.ListReplacementOpenDto;
+import com.cleancode.ecommerce.replacement.application.usecase.contract.ListReplacement;
 import com.cleancode.ecommerce.replacement.domain.Replacement;
 import com.cleancode.ecommerce.replacement.domain.repository.ReplacementRepository;
 
