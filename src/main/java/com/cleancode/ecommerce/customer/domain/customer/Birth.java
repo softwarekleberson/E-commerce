@@ -15,7 +15,7 @@ public class Birth {
 		}
 
 		if (birth == null || birth.isAfter(LocalDate.now().minusYears(18)))
-			throw new IllegalDomainException("For register you need 18 years");
+			throw new IllegalDomainException("You must be 18 years of age or older.");
 
 		this.birth = birth;
 	}

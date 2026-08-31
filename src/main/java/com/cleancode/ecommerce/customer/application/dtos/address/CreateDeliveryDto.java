@@ -30,7 +30,6 @@ public class CreateDeliveryDto {
 	@NotBlank(message = "The Zip Code needs this format : xxxxxxx ")
 	private String zipCode;
 
-	@NotBlank
 	@Size(max = 255)
 	private String observation;
 

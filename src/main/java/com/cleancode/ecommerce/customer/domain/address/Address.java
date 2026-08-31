@@ -58,7 +58,7 @@ public abstract class Address {
 			throw new IllegalDomainException("Neighborhood is requerid");
 		if (isZipCode(zipCode))
 			throw new IllegalDomainException("Zip code must be in the format xxxxx-xxx");
-		if (isValid(observation))
+		if (observation != null && observation.length() > LENGTH_MAX)
 			throw new IllegalDomainException("Observation needs max length 400 caracters");
 		if (isValid(streetType))
 			throw new IllegalDomainException("Street type is requerid");
@@ -71,7 +71,7 @@ public abstract class Address {
 		if (isValid(country))
 			throw new IllegalDomainException("Country is requerid");
 	}
-
+	
 	protected boolean isZipCode(String zipCode) {
 		String zipCodeRegex = "^\\d{8}$";
 		return !zipCode.matches(zipCodeRegex);
