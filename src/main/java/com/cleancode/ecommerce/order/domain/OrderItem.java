@@ -67,7 +67,6 @@ public final class OrderItem {
 	}
 	
 	public void ship () {
-		System.out.println("Metodo ship chamado em orderitem");
 		itemState.ship(this);
 	}
 	
