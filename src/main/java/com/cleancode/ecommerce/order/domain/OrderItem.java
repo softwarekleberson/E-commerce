@@ -74,6 +74,18 @@ public final class OrderItem {
 		itemState.delivered(this);
 	}
 	
+	public void exchangeRequest() {
+		itemState.exchangeRequest(this);
+	}
+	
+	public void exchangeAccepted() {
+		itemState.exchangeAccepted(this);
+	}
+	
+	public void exchangeRejected() {
+		itemState.exchangeRejected(this);
+	}
+	
 	public ItemState getItemState() {
 		return itemState;
 	}

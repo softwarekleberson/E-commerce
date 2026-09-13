@@ -34,4 +34,19 @@ public class AwaitingPaymentState implements ItemState {
     public void awaitingPayment(OrderItem item) {
         throw new IllegalDomainOrder("The item is already awaiting payment.");
     }
+
+    @Override
+    public void exchangeRequest(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot request exchange for an item that is awaiting payment.");
+    }
+
+    @Override
+    public void exchangeAccepted(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot accept exchange for an item awaiting payment.");
+    }
+
+    @Override
+    public void exchangeRejected(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot reject exchange for an item awaiting payment.");
+    }
 }

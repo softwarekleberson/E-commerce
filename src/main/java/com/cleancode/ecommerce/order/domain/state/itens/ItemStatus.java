@@ -35,7 +35,27 @@ public enum ItemStatus {
         public ItemState createState() {
             return new DeliveredState();
         }
-    };
+    },
+	
+	EXCHANGE_REQUEST {
+		@Override
+		public ItemState createState() {
+			return new ExchangeRequestState();
+		}
+	},
+	
+	EXCHANGE_ACCEPTED {
+		@Override
+		public ItemState createState() {
+			return new ExchangeAcceptedState();
+		}
+	},
+	
+	EXCHANGE_REJECTED {
+		public ItemState createState() {
+			return new ExchangeRejectedState();
+		}
+	};
 
     // Método abstrato exigido para cada constante do Enum
     public abstract ItemState createState();

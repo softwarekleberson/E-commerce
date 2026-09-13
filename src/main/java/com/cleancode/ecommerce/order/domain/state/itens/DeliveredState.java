@@ -34,4 +34,19 @@ public class DeliveredState implements ItemState {
     public void awaitingPayment(OrderItem item) {
         throw new IllegalDomainOrder("A delivered item cannot return to awaiting payment.");
     }
+
+    @Override
+    public void exchangeRequest(OrderItem item) {
+        item.setItemState(new ExchangeRequestState());
+    }
+
+    @Override
+    public void exchangeAccepted(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot accept exchange for a delivered item without an active exchange request.");
+    }
+
+    @Override
+    public void exchangeRejected(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot reject exchange for a delivered item without an active exchange request.");
+    }
 }

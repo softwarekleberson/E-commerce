@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateReplacementDto {
 
+	@NotBlank(message = "The Order Id need present")
+	private String orderId;
+	
 	@NotBlank(message = "The Reservation Id need present")
 	private String reservationId;
 	
@@ -26,12 +29,17 @@ public class CreateReplacementDto {
 	
 	public CreateReplacementDto() {}
 	
-	public CreateReplacementDto(String reservationId, Reason reason, String explain, String customerId, int quantity) {
+	public CreateReplacementDto(String orderId, String reservationId, Reason reason, String explain, String customerId, int quantity) {
+		this.orderId = orderId;
 		this.reservationId = reservationId;
 		this.reason = reason;
 		this.explain = explain;
 		this.customerId = customerId;
 		this.quantity = quantity;
+	}
+	
+	public String getOrderId() {
+		return orderId;
 	}
 
 	public String getReservationId() {

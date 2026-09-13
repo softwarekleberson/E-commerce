@@ -7,9 +7,9 @@ public class ShippedState implements ItemState {
 
     @Override
     public ItemStatus getItemState() {
-    	return ItemStatus.SHIPPED;
+        return ItemStatus.SHIPPED;
     }
-    
+
     @Override
     public void cancelled(OrderItem item) {
         item.setItemState(new CancelledState());
@@ -17,7 +17,7 @@ public class ShippedState implements ItemState {
 
     @Override
     public void ship(OrderItem item) {
-        throw new IllegalDomainOrder("The item is already in transit.");
+        throw new IllegalDomainOrder("Item is already shipped.");
     }
 
     @Override
@@ -27,11 +27,26 @@ public class ShippedState implements ItemState {
 
     @Override
     public void separating(OrderItem item) {
-        throw new IllegalDomainOrder("The item is already in transit; it cannot return to the separating stage.");
+        throw new IllegalDomainOrder("Cannot return a shipped item to separating state.");
     }
 
     @Override
     public void awaitingPayment(OrderItem item) {
-        throw new IllegalDomainOrder("The item is already in transit; it cannot return to awaiting payment.");
+        throw new IllegalDomainOrder("Cannot return a shipped item to awaiting payment.");
+    }
+
+    @Override
+    public void exchangeRequest(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot request exchange for a shipped item before delivery.");
+    }
+
+    @Override
+    public void exchangeAccepted(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot accept exchange for a shipped item.");
+    }
+
+    @Override
+    public void exchangeRejected(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot reject exchange for a shipped item.");
     }
 }

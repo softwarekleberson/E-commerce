@@ -9,7 +9,7 @@ public class SeparatingState implements ItemState {
     public ItemStatus getItemState() {
         return ItemStatus.SEPARATING;
     }
-    
+
     @Override
     public void cancelled(OrderItem item) {
         item.setItemState(new CancelledState());
@@ -17,7 +17,7 @@ public class SeparatingState implements ItemState {
 
     @Override
     public void separating(OrderItem item) {
-        throw new IllegalDomainOrder("The item is already being separated.");
+        throw new IllegalDomainOrder("Item is already being separated.");
     }
 
     @Override
@@ -27,11 +27,26 @@ public class SeparatingState implements ItemState {
 
     @Override
     public void delivered(OrderItem item) {
-        throw new IllegalDomainOrder("The item is being separated and cannot be delivered directly.");
+        throw new IllegalDomainOrder("Cannot deliver an item directly while in separation.");
     }
 
     @Override
     public void awaitingPayment(OrderItem item) {
-        throw new IllegalDomainOrder("The item is being separated and cannot return to awaiting payment.");
+        throw new IllegalDomainOrder("Cannot return an item in separation to awaiting payment.");
+    }
+
+    @Override
+    public void exchangeRequest(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot request exchange for an item in separation.");
+    }
+
+    @Override
+    public void exchangeAccepted(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot accept exchange for an item in separation.");
+    }
+
+    @Override
+    public void exchangeRejected(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot reject exchange for an item in separation.");
     }
 }

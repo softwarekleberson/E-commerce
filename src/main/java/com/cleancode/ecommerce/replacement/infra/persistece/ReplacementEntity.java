@@ -17,6 +17,9 @@ public class ReplacementEntity {
 	@Id
 	private String id;
 	
+	@Column(name = "order_id")
+	private String orderId;
+	
 	@Column(name = "reservation_id")
 	private String reservationId;
 	

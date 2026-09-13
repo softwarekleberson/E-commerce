@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
+import com.cleancode.ecommerce.order.domain.state.itens.ItemStatus;
 import com.cleancode.ecommerce.order.domain.state.order.OrderState;
 import com.cleancode.ecommerce.order.domain.state.order.OrderStatus;
 import com.cleancode.ecommerce.order.domain.state.order.PendingState;
@@ -84,6 +85,27 @@ public final class Order {
 		item.cancelled();
 	}
 	
+	public void exchangeRequestItem(String reservationId) {
+		OrderItem item = this.items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+
+		item.exchangeRequest();
+	}
+	
+	public void exchangeAcceptedtItem(String reservationId) {
+		OrderItem item = this.items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+
+		item.exchangeAccepted();
+	}
+	
+	public void exchangeRejectedItem(String reservationId) {
+		OrderItem item = this.items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+
+		item.exchangeRejected();
+	}
+	
 	public OrderItem findItemByReservationId(String reservationId) {
 		if(reservationId == null || reservationId.isBlank()) {
 			throw new IllegalDomainOrder("Item not find by reservation id :" + reservationId);
@@ -91,6 +113,18 @@ public final class Order {
 		
 		return items.stream().filter(i -> i.getStockOutId().equals(reservationId)).findFirst()
 				.orElseThrow(() -> new IllegalDomainOrder("Item not find"));
+	}
+	
+	public boolean itemdelivered(String reservationId) {
+		if(reservationId == null || reservationId.isBlank()) {
+			throw new IllegalDomainOrder("Item not find by reservation id :" + reservationId);
+		}
+		
+		return items.stream()
+		    .filter(i -> reservationId.equals(i.getStockOutId()))
+		    .findFirst() 
+		    .map(i -> ItemStatus.DELIVERED.equals(i.getItemStatus())) 
+		    .orElseThrow(() -> new IllegalDomainOrder("Item not found by reservation id: " + reservationId));
 	}
 	
 	public void customerConfirmDeliverd() {

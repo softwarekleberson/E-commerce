@@ -13,12 +13,13 @@ import com.cleancode.ecommerce.order.domain.state.itens.ItemStatus;
 import com.cleancode.ecommerce.order.infra.mapper.OrderMapper;
 import com.cleancode.ecommerce.order.infra.persistencia.ItemStatusEntity;
 import com.cleancode.ecommerce.order.infra.persistencia.OrderEntity;
+import com.cleancode.ecommerce.replacement.application.service.FindOrderByIdService;
 import com.cleancode.ecommerce.replacement.application.service.ValueUnitProductService;
 
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class OrderRepositoryJpa implements OrderRepository, ValueUnitProductService{
+public class OrderRepositoryJpa implements OrderRepository, ValueUnitProductService, FindOrderByIdService{
 
 	private final OrderJpa jpa;
 	
@@ -64,5 +65,11 @@ public class OrderRepositoryJpa implements OrderRepository, ValueUnitProductServ
 	@Override
 	public Optional<BigDecimal> findSubtotalByReservationId(String reservationId) {
 		return jpa.findSubtotalByReservationId(reservationId);
+	}
+
+	@Override
+	public Optional<Order> findOrderById(String orderId) {
+		return jpa.findByIdWithItems(orderId)
+		.map(OrderMapper::toDomain);
 	}
 }
