@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cleancode.ecommerce.replacement.application.dto.CreateReplacementDto;
-import com.cleancode.ecommerce.replacement.application.usecase.CreateReplacement;
+import com.cleancode.ecommerce.replacement.application.usecase.contract.CreateReplacement;
 
 import jakarta.validation.Valid;
 

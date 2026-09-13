@@ -2,6 +2,13 @@ package com.cleancode.ecommerce.shared.util.pagination.controller;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class PageResponse <T> {
 
 	private List<T> content;
@@ -10,8 +17,6 @@ public class PageResponse <T> {
     private long totalElements;
     private int totalPages;
 
-    public PageResponse() {}
-    
     public PageResponse(List<T> content, int page, int size, long totalElements, int totalPages) {
         this.content = content;
         this.page = page;
@@ -29,10 +34,4 @@ public class PageResponse <T> {
                 page.getTotalPages()
         );
     }
-
-    public List<T> getContent() { return content; }
-    public int getPage() { return page; }
-    public int getSize() { return size; }
-    public long getTotalElements() { return totalElements; }
-    public int getTotalPages() { return totalPages; }
 }

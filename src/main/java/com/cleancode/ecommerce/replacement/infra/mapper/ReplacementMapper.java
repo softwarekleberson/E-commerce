@@ -1,10 +1,13 @@
 package com.cleancode.ecommerce.replacement.infra.mapper;
 
+import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.order.domain.OrderId;
 import com.cleancode.ecommerce.replacement.domain.Explain;
 import com.cleancode.ecommerce.replacement.domain.Id;
 import com.cleancode.ecommerce.replacement.domain.Reason;
 import com.cleancode.ecommerce.replacement.domain.Replacement;
 import com.cleancode.ecommerce.replacement.domain.Status;
+import com.cleancode.ecommerce.replacement.domain.Quantity;
 import com.cleancode.ecommerce.replacement.infra.persistece.ReasonEntity;
 import com.cleancode.ecommerce.replacement.infra.persistece.ReplacementEntity;
 import com.cleancode.ecommerce.replacement.infra.persistece.StatusEntity;
@@ -22,10 +25,13 @@ public class ReplacementMapper {
 
 		return new Replacement(
 			new Id(entity.getId()),
+			new OrderId(entity.getOrderId()),
 			new ReservationId(entity.getReservationId()),
 			Reason.valueOf(entity.getReason().name()),
 			new Explain(entity.getExplain()),
-			Status.valueOf(entity.getStatus().name())
+			Status.valueOf(entity.getStatus().name()),
+			new CustomerId(entity.getCustomerId()),
+			new Quantity(entity.getQuantity())
 		);
 	}
 
@@ -47,10 +53,13 @@ public class ReplacementMapper {
 
 	public static ReplacementEntity updateEntityFromDomain(Replacement domain, ReplacementEntity entity) {
 		entity.setId(domain.getId().getId());
+		entity.setOrderId(domain.getOrderId().getOrderId());
 		entity.setReservationId(domain.getReservationId().getReservationId());
 		entity.setReason(ReasonEntity.valueOf(domain.getReason().name()));
 		entity.setExplain(domain.getExplain().getExplain());
 		entity.setStatus(StatusEntity.valueOf(domain.getStatus().name()));
+		entity.setCustomerId(domain.getCustomerId().getValue());
+		entity.setQuantity(domain.getQuantity().getQuantity());
 		return entity;
 	}
 }

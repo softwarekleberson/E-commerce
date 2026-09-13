@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.replacement.infra.persistece;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +17,9 @@ public class ReplacementEntity {
 	@Id
 	private String id;
 	
+	@Column(name = "order_id")
+	private String orderId;
+	
 	@Column(name = "reservation_id")
 	private String reservationId;
 	
@@ -27,4 +31,9 @@ public class ReplacementEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private StatusEntity status;
+	
+	@Column(name = "customer_id")
+	private String customerId;
+	
+	private int quantity;
 }

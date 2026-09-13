@@ -2,11 +2,15 @@ package com.cleancode.ecommerce.replacement.application.dto;
 
 import com.cleancode.ecommerce.replacement.domain.Reason;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class CreateReplacementDto {
 
+	@NotBlank(message = "The Order Id need present")
+	private String orderId;
+	
 	@NotBlank(message = "The Reservation Id need present")
 	private String reservationId;
 	
@@ -16,12 +20,26 @@ public class CreateReplacementDto {
 	@NotBlank(message = "You need inform the reason")
 	private String explain;
 	
+	@NotBlank
+	private String customerId;
+	
+	@NotNull
+	@Min(value = 1, message = "Quantity must be at least 1")
+	private int quantity;
+	
 	public CreateReplacementDto() {}
 	
-	public CreateReplacementDto(String reservationId, Reason reason, String explain) {
+	public CreateReplacementDto(String orderId, String reservationId, Reason reason, String explain, String customerId, int quantity) {
+		this.orderId = orderId;
 		this.reservationId = reservationId;
 		this.reason = reason;
 		this.explain = explain;
+		this.customerId = customerId;
+		this.quantity = quantity;
+	}
+	
+	public String getOrderId() {
+		return orderId;
 	}
 
 	public String getReservationId() {
@@ -34,5 +52,13 @@ public class CreateReplacementDto {
 
 	public String getExplain() {
 		return explain;
+	}
+	
+	public String getCustomerId() {
+		return customerId;
+	}
+	
+	public int getQuantity() {
+		return quantity;
 	}
 }

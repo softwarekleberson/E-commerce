@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.order.domain.Order;
-import com.cleancode.ecommerce.order.domain.OrderStatus;
+import com.cleancode.ecommerce.order.domain.state.order.OrderStatus;
 
 public record OrderDto(
 		

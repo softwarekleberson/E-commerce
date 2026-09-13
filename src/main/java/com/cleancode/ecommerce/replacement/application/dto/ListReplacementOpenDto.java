@@ -6,15 +6,17 @@ import com.cleancode.ecommerce.replacement.domain.Status;
 
 public record ListReplacementOpenDto(
 	
-	String id, String reservationId, Reason reason,
-	String explain, Status status
+	String id, String orderId, String reservationId, Reason reason,
+	int quantity, String explain, Status status
 		
 		)
 {
 	public ListReplacementOpenDto(Replacement rep) {
 		this(rep.getId().getId(),
+			 rep.getOrderId().getOrderId(),
 			 rep.getReservationId().getReservationId(),
 			 rep.getReason(),
+			 rep.getQuantity().getQuantity(),
 			 rep.getExplain().getExplain(),
 			 rep.getStatus()
 		);

@@ -35,6 +35,7 @@ public class Voucher {
 		this.emission = LocalDate.now();
 		this.typeVoucher = typeVoucher;
 		this.discount = new Discount(discount);
+		this.active = true;
 	}
 
 	public boolean apply(BigDecimal totalAmount) {

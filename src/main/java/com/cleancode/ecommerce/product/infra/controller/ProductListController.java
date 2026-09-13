@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,8 +36,6 @@ public class ProductListController {
         return listProduct.execute(id);
     }
 
-    @Operation(summary = "Get all products", security = {})
-    @Cacheable(value = "list-all-products", key = "{#page, #size}")
     @GetMapping
     public PageResponse<ListProductDto> getAllProducts(
             @RequestParam(defaultValue = "0") int page,

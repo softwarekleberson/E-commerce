@@ -31,7 +31,6 @@ public class CreateChargeDto {
 	@NotBlank(message = "The Zip Code needs this format : xxxxx-xx ")
 	private String zipCode;
 	
-	@NotBlank
 	@Size(max = 255)
 	private String observation;
 	

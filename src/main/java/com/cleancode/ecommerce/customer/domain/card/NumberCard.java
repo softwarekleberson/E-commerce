@@ -29,7 +29,7 @@ public class NumberCard {
 		}
 
 		if (sum % 10 != 0) {
-			throw new IllegalCardException("Invalid card number (Luhn check failed)");
+			throw new IllegalCardException("Invalid card number");
 		}
 
 		this.numberCard = numberCard;

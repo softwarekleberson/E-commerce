@@ -7,8 +7,10 @@ import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepos
 import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
 import com.cleancode.ecommerce.promotional.usecase.CreateVoucherImpl;
 import com.cleancode.ecommerce.promotional.usecase.ListVoucherCustomerImpl;
+import com.cleancode.ecommerce.promotional.usecase.ReplacementVoucherImpl;
 import com.cleancode.ecommerce.promotional.usecase.contract.CreateVoucher;
 import com.cleancode.ecommerce.promotional.usecase.contract.ListVoucherCustomer;
+import com.cleancode.ecommerce.promotional.usecase.contract.ReplacementVoucher;
 import com.cleancode.ecommerce.promotional.usecase.service.contract.CustomerIdentityService;
 
 @Configuration
@@ -22,5 +24,10 @@ public class VoucherConfig {
 	@Bean
 	public ListVoucherCustomer listVoucherCustomer (VoucherRepository repository, CustomerRepository customerRepository) {
 		return new ListVoucherCustomerImpl(repository, customerRepository); 
+	}
+	
+	@Bean
+	public ReplacementVoucher replacementVoucher (VoucherRepository repository, CustomerIdentityService service) {
+		return new ReplacementVoucherImpl(repository, service);
 	}
 }
