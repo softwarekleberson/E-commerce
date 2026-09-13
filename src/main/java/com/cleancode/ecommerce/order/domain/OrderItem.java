@@ -67,12 +67,23 @@ public final class OrderItem {
 	}
 	
 	public void ship () {
-		System.out.println("Metodo ship chamado em orderitem");
 		itemState.ship(this);
 	}
 	
 	public void delivered () {
 		itemState.delivered(this);
+	}
+	
+	public void exchangeRequest() {
+		itemState.exchangeRequest(this);
+	}
+	
+	public void exchangeAccepted() {
+		itemState.exchangeAccepted(this);
+	}
+	
+	public void exchangeRejected() {
+		itemState.exchangeRejected(this);
 	}
 	
 	public ItemState getItemState() {

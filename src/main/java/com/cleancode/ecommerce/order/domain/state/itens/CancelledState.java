@@ -34,4 +34,19 @@ public class CancelledState implements ItemState {
     public void awaitingPayment(OrderItem item) {
         throw new IllegalDomainOrder("Item cannot return to awaiting payment when cancelled.");
     }
+
+    @Override
+    public void exchangeRequest(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot request exchange for a cancelled item.");
+    }
+
+    @Override
+    public void exchangeAccepted(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot accept exchange for a cancelled item.");
+    }
+
+    @Override
+    public void exchangeRejected(OrderItem item) {
+        throw new IllegalDomainOrder("Cannot reject exchange for a cancelled item.");
+    }
 }

@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.order.domain.OrderId;
 import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
 import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
 
 public class Replacement {
 
 	private final Id id;
+	private final OrderId orderId;
 	private final ReservationId reservationId;
 	private final Reason reason;
 	private final Explain explain;
@@ -17,8 +19,9 @@ public class Replacement {
 	private final CustomerId customerId;
 	private final Quantity quantity;
 	
-	public Replacement(ReservationId reservationId, Reason reason, Explain explain, CustomerId customerId, Quantity quantity) {
+	public Replacement(OrderId orderId, ReservationId reservationId, Reason reason, Explain explain, CustomerId customerId, Quantity quantity) {
 		this.id = new Id();
+		this.orderId = orderId;
 		this.reservationId = reservationId;
 		this.reason = reason;
 		this.explain = explain;
@@ -27,8 +30,9 @@ public class Replacement {
 		this.quantity = quantity;
 	}
 	
-	public Replacement(Id id, ReservationId reservationId, Reason reason, Explain explain, Status status, CustomerId customerId, Quantity quantity) {
+	public Replacement(Id id, OrderId orderId ,ReservationId reservationId, Reason reason, Explain explain, Status status, CustomerId customerId, Quantity quantity) {
 	    this.id = id;
+	    this.orderId = orderId;
 	    this.reservationId = reservationId;
 	    this.reason = reason;
 	    this.explain = explain;
@@ -44,17 +48,17 @@ public class Replacement {
 	
 	public Replacement accept() {
 		ensureIsOpen();
-		return new Replacement(this.id, this.reservationId, this.reason, this.explain, Status.ACCEPTS, this.customerId, this.quantity);	
+		return new Replacement(this.id, this.orderId, this.reservationId, this.reason, this.explain, Status.ACCEPTS, this.customerId, this.quantity);	
 	}
 	
 	public Replacement negate() {
 		ensureIsOpen();
-		return new Replacement(this.id, this.reservationId, this.reason, this.explain, Status.NEGATED, this.customerId, this.quantity);
+		return new Replacement(this.id, this.orderId ,this.reservationId, this.reason, this.explain, Status.NEGATED, this.customerId, this.quantity);
 	}
 	
 	public Replacement cancel() {
 		ensureIsOpen();
-		return new Replacement(this.id, this.reservationId, this.reason, this.explain, Status.CLOSE, this.customerId, this.quantity);
+		return new Replacement(this.id, this.orderId, this.reservationId, this.reason, this.explain, Status.CLOSE, this.customerId, this.quantity);
 	}
 	
 	private void ensureIsOpen() {
@@ -65,6 +69,10 @@ public class Replacement {
 
 	public Id getId() {
 		return id;
+	}
+	
+	public OrderId getOrderId() {
+		return orderId;
 	}
 
 	public ReservationId getReservationId() {

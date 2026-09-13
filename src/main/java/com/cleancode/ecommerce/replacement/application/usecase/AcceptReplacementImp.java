@@ -2,6 +2,8 @@ package com.cleancode.ecommerce.replacement.application.usecase;
 
 import java.math.BigDecimal;
 
+import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.ExchangeEventAfterReviewAdm;
+import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.SpringEventExchangePublisher;
 import com.cleancode.ecommerce.event.replacement.EventReplacementPublisher;
 import com.cleancode.ecommerce.event.replacement.ReplacementEvent;
 import com.cleancode.ecommerce.replacement.application.service.ValueUnitProductService;
@@ -15,11 +17,13 @@ public class AcceptReplacementImp implements AcceptReplacement{
 	private final ReplacementRepository repository;
 	private final ValueUnitProductService service;
 	private final EventReplacementPublisher publisher;
-
-	public AcceptReplacementImp(ReplacementRepository repository, ValueUnitProductService service, EventReplacementPublisher publisher) {
+	private final SpringEventExchangePublisher exchangePublisher;
+	
+	public AcceptReplacementImp(ReplacementRepository repository, ValueUnitProductService service, EventReplacementPublisher publisher, SpringEventExchangePublisher exchangePublisher) {
 		this.repository = repository;
 		this.service = service;
 		this.publisher = publisher;
+		this.exchangePublisher = exchangePublisher;
 	}
 	
 	@Override
@@ -35,5 +39,6 @@ public class AcceptReplacementImp implements AcceptReplacement{
 		repository.save(replacementAccept);
 		
 		publisher.publish(new ReplacementEvent(replacementAccept.getCustomerId().getValue(), valueVoucher));
+		exchangePublisher.publish(new ExchangeEventAfterReviewAdm(replacement.getOrderId().getOrderId(), reservationId, true));
 	}
 }

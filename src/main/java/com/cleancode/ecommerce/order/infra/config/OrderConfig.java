@@ -7,11 +7,15 @@ import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdServi
 import com.cleancode.ecommerce.order.application.usecase.item.AwaitingPaymentImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.CancelledOrderImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.DeliveredOrderImpl;
+import com.cleancode.ecommerce.order.application.usecase.item.OrderStatusAfterInitiatingAnExchangeRequestImpl;
+import com.cleancode.ecommerce.order.application.usecase.item.OrderStatusAfterReviewImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.SeparationOrderImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.TransportOrderImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.AwaitingPayment;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.CancelledOrder;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.DeliveredOrder;
+import com.cleancode.ecommerce.order.application.usecase.item.contract.OrderStatusAfterInitiatingAnExchangeRequest;
+import com.cleancode.ecommerce.order.application.usecase.item.contract.OrderStatusAfterReview;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.SeparationOrder;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.TransportOrder;
 import com.cleancode.ecommerce.order.application.usecase.order.ListAllOrdersImpl;
@@ -63,5 +67,15 @@ public class OrderConfig {
 	@Bean
 	public ListOrderByTransport listOrderByTransport (OrderRepository repository) {
 		return new ListOrderByTransportImpl(repository);
+	}
+	
+	@Bean
+	public OrderStatusAfterReview orderStatusAfterReview(OrderRepository repository) {
+		return new OrderStatusAfterReviewImpl(repository);
+	}
+	
+	@Bean
+	public OrderStatusAfterInitiatingAnExchangeRequest orderStatusAfterInitiatingAnExchangeRequest (OrderRepository repository) {
+		return new OrderStatusAfterInitiatingAnExchangeRequestImpl(repository);
 	}
 }

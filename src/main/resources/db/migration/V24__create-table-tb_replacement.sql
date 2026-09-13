@@ -1,5 +1,6 @@
 CREATE TABLE tb_replacement (
     id VARCHAR(36) NOT NULL COMMENT 'Identificador único do registro de substituição',
+    order_id VARCHAR(36) NOT NULL COMMENT 'Chave estrangeira para a order id associada',
     reservation_id VARCHAR(36) NOT NULL COMMENT 'Chave estrangeira para a reserva associada',
     reason VARCHAR(50) COMMENT 'Motivo da substituição',
     `explain` VARCHAR(255) COMMENT 'Explicação detalhada da substituição', 
@@ -8,6 +9,10 @@ CREATE TABLE tb_replacement (
     quantity INT NOT NULL COMMENT 'Quantity of items replacement',
     
     CONSTRAINT pk_tb_replacement PRIMARY KEY (id),
+    
+     CONSTRAINT fk_replacement_order FOREIGN KEY (order_id) 
+        REFERENCES tb_orders(order_id) -- CORRIGIDO AQUI
+        ON DELETE CASCADE,
     
     CONSTRAINT fk_replacement_reservation FOREIGN KEY (reservation_id) 
         REFERENCES tb_reservation(reservation_id) -- CORRIGIDO AQUI

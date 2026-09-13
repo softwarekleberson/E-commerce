@@ -14,5 +14,11 @@ public interface ItemState {
     
     void awaitingPayment (OrderItem item);
     
+    void exchangeRequest (OrderItem item);
+    
+    void exchangeAccepted (OrderItem item);
+    
+    void exchangeRejected (OrderItem item);
+    
     ItemStatus getItemState();
 }
