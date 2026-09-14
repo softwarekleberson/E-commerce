@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cleancode.ecommerce.adm.application.CreateNewAdm;
-import com.cleancode.ecommerce.adm.application.dto.CreateAdmDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.usecase.contract.CreateCustomer;
@@ -33,15 +31,13 @@ public class AuthController {
 	private final AuthenticationManager authenticationManager;
 	private final JwtService jwtService;
 	private final CustomUserDetailsService userDetailsService;
-	private final CreateNewAdm createNewAdm;
 	private final CreateCustomer createCustomer;
 
 	public AuthController(AuthenticationManager authenticationManager, JwtService jwtService,
-			CustomUserDetailsService userDetailsService, CreateNewAdm createNewAdm, CreateCustomer createCustomer) {
+			CustomUserDetailsService userDetailsService, CreateCustomer createCustomer) {
 		this.authenticationManager = authenticationManager;
 		this.jwtService = jwtService;
 		this.userDetailsService = userDetailsService;
-		this.createNewAdm = createNewAdm;
 		this.createCustomer = createCustomer;
 	}
 
@@ -55,13 +51,6 @@ public class AuthController {
 		String jwtToken = jwtService.generateToken(userDetails);
 		
 		return ResponseEntity.ok(new JwtResponse(jwtToken));
-	}
-
-    @Operation(summary = "Create new Adm.", security = {}) 
-	@PostMapping("/adm")
-	public ResponseEntity<Void> createAdm(@Valid @RequestBody CreateAdmDto dto) {
-		createNewAdm.execute(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
     @Operation(summary = "Create new Customer.", security = {}) 
