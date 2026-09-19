@@ -41,7 +41,11 @@ public class AuthController {
 		this.createCustomer = createCustomer;
 	}
 
-    @Operation(summary = "Authenticates a user and generates the JWT token.", security = {}) 
+	
+	@Operation(
+		    summary = "Authenticates a user and generates the JWT token.",
+		    security = {}
+	)
 	@PostMapping("/login")
 	public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
 		Authentication authentication = authenticationManager
@@ -53,7 +57,10 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtResponse(jwtToken));
 	}
 
-    @Operation(summary = "Create new Customer.", security = {}) 
+    @Operation(
+    		summary = "Create new Customer.",
+    		security = {}
+    ) 
 	@PostMapping("/customer")
 	public ResponseEntity<ListCustomerDto> createCustomer(@Valid @RequestBody CreateCustomerDto dto) {
 		var created = createCustomer.execute(dto);

@@ -30,12 +30,19 @@ public class ProductListController {
         this.listProduct = listProduct;
     }
 
-    @Operation(summary = "Get product by id", security = {})
+    @Operation(
+    		summary = "Get product by id",
+    		security = {}
+    )
     @GetMapping("/{id}")
     public ListProductDto getProductById(@PathVariable String id) {
         return listProduct.execute(id);
     }
 
+    @Operation(
+		    summary = "Get all product",
+		    security = {}
+	)
     @GetMapping
     public PageResponse<ListProductDto> getAllProducts(
             @RequestParam(defaultValue = "0") int page,

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cleancode.ecommerce.adm.application.CreateNewAdm;
 import com.cleancode.ecommerce.adm.application.dto.CreateAdmDto;
 
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -25,7 +24,6 @@ public class AdmCreateAdm {
 		this.createNewAdm = createNewAdm;
 	}
 
-	@Operation(summary = "Create new Adm.", security = {})
 	@PostMapping("/create")
 	public ResponseEntity<Void> createAdm(@Valid @RequestBody CreateAdmDto dto) {
 		createNewAdm.execute(dto);
