@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 @CrossOrigin(origins = "*")
 public class ProductListController {
 
-
     private final ListAllProductActive listAllProduct;
     private final ListActiveProduct listProduct;
 
