@@ -10,7 +10,7 @@ INSERT INTO tb_card (
 ) VALUES 
 (
     '2574085f-2239-47fe-a7fc-2c8e600906c3',
-    'f2a84230-2417-4088-bc2a-872683fc3b54',
+    'fb9cbac5-1905-478c-b641-c7a9a5bd2373',
     1,
     'charle franco',
     '159',
@@ -20,7 +20,7 @@ INSERT INTO tb_card (
 ),
 (
     'baeda08f-4d4c-4d8b-ad11-48ad995b975a',
-    'f2a84230-2417-4088-bc2a-872683fc3b54',
+    'fb9cbac5-1905-478c-b641-c7a9a5bd2373',
     0,
     'charle andersen',
     '159',
