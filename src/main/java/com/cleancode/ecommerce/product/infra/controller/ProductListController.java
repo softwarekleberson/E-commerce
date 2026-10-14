@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 @CrossOrigin(origins = "*")
 public class ProductListController {
 
-
     private final ListAllProductActive listAllProduct;
     private final ListActiveProduct listProduct;
 
@@ -30,12 +29,19 @@ public class ProductListController {
         this.listProduct = listProduct;
     }
 
-    @Operation(summary = "Get product by id", security = {})
+    @Operation(
+    		summary = "Get product by id",
+    		security = {}
+    )
     @GetMapping("/{id}")
     public ListProductDto getProductById(@PathVariable String id) {
         return listProduct.execute(id);
     }
 
+    @Operation(
+		    summary = "Get all product",
+		    security = {}
+	)
     @GetMapping
     public PageResponse<ListProductDto> getAllProducts(
             @RequestParam(defaultValue = "0") int page,
