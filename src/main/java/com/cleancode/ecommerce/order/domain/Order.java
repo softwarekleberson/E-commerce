@@ -145,6 +145,12 @@ public final class Order {
 		calculateTotal();
 	}
 
+	public void addItem(String name, String productReferenceId, BigDecimal price, int quantity, String reservationId) {
+		OrderItem item = new OrderItem(name, productReferenceId, price, quantity, reservationId);
+		this.items.add(item);
+		calculateTotal();
+	}
+
 	public Total calculateTotal() {
 		BigDecimal totalValue = items.stream()
 				.map(OrderItem::getSubtotal)

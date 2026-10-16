@@ -21,7 +21,9 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			       SUM(oi.subtotal) AS total
 			FROM tb_orders o
 			JOIN tb_order_items oi ON oi.order_id = o.order_id
-			JOIN tb_product p ON p.name = oi.product_id
+			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
+			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
+			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			WHERE o.status = 'PAID'
 			  AND o.created_at >= :startDate
 			  AND o.created_at < :endDateExclusive
@@ -32,7 +34,9 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			SELECT DATE_FORMAT(o.created_at, '%Y-%m') AS month, p.category AS category,
 			       SUM(oi.subtotal) AS total
 			FROM tb_orders o JOIN tb_order_items oi ON oi.order_id = o.order_id
-			JOIN tb_product p ON p.name = oi.product_id
+			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
+			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
+			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			WHERE o.status = 'PAID' AND o.created_at >= :startDate
 			  AND o.created_at < :endDateExclusive
 			  AND (:category IS NULL OR p.category = :category)
@@ -42,7 +46,9 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 	private static final String CATEGORY_TOTALS_QUERY = """
 			SELECT NULL AS month, p.category AS category, SUM(oi.subtotal) AS total
 			FROM tb_orders o JOIN tb_order_items oi ON oi.order_id = o.order_id
-			JOIN tb_product p ON p.name = oi.product_id
+			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
+			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
+			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			WHERE o.status = 'PAID' AND o.created_at >= :startDate
 			  AND o.created_at < :endDateExclusive
 			  AND (:category IS NULL OR p.category = :category)
@@ -52,7 +58,9 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			SELECT COUNT(DISTINCT o.order_id) FROM tb_orders o
 			WHERE o.status = 'PAID' AND o.created_at >= :startDate AND o.created_at < :endDateExclusive
 			  AND (:category IS NULL OR EXISTS (
-			      SELECT 1 FROM tb_order_items oi JOIN tb_product p ON p.name = oi.product_id
+	      SELECT 1 FROM tb_order_items oi JOIN tb_product p ON p.product_id = oi.product_ref_id OR
+	          (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
+	           (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			      WHERE oi.order_id = o.order_id AND p.category = :category))
 			""";
 	private static final String RECENT_ORDERS_QUERY = """
@@ -61,7 +69,9 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			       o.created_at AS orderDate, o.value AS orderValue, o.status AS orderStatus
 			FROM tb_orders o JOIN tb_customer c ON c.customer_id = o.customer_id
 			JOIN tb_order_items oi ON oi.order_id = o.order_id
-			JOIN tb_product p ON p.name = oi.product_id
+			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
+			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
+			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			WHERE o.created_at >= :startDate AND o.created_at < :endDateExclusive
 			  AND (:category IS NULL OR p.category = :category)
 			GROUP BY o.order_id, c.full_name, o.created_at, o.value, o.status

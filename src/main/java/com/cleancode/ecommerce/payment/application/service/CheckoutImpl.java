@@ -60,7 +60,7 @@ public class CheckoutImpl implements Checkout     {
 		
 		// 2️⃣ Criar pedido e adicionar itens
 		Order order = new Order(customer.getId().getValue(), deliveryPublicId);
-		cart.getCartItens().forEach(item -> order.addItem(item.getProductName().getName(),
+		cart.getCartItens().forEach(item -> order.addItem(item.getProductName().getName(), item.getProductId().getProductId(),
 				item.getUnitPrice().getPrice(), item.getQuantity().getQuantity(), item.getReservationId()));
 
 		// 3️⃣ Criar pagamento usando o total calculado pelo pedido
