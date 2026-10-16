@@ -30,6 +30,7 @@ public class OrderItemEntity {
 	private String order_item_id = UUID.randomUUID().toString();
 	
 	private String product_id;
+	private String product_ref_id;
 	private BigDecimal price;
 	private int quantity;
 	private BigDecimal subtotal;

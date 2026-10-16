@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.adm.infra.controller;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,7 @@ import com.cleancode.ecommerce.replacement.application.usecase.contract.AcceptRe
 import com.cleancode.ecommerce.replacement.application.usecase.contract.ListReplacement;
 import com.cleancode.ecommerce.replacement.application.usecase.contract.NegateReplacement;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
+import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 @RestController
 @RequestMapping("/adm/replacement")
@@ -59,7 +59,7 @@ public class AdmReplacement {
 	
 	@GetMapping
 	public ResponseEntity<PageResponse<ListReplacementOpenDto>> listReplacementOpen(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-		Pageable pageable = PageRequest.of(page, size);
+		Pageable pageable = PageRequests.of(page, size);
 		var result = listReplacement.execute(pageable);
 		return ResponseEntity.ok(PageResponse.from(result));
 	}

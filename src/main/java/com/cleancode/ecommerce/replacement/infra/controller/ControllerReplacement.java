@@ -36,7 +36,7 @@ public class ControllerReplacement {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        createReplacement.execute(dto);
+        createReplacement.execute(dto, authentication.getName());
         return ResponseEntity.noContent().build();
     }
 }

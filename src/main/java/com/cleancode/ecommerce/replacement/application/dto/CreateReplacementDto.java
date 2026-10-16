@@ -20,21 +20,17 @@ public class CreateReplacementDto {
 	@NotBlank(message = "You need inform the reason")
 	private String explain;
 	
-	@NotBlank
-	private String customerId;
-	
 	@NotNull
 	@Min(value = 1, message = "Quantity must be at least 1")
 	private int quantity;
 	
 	public CreateReplacementDto() {}
 	
-	public CreateReplacementDto(String orderId, String reservationId, Reason reason, String explain, String customerId, int quantity) {
+	public CreateReplacementDto(String orderId, String reservationId, Reason reason, String explain, int quantity) {
 		this.orderId = orderId;
 		this.reservationId = reservationId;
 		this.reason = reason;
 		this.explain = explain;
-		this.customerId = customerId;
 		this.quantity = quantity;
 	}
 	
@@ -52,10 +48,6 @@ public class CreateReplacementDto {
 
 	public String getExplain() {
 		return explain;
-	}
-	
-	public String getCustomerId() {
-		return customerId;
 	}
 	
 	public int getQuantity() {

@@ -11,6 +11,7 @@ import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 public final class OrderItem {
 
 	private final String productId;
+	private final String productReferenceId;
 	private final BigDecimal price;
 	private final int quantity;
 	private final BigDecimal subtotal;
@@ -19,12 +20,17 @@ public final class OrderItem {
 	private ItemStatus itemStatus;
 	
 	public OrderItem(String productId, BigDecimal price, int quantity, String reservationId) {
+		this(productId, null, price, quantity, reservationId);
+	}
+
+	public OrderItem(String productId, String productReferenceId, BigDecimal price, int quantity, String reservationId) {
 		if(reservationId == null) throw new IllegalDomainPayment("Stock out id is required");
 		if(productId == null) throw new IllegalDomainPayment("Name not be null");
 		if (price == null || price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalDomainPayment("Invalid Price it be greater than 0");
         if (quantity <= 0) throw new IllegalDomainPayment("The quantity requires that it be greater than 0.");
 		
 		this.productId = productId;
+		this.productReferenceId = productReferenceId;
 		this.price = price;
 		this.quantity = quantity;
 		this.reservationId = reservationId;
@@ -34,12 +40,17 @@ public final class OrderItem {
 	}
 	
 	public OrderItem(String productId, BigDecimal price, int quantity, String reservationId, ItemStatus itemStatus) {
+		this(productId, null, price, quantity, reservationId, itemStatus);
+	}
+
+	public OrderItem(String productId, String productReferenceId, BigDecimal price, int quantity, String reservationId, ItemStatus itemStatus) {
 		if(reservationId == null) throw new IllegalDomainPayment("Stock out id is required");
 		if(productId == null) throw new IllegalDomainPayment("Name not be null");
 		if (price == null || price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalDomainPayment("Invalid Price it be greater than 0");
         if (quantity <= 0) throw new IllegalDomainPayment("The quantity requires that it be greater than 0.");
 		
 		this.productId = productId;
+		this.productReferenceId = productReferenceId;
 		this.price = price;
 		this.quantity = quantity;
 		this.reservationId = reservationId;
@@ -101,6 +112,10 @@ public final class OrderItem {
 	public String getProductId() {
 		return productId;
 	}
+
+	public String getProductReferenceId() {
+		return productReferenceId;
+	}
 	
 	public BigDecimal getPrice() {
 		return price;
@@ -120,7 +135,7 @@ public final class OrderItem {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(productId, price, quantity, reservationId, subtotal);
+		return Objects.hash(productId, productReferenceId, price, quantity, reservationId, subtotal);
 	}
 
 	@Override
@@ -132,7 +147,9 @@ public final class OrderItem {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItem other = (OrderItem) obj;
-		return Objects.equals(productId, other.productId) && Objects.equals(price, other.price) && quantity == other.quantity
+		return Objects.equals(productId, other.productId)
+				&& Objects.equals(productReferenceId, other.productReferenceId)
+				&& Objects.equals(price, other.price) && quantity == other.quantity
 				&& Objects.equals(reservationId, other.reservationId) && Objects.equals(subtotal, other.subtotal);
 	}
 }

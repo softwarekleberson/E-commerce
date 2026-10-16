@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.replacement.application.usecase;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.EventExchangePublish;
 import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.ExchangeEvent;
+import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.OrderId;
 import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
@@ -21,17 +22,25 @@ public class CreateReplacementImp implements CreateReplacement {
 	private final ReplacementRepository repository;
 	private final FindOrderByIdService findOrderById;
 	private final EventExchangePublish eventPublish;
+	private final CustomerIdentityIdService customerIdentity;
 	
-	public CreateReplacementImp(ReplacementRepository repository, FindOrderByIdService findOrderById, EventExchangePublish eventPublish) {
+	public CreateReplacementImp(ReplacementRepository repository, FindOrderByIdService findOrderById,
+			EventExchangePublish eventPublish, CustomerIdentityIdService customerIdentity) {
 		this.repository = repository;
 		this.findOrderById = findOrderById;
 		this.eventPublish = eventPublish;
+		this.customerIdentity = customerIdentity;
 	}
 	
-	public void execute (CreateReplacementDto dto) {
+	public void execute (CreateReplacementDto dto, String customerEmail) {
+		String customerId = customerIdentity.customerId(customerEmail)
+				.orElseThrow(() -> new IllegalDomainOrder("Order not found"));
 		
 		Order order = findOrderById.findOrderById(dto.getOrderId())
-	    .orElseThrow(() -> new IllegalDomainOrder("Order with id : " + dto.getOrderId() + " not found"));		
+				.orElseThrow(() -> new IllegalDomainOrder("Order not found"));
+		if (!order.getCustomerId().getValue().equals(customerId)) {
+			throw new IllegalDomainOrder("Order not found");
+		}
 		
 		boolean itemDelivered = order.itemdelivered(dto.getReservationId());
 		
@@ -44,7 +53,7 @@ public class CreateReplacementImp implements CreateReplacement {
 			    new ReservationId(dto.getReservationId()),
 			    dto.getReason(),
 			    new Explain(dto.getExplain()),
-			    new CustomerId(dto.getCustomerId()),
+			    new CustomerId(customerId),
 			    new Quantity(dto.getQuantity())
 		);
 		

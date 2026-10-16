@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.replacement.application.dto.CreateReplacementDto;
 
 public interface CreateReplacement {
 
-	public void execute (CreateReplacementDto dto);
+	public void execute (CreateReplacementDto dto, String customerEmail);
 }

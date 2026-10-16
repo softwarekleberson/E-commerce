@@ -10,7 +10,7 @@ public class OrderItensMapper {
 
 	public static OrderItem toDomain(OrderItemEntity entity) {
 		return new OrderItem
-		(entity.getProduct_id(),
+		(entity.getProduct_id(), entity.getProduct_ref_id(),
 		 entity.getPrice(),
 		 entity.getQuantity(),
 		 entity.getReservation_id(),
@@ -20,6 +20,7 @@ public class OrderItensMapper {
 	public static OrderItemEntity toEntity(OrderItem domain, OrderEntity orderEntity) {
 		OrderItemEntity entity = new OrderItemEntity();
 		entity.setProduct_id(domain.getProductId());
+		entity.setProduct_ref_id(domain.getProductReferenceId());
 		entity.setPrice(domain.getPrice());
 		entity.setQuantity(domain.getQuantity());
 		entity.setSubtotal(domain.getSubtotal());
