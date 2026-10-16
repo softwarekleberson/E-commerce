@@ -50,8 +50,8 @@ public class OrderConfig {
 	}
 	
 	@Bean
-	public CancelledOrder cancelledOrder(OrderRepository repository) {
-		return new CancelledOrderImpl(repository);
+	public CancelledOrder cancelledOrder(OrderRepository repository, CustomerIdentityIdService service) {
+		return new CancelledOrderImpl(repository, service);
 	}
 	
 	@Bean

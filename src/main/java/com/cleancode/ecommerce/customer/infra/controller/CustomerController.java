@@ -2,7 +2,6 @@ package com.cleancode.ecommerce.customer.infra.controller;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +36,7 @@ import com.cleancode.ecommerce.customer.application.usecase.contract.UpdatePassw
 import com.cleancode.ecommerce.promotional.usecase.contract.ListVoucherCustomer;
 import com.cleancode.ecommerce.promotional.usecase.dto.ListVoucherDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
+import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 import jakarta.validation.Valid;
 
@@ -102,7 +102,7 @@ public class CustomerController {
 
 		String email = authentication.getName();
 		
-		Pageable pageable = PageRequest.of(page, size);
+		Pageable pageable = PageRequests.of(page, size);
 		var result = listVoucherCustomer.execute(email, pageable);
 		return ResponseEntity.ok(PageResponse.from(result));
 	}

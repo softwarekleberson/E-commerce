@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +27,7 @@ import com.cleancode.ecommerce.product.application.usecase.contract.ManualProduc
 import com.cleancode.ecommerce.product.application.usecase.contract.ManualProductDeactivation;
 import com.cleancode.ecommerce.product.application.usecase.contract.ReviseDetails;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
+import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 import jakarta.validation.Valid;
 
@@ -68,7 +68,7 @@ public class ProductController {
 	        @RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "10") int size) {
 
-	    Pageable pageable = PageRequest.of(page, size);
+	    Pageable pageable = PageRequests.of(page, size);
 	    var result = listAllProductsInactive.execute(pageable);
 	    return ResponseEntity.ok(PageResponse.from(result));
 	}

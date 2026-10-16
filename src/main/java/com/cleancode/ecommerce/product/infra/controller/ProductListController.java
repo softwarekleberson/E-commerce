@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.usecase.contract.ListActiveProduct;
 import com.cleancode.ecommerce.product.application.usecase.contract.ListAllProductActive;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
+import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -47,7 +47,7 @@ public class ProductListController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size) {
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequests.of(page, size);
         var result = listAllProduct.execute(pageable);
 
         return PageResponse.from(result);
