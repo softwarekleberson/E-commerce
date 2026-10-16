@@ -2,6 +2,8 @@ package com.cleancode.ecommerce.shared.exception;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,8 @@ import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@ExceptionHandler(IllegalDomainException.class)
 	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalDomainException ex) {
@@ -141,7 +145,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<DetailsError> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
 		DetailsError erro = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
-				"Poorly formatted request", ex.getMessage());
+				"Poorly formatted request", "The request body is invalid.");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 	}
 
@@ -156,8 +160,9 @@ public class GlobalExceptionHandler {
 	// Any other error (500)
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<DetailsError> handleGenericException(Exception ex) {
+		logger.error("Unhandled exception while processing request", ex);
 		DetailsError erro = new DetailsError(LocalDateTime.now(), HttpStatus.INTERNAL_SERVER_ERROR.value(),
-				"Internal server error", ex.getMessage());
+				"Internal server error", "An unexpected error occurred. Please try again later.");
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(erro);
 	}
 
