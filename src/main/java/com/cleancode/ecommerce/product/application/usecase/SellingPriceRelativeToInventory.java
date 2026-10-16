@@ -1,9 +1,11 @@
 package com.cleancode.ecommerce.product.application.usecase;
 
 import com.cleancode.ecommerce.product.application.service.contract.ProductPriceService;
+import com.cleancode.ecommerce.product.application.cache.ProductCacheNames;
 import com.cleancode.ecommerce.product.application.usecase.contract.SellingPriceToInventory;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
+import org.springframework.cache.annotation.CacheEvict;
 
 public class SellingPriceRelativeToInventory implements SellingPriceToInventory {
 
@@ -16,6 +18,8 @@ public class SellingPriceRelativeToInventory implements SellingPriceToInventory 
 	}
 	
 	@Override
+	@CacheEvict(cacheNames = { ProductCacheNames.BY_ID, ProductCacheNames.ACTIVE_PAGES,
+			ProductCacheNames.INACTIVE_PAGES }, allEntries = true, beforeInvocation = true)
 	public void execute(String productId, String stockId) {
 		
 		Product product = productPriceService.productPriceService(productId, stockId);

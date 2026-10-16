@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,7 @@ import com.cleancode.ecommerce.product.application.dto.input.ModifySellingPriceD
 import com.cleancode.ecommerce.product.application.dto.input.ProductStatusChangeDto;
 import com.cleancode.ecommerce.product.application.dto.input.ReviseDetailsDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
+import com.cleancode.ecommerce.product.application.cache.ProductCacheNames;
 import com.cleancode.ecommerce.product.application.usecase.contract.CreateProduct;
 import com.cleancode.ecommerce.product.application.usecase.contract.IncreaseSellingPriceAboveProfitMargin;
 import com.cleancode.ecommerce.product.application.usecase.contract.ListActiveProduct;
@@ -64,13 +66,15 @@ public class ProductController {
 	}
 
 	@GetMapping("/inactive")
-	public ResponseEntity<PageResponse<ListProductDto>> getAllProductsInactive(
+	@Cacheable(cacheNames = ProductCacheNames.INACTIVE_PAGES,
+			key = "#p0 + ':' + T(com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests).boundedSize(#p1)")
+	public PageResponse<ListProductDto> getAllProductsInactive(
 	        @RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "10") int size) {
 
 	    Pageable pageable = PageRequests.of(page, size);
 	    var result = listAllProductsInactive.execute(pageable);
-	    return ResponseEntity.ok(PageResponse.from(result));
+	    return PageResponse.from(result);
 	}
 
 	@PutMapping("/{productId}")

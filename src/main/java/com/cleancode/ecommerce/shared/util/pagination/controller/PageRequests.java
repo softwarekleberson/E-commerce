@@ -11,6 +11,10 @@ public final class PageRequests {
 	}
 
 	public static Pageable of(int page, int size) {
-		return PageRequest.of(page, Math.min(size, MAX_PAGE_SIZE));
+		return PageRequest.of(page, boundedSize(size));
+	}
+
+	public static int boundedSize(int size) {
+		return Math.min(size, MAX_PAGE_SIZE);
 	}
 }
