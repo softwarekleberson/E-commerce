@@ -1,52 +1,29 @@
+# Módulo `adm`
 
+## Responsabilidade
 
-Pular para o conteúdo
-Como usar o Gmail com leitores de tela
-3 de 31
-reademe
-Caixa de entrada
+Agrupa operações administrativas, criação de administrador e consultas de vendas. Também fornece controllers administrativos que encaminham operações de clientes, pedidos, vouchers e substituições para os módulos correspondentes.
 
-kleberson dos santos silva
-Anexos
-sex., 8 de mai., 15:42 (há 20 horas)
-para mim
+## Estrutura e arquitetura
 
+- `application/`: `CreateNewAdm` e sua implementação; `dto/` contém dados para criação; `report/` monta dashboard e dados de vendas por categoria.
+- `domain/`: entidade `Adm`, exceção, contrato `AdmRepository`, operação de gerenciamento `RemoveProductCart` e tipos/contratos de relatório.
+- `infra/config/`: composição de dependências do módulo.
+- `infra/controller/`: endpoints administrativos (`AdmCreateAdm`, `AdmCustomerController`, `AdmOrdersController`, `AdmReplacement`, `AdmSalesDashboardController`, `AdmVoucherController`).
+- `infra/gateway/`: adapters JPA para administrador e relatórios.
+- `infra/mapper/` e `infra/persistence/`: conversão e representação persistida de `Adm`.
+- `infra/service/`: `AdmOrdersCacheService`, serviço de cache de pedidos administrativos.
 
- 8 anexos
-  •  Verificados pelo Gmail
-# Módulo Users (Usuários e Autenticação)
+## Casos de uso encontrados
 
-Este diretório contém o módulo de **Users** (Usuários) do sistema Clean Ecommerce. Ele é o pilar de Segurança, focado essencialmente em gerenciar a autenticação (Login), autorização, controle de acesso e tokens JWT, fornecendo infraestrutura segura para a aplicação.
+- Criar administrador: `CreateNewAdmImpl`, exposto por `AdmCreateAdm`.
+- Consultar dashboard e vendas por categoria: `SalesDashboard` e `SalesByCategoryImpl`, apoiados por `SalesReportRepository`/`SalesReportRepositoryJpa`.
+- Operações administrativas de clientes, pedidos, vouchers e substituições: pontos de entrada nos controllers indicados. A execução de negócio é delegada a contratos de outros módulos.
+- `RemoveProductCart` está declarado no domínio, mas não foi localizada implementação correspondente em `application`; não há evidência suficiente para descrever um fluxo executável.
 
-## 🏗️ Arquitetura do Software
+## Referências
 
-Apoiado na **Clean Architecture** e projetado para integrar-se sem fricções na infraestrutura da aplicação:
-
-1. **Domain (`domain`)**:
-   - Gerencia a entidade focada em credenciais e papéis (`Role`), geralmente referenciando a essência da autenticação, isolada dos detalhes ricos da entidade `Customer` (que lida com entregas, carrinhos, etc).
-
-2. **Application (`application`)**:
-   - Os Casos de Uso incluem login, validação de token e registro inicial do perfil de acesso.
-   - Contém serviços ou interfaces focados na criptografia de senhas e geração/verificação de Tokens de Autorização (JWT).
-
-3. **Infrastructure (`infra`)**:
-   - Fortemente integrada ao **Spring Security**.
-   - Gerencia os filtros Web (Filters) de segurança para checar se uma rota exige permissão de ADMIN, USER, etc.
-   - Contém os Controllers de Autenticação (`AuthController`) e os repositórios que comunicam com a base de dados para checar login e senha.
-
-## 🧩 Padrões de Projeto (Design Patterns)
-
-- **Filter Chain / Interceptor Pattern**: A infraestrutura do Spring Security avalia sucessivamente os tokens através de uma cadeia de filtros configurada neste módulo, interceptando as requisições antes que atinjam as áreas restritas.
-- **Facade**: Componentes de geração e validação de Tokens JWT agem como uma fachada, escondendo a complexidade de algoritmos de assinatura digital dos controladores de domínio.
-
-## 🛡️ Princípios SOLID
-
-- **S - Single Responsibility Principle**: O módulo `Users` cuida puramente do aspecto de acesso e segurança, não misturando lógicas de venda de produtos ou fretes.
-- **D - Dependency Inversion Principle**: Ferramentas críticas (como `BCrypt` para hashing de senha ou a biblioteca JWT) não vazam para a regra de negócio. Elas são injetadas através de portas (interfaces) bem desenhadas e resolvidas na camada de infraestrutura.
-
-## 🏋️‍♂️ Object Calisthenics
-
-- **Não use `else`**: Nos filtros de verificação de token, a validação funciona na base do *Early Return* — se não houver cabeçalho de Autorização, a cadeia encerra.
-- **Envolva primitivos em Objetos**: Tokens não são apenas *Strings* soltas fluindo na memória. A lógica envelopa esses tokens em estruturas ou contextos de Segurança adequados, garantindo confiabilidade no ciclo de vida de uma requisição.
-USER.md
-Exibindo USER.md.
+- [Controllers](infra/controller/)
+- [Aplicação e relatórios](application/)
+- [Domínio](domain/)
+- [Visão geral da arquitetura](../../../../../../../doc/docs/architecture/adm.md)
