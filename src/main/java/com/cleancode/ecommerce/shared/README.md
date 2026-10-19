@@ -1,30 +1,33 @@
-# Módulo Shared (Compartilhado)
+# Módulo `shared`
 
-Este diretório contém o módulo **Shared** (Compartilhado/Kernel) do sistema Clean Ecommerce. Ele funciona como o **Shared Kernel** no contexto do Domain-Driven Design (DDD), fornecendo blocos fundamentais e estruturas transversais consumidas por todos os demais módulos.
+## Responsabilidade
 
-## 🏗️ Arquitetura do Software
+Oferece tipos e infraestrutura transversal usados pelos módulos de negócio. Nem todo conteúdo é um shared kernel de domínio: o pacote também contém configuração Spring e utilitários técnicos.
 
-O módulo Shared é essencialmente um provedor de infraestrutura, utilitários, tratamento de exceções base e **Value Objects** universais para não ferir o isolamento das outras camadas da **Clean Architecture**:
+## Estrutura e arquitetura
 
-1. **Kernel / Value Objects**:
-   - Contém abstrações puras e conceitos compartilhados como `Email`, `Cpf`, `Name`, `Price`, e `TypeCoin`.
-   - Como múltiplos módulos (Customer, Order) utilizam o conceito de "Preço" ou "E-mail", estas lógicas de negócio centralizam-se aqui para evitar repetição de código.
+- `kernel/`: tipos compartilhados (`Cpf`, `Email`, `Name`, `Password`, `Price`, `TypeCoin`, `UrlProduct`).
+- `config/cors/`, `config/openApi/`: CORS e OpenAPI.
+- `config/redis/`: configuração de Redis e serializer.
+- `config/security/`: filtro JWT, serviço de token, serviço de detalhes do usuário e configuração de segurança; `dto/` contém DTOs de autenticação.
+- `exception/`: erros compartilhados e `GlobalExceptionHandler`.
+- `util/pagination/controller/`: adaptação de paginação e resposta paginada.
+- `util/passwordencoder/`: contrato/serviço de aplicação, configuração e adapter BCrypt.
+- `util/uuidconverter/`: conversão de UUID.
 
-2. **Exception / Config / Util**:
-   - **Exception**: Agrupa as hierarquias de exceções comuns e os handlers globais (como o `ControllerAdvice` no Spring) que traduzem erros de negócio em respostas HTTP apropriadas para o cliente.
-   - **Dto / Util**: Objetos de transferência padronizados (ex: paginação universal `PageResponse`) e funções utilitárias que não detêm regras de negócio específicas de um único subdomínio.
+## Fluxos técnicos identificados
 
-## 🧩 Padrões de Projeto (Design Patterns)
+- Autenticação é recebida em `user/infra/controller/AuthController` e apoiada pelos componentes JWT em `config/security/`.
+- Exceções são traduzidas globalmente por `GlobalExceptionHandler`.
+- Paginação usa `PageRequests` e `PageResponse`.
+- Codificação de senha é abstraída por contratos e implementada com BCrypt no adapter de infraestrutura.
 
-- **Shared Kernel**: Como padrão arquitetural, é uma biblioteca de suporte mantida no core para garantir que conceitos fundamentais de negócio (como um CPF válido) não sejam recriados diferentemente em cada módulo.
-- **Global Error Handler (Chain of Responsibility / Decorator)**: Centraliza a interceptação de erros HTTP vindos de todas as rotas do sistema.
+Os componentes devem permanecer genéricos; regras específicas de cliente, produto ou pagamento pertencem aos respectivos módulos.
 
-## 🛡️ Princípios SOLID
+## Referências
 
-- **S - Single Responsibility Principle**: Os objetos no `Shared Kernel` possuem validações muito intrínsecas ao seu próprio formato (ex: `Email` sabe validar seu padrão Regex; não faz mais nada).
-- **L - Liskov Substitution Principle**: A hierarquia de Exceções Base permite que o handler global intercepte erros de uma família específica sem precisar conhecer todas as subclasses.
-
-## 🏋️‍♂️ Object Calisthenics
-
-- **Envolva primitivos em objetos**: É o grande pilar do pacote `kernel`. Nenhum módulo usa `String` para email ou `String` para nome; todos consomem os **Value Objects** imutáveis e já validados disponibilizados aqui.
-- **Nenhum getter/setter cego**: Todos os VOs criados neste módulo são imutáveis após instanciados, preservando a integridade dos dados trafegados entre as camadas de negócio do e-commerce.
+- [Configuração](config/)
+- [Kernel compartilhado](kernel/)
+- [Exceções](exception/)
+- [Utilitários](util/)
+- [Visão geral da arquitetura](../../../../../../../doc/docs/architecture/shared.md)
