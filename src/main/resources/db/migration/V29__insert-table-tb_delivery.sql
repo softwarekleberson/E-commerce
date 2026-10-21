@@ -29,7 +29,7 @@ INSERT INTO tb_address (
     'São Paulo',
     'SP',
     'Brasil',
-    'fb9cbac5-1905-478c-b641-c7a9a5bd2373'
+    '40ebef6f-d8b2-4a7f-b4e9-8b16909cd57b'
 );
 
 INSERT INTO tb_delivery (

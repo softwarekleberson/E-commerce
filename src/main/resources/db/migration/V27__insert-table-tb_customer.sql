@@ -13,7 +13,7 @@ INSERT INTO tb_customer (
     created_at,
     updated_at
 ) VALUES (
-    'fb9cbac5-1905-478c-b641-c7a9a5bd2373',
+    '40ebef6f-d8b2-4a7f-b4e9-8b16909cd57b',
     1,
     '428.067.429-40',
     'pessoal teste',
