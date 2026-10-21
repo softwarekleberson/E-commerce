@@ -9,7 +9,7 @@ CREATE TABLE tb_customer (
     area_code CHAR(2) NOT NULL COMMENT 'Phone area code (DDD)',
     phone_number VARCHAR(9) NOT NULL COMMENT 'Phone number without area code',
     phone_type ENUM('MOBILE', 'WHATSAPP', 'LANDLINE') NOT NULL COMMENT 'Type of phone contact',
-    email VARCHAR(255) NOT NULL COMMENT 'Customer email address',
+    email VARCHAR(255) NOT NULL UNIQUE COMMENT 'Customer email address',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation timestamp',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Record last update timestamp',
     

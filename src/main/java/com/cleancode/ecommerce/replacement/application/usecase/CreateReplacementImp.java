@@ -45,7 +45,7 @@ public class CreateReplacementImp implements CreateReplacement {
 		boolean itemDelivered = order.itemdelivered(dto.getReservationId());
 		
 		if(!itemDelivered) {
-			throw new IllegalReplacementException("The item must be delivered first before requesting an exchange.");
+			throw new IllegalReplacementException("The item must be delivered before an exchange is requested, or an exchange has already been requested.");
 		}
 		
 		Replacement replacement = new Replacement(
