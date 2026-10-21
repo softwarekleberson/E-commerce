@@ -33,3 +33,7 @@ build/
 .vscode/
 /.apt_generated_tests/
 /bin/
+
+
+### .env
+.env

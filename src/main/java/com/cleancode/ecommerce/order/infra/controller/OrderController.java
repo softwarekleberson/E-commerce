@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.order.infra.controller;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import com.cleancode.ecommerce.order.application.usecase.item.contract.Cancelled
 import com.cleancode.ecommerce.order.application.usecase.order.contract.ListOrders;
 import com.cleancode.ecommerce.order.application.usecase.order.dto.ListOrdersDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
+import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 @RestController
 @RequestMapping("/customer/orders")
@@ -34,12 +34,11 @@ public class OrderController {
 	
 	@PutMapping("/{orderId}/cancelled/{reservationId}")
 	public ResponseEntity<Void> cancelledOrder(Authentication authentication, @PathVariable String orderId, @PathVariable String reservationId) {
-		cancelledOrder.execute(orderId, reservationId);
-		
 		if (authentication == null || !authentication.isAuthenticated()
 				|| authentication instanceof AnonymousAuthenticationToken) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
+		cancelledOrder.execute(orderId, reservationId, authentication.getName());
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -55,7 +54,7 @@ public class OrderController {
 
 		String email = authentication.getName();
 		
-		Pageable pageable = PageRequest.of(page, size);
+		Pageable pageable = PageRequests.of(page, size);
 		var result = listOrders.execute(email, pageable);
 		return ResponseEntity.ok(PageResponse.from(result));
 	}

@@ -1,24 +1,8 @@
-## 🏛️ Architecture
+## Arquitetura
 
-Clean Ecommerce is organized around business capabilities and uses Clean Architecture principles to separate business rules from infrastructure concerns.
+O Clean Ecommerce é organizado por capacidades de negócio e separa, com variações entre módulos, entrada HTTP, orquestração de aplicação, regras de domínio e adapters de infraestrutura.
 
-```text
-Customer · Product · Cart · Order · Payment · Stock · Promotional
-                              │
-                              ▼
-                       Application / Use Cases
-                              │
-                              ▼
-                         Domain / Rules
-                              │
-                       Dependency Inversion
-                              │
-                              ▼
-                  Infrastructure / Adapters
-                    JPA · Redis · Security · Events
-```
+### Documentação
 
-### Architecture documentation
-
-- 📐 [Architecture overview](docs/architecture.md)
-- 🧠 [Architecture Decision Records](docs/adr/README.md)
+- [Guia da arquitetura e índice dos módulos](architecture.md)
+- [Decisões arquiteturais (ADRs)](adr/README.md)

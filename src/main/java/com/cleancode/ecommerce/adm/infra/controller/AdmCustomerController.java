@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.adm.infra.controller;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +15,7 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.ListAllCustome
 import com.cleancode.ecommerce.customer.application.usecase.contract.ChangeActivationStatusAdm;
 import com.cleancode.ecommerce.customer.application.usecase.contract.ListAllCustomers;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
+import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 import jakarta.validation.Valid;
 
@@ -37,7 +37,7 @@ public class AdmCustomerController {
 	public ResponseEntity<PageResponse<ListAllCustomersDto>> listAllCustomers(
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
 
-		Pageable pageable = PageRequest.of(page, size);
+		Pageable pageable = PageRequests.of(page, size);
 		var result = listAllCustomers.execute(pageable);
 		return ResponseEntity.ok(PageResponse.from(result));
 	}

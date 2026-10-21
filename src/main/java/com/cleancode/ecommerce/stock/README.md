@@ -1,41 +1,31 @@
-# Módulo Stock (Estoque)
+# Módulo `stock`
 
-Este diretório contém o módulo de **Stock** (Estoque) do sistema Clean Ecommerce. Ele é vital para o sistema, garantindo a disponibilidade real dos produtos para venda e evitando os problemas clássicos de concorrência onde dois clientes compram o último item ao mesmo tempo.
+## Responsabilidade
 
-## 🏗️ Arquitetura do Software
+Controla estoque, entradas e saídas de produto e reservas consumidas pelo carrinho e pelo checkout.
 
-Mantendo a coesão de todo o ecossistema, este módulo aplica rigorosamente a **Clean Architecture** em paralelo com o **Domain-Driven Design (DDD)**:
+## Estrutura e arquitetura
 
-1. **Domain (`domain`)**:
-   - Isolado do mundo exterior. Possui a entidade agregadora base `Stock`, a qual rastreia a quantidade disponível de produtos.
-   - Centraliza regras como "reserva temporária de produtos" (ex: quando um item vai para o carrinho) usando o conceito de `Reservation` e `ReservationId`.
-   - Utiliza Value Objects importantes, principalmente a classe `Quantity`, para garantir que os valores nunca fiquem negativos indevidamente.
-   - Estabelece as abstrações dos repositórios, como `StockRepository`, para consultar e gerenciar as fatias do estoque.
+- `application/dto/`: dados de criação e listagem de estoque/entradas.
+- `application/usecase/`: criar estoque e registrar entrada; `contract/` contém as interfaces desses casos de uso.
+- `domain/`: agregado `Stock`, quantidade, fornecedor, qualidade, preço de compra, exceções e contrato `StockRepository`.
+- `domain/productinput/`, `productoutput/`: registros de entrada e saída.
+- `domain/reservation/`: reserva, identificador e status da reserva.
+- `infra/config/`, `controller/`, `gateway/`, `mapper/`, `persistence/`: composição, HTTP, adapter JPA, conversores e entidades.
 
-2. **Application (`application`)**:
-   - Contém a inteligência orquestradora. Casos de Uso como aprovação de saída de estoque, reservas temporárias, exclusão ou atualização de quantidades.
-   - Atende requisições de outros módulos. Por exemplo, quando o módulo `Order` tenta adicionar um produto ao carrinho, a verificação e reserva acontecem orquestradas pelos Casos de Uso do módulo `Stock` (ex: `ValidateProductHasStock`).
+## Casos de uso e colaborações
 
-3. **Infrastructure (`infra`)**:
-   - Contém a camada web (Controllers) e persistência de dados.
-   - Converte e salva entidades de domínio no banco de dados usando Spring Data JPA, lidando também com *locks* ou controle transacional quando necessário para evitar problemas de concorrência.
+- Criar estoque: `CreateStockImpl`.
+- Adicionar entrada de produto: `AddProductStockImpl`.
+- Consultar/reservar/liberar estoque: integrações do carrinho usam o módulo por meio de seus contratos/repositório; não existe uma classe de caso de uso nomeada para cada operação em `application/usecase/`.
+- Confirmar reserva no checkout: `CheckoutImpl` busca estoque por ID de reserva, chama `Stock.confirmOrder(productId, reservationId)` e salva o agregado.
 
-## 🧩 Padrões de Projeto (Design Patterns)
+`Stock` é o ponto de consistência das operações de estoque. Regras de expiração e compensação da reserva dependem dos fluxos chamadores e não devem ser presumidas pelo nome do modelo.
 
-- **Aggregate Root**: `Stock` funciona como uma barreira de consistência. Não se altera uma `Reservation` diretamente; toda alocação passa pela raiz, que subtrai da quantidade livre total.
-- **Dependency Injection**: Casos de uso do estoque e controladores interagem entre si usando abstrações injetadas nos construtores, maximizando a possibilidade de criar testes de unidade.
-- **Repository Pattern**: Centraliza os métodos de busca do banco de dados (ex: `findById`, `save`), escondendo a complexidade do ORM da camada de negócios.
+## Referências
 
-## 🛡️ Princípios SOLID
-
-- **S - Single Responsibility Principle**: O módulo de estoque tem a responsabilidade exclusiva de controlar as disponibilidades e reservas. Ele não sabe o preço do produto nem o nome do cliente.
-- **O - Open/Closed Principle**: Novos fluxos de processamento (ex: estoque danificado, retorno de mercadoria) podem ser facilmente acoplados implementando novos casos de uso, sem a necessidade de modificar os fluxos que realizam reservas de venda.
-- **I - Interface Segregation**: O módulo utiliza contratos bem definidos para que as classes clientes consumam apenas as assinaturas de que realmente precisam (ex: segregar consultas de atualizações).
-- **D - Dependency Inversion Principle**: O acesso a dados não depende do Framework Spring diretamente no núcleo. `StockRepository` é apenas uma interface que a infraestrutura se responsabiliza por implementar.
-
-## 🏋️‍♂️ Object Calisthenics
-
-- **Não use `else`**: Validações de limites (ex: quando a reserva solicitada excede o limite disponível) lançam exceções como `IllegalDomainException` rapidamente com *early return*, dispensando blocos aninhados e dificultosos de ler.
-- **Envolva Primitivos em Objetos**: Quantidade de estoque não é um tipo primitivo `int` ou `Long`. É uma classe `Quantity`, que internamente impede que instanciem lixos ou números negativos.
-- **Nenhum getter/setter que quebre encapsulamento**: A manipulação da quantidade não é realizada através de algo trivial como `estoque.setQuantidade()`. Ela é feita por meio de intenções negociais claras (ex: `reserve()`, `liberate()`), que disparam a lógica de cálculo das sobras internamente, mantendo o controle centralizado.
-- **Não abrevie**: As operações que lidam com itens e exceções são sempre verbosas (ex: `ValidateProductHasStock`), revelando explicitamente a intenção do código.
+- [Controller](infra/controller/StockController.java)
+- [Use cases](application/usecase/)
+- [Domínio](domain/)
+- [Infraestrutura](infra/)
+- [Visão geral da arquitetura](../../../../../../../doc/docs/architecture/stock.md)

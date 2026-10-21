@@ -10,7 +10,7 @@ import com.cleancode.ecommerce.payment.application.service.payment.contract.Paym
 @Component
 public class FakeGatewayClient implements PaymentGatewayClient{
 
-	private final BigDecimal TESTE_LIMITE_FAKE = new BigDecimal("50"); 
+	private final BigDecimal TESTE_LIMITE_FAKE = new BigDecimal("1"); 
 	
 	@Override
 	public CardAuthorizationResponse authorize(String cardNumber, BigDecimal amount) {

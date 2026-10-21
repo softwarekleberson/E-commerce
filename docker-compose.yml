@@ -6,10 +6,10 @@ services:
     container_name: mysql_container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Set MYSQL_ROOT_PASSWORD in .env}
       MYSQL_DATABASE: clean_ecommerce
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user123
+      MYSQL_USER: ${MYSQL_USER:?Set MYSQL_USER in .env}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in .env}
     ports:
       - "3307:3306"
     volumes:
@@ -33,7 +33,7 @@ services:
     image: prom/mysqld-exporter:v0.14.0
     container_name: mysql_exporter
     environment:
-      DATA_SOURCE_NAME: "user:user123@tcp(mysql:3306)/"
+      DATA_SOURCE_NAME: "${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(mysql:3306)/"
     ports:
       - "9104:9104"
     depends_on:
@@ -95,7 +95,7 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:?Set GF_SECURITY_ADMIN_PASSWORD in .env}
     volumes:
       - grafana_data:/var/lib/grafana
     depends_on:
