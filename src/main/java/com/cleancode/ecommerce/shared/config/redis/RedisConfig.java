@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.io.IOException;
 import java.util.Map;
 
-import com.cleancode.ecommerce.product.application.cache.ProductCacheNames;
+import com.cleancode.ecommerce.product.infra.service.cache.ProductCacheNames;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListBagDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListBookDto;
