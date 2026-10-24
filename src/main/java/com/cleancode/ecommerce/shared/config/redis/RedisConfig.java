@@ -8,6 +8,7 @@ import com.cleancode.ecommerce.product.infra.service.cache.ProductCacheNames;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListBagDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListBookDto;
+import com.cleancode.ecommerce.product.application.dto.output.ListToyDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -164,6 +165,7 @@ public class RedisConfig {
 		node.remove("type");
 		if (product instanceof ListBookDto) node.put("@cacheType", "book");
 		else if (product instanceof ListBagDto) node.put("@cacheType", "bag");
+		else if (product instanceof ListToyDto) node.put("@cacheType", "toy");
 		else throw new SerializationException("Unsupported product DTO type: " + product.getClass().getName());
 		return node;
 	}
@@ -176,6 +178,7 @@ public class RedisConfig {
 		return switch (type) {
 			case "book" -> mapper.treeToValue(productNode, ListBookDto.class);
 			case "bag" -> mapper.treeToValue(productNode, ListBagDto.class);
+			case "toy" -> mapper.treeToValue(productNode, ListToyDto.class);
 			default -> throw new SerializationException("Unsupported cached product type: " + type);
 		};
 	}

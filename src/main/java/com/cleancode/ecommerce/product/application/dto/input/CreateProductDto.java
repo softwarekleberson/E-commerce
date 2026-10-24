@@ -19,7 +19,8 @@ import jakarta.validation.constraints.NotNull;
 )
 
 @JsonSubTypes({ @JsonSubTypes.Type(value = CreateBoockDto.class, name = "book"),
-@JsonSubTypes.Type(value = CreateBagDto.class, name = "bag") 
+@JsonSubTypes.Type(value = CreateBagDto.class, name = "bag"),
+@JsonSubTypes.Type(value = CreateToyDto.class, name = "toy")
 })
 public abstract class CreateProductDto implements ProductCreatableInterface {
 
