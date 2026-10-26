@@ -3,19 +3,19 @@ package com.cleancode.ecommerce.event.product;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import com.cleancode.ecommerce.product.application.usecase.contract.SellingPriceToInventory;
+import com.cleancode.ecommerce.product.infra.service.cache.ProductCacheService;
 
 @Component
 public class SellingPriceEventListener {
 
-	private final SellingPriceToInventory useCase;
+	private final ProductCacheService productCacheService;
 	
-	public SellingPriceEventListener(SellingPriceToInventory sellingPriceToInventory) {
-		this.useCase = sellingPriceToInventory;
+	public SellingPriceEventListener(ProductCacheService productCacheService) {
+		this.productCacheService = productCacheService;
 	}
 	
 	@EventListener
 	public void onProductActivated(StockUpdatedEvent event) {
-		useCase.execute(event.productId(), event.StockId());
+		productCacheService.recalculatePrice(event.productId(), event.StockId());
 	}
 }

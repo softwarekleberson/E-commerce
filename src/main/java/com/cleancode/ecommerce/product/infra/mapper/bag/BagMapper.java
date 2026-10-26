@@ -3,6 +3,8 @@ package com.cleancode.ecommerce.product.infra.mapper.bag;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Pricing;
@@ -12,6 +14,7 @@ import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.bag.Color;
 import com.cleancode.ecommerce.product.domain.bag.Volume;
 import com.cleancode.ecommerce.product.infra.mapper.MidiaInputMapper;
+import com.cleancode.ecommerce.product.infra.mapper.ProductSubtypeMapper;
 import com.cleancode.ecommerce.product.infra.persistence.bag.BagEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductCategoryEntity;
@@ -21,12 +24,17 @@ import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
-public class BagMapper {
+@Component
+public class BagMapper implements ProductSubtypeMapper<Bag, BagEntity> {
 
-	private BagMapper() {
-	}
+	@Override
+	public Class<Bag> domainType() { return Bag.class; }
 
-	public static BagEntity toEntity(Bag domain) {
+	@Override
+	public Class<BagEntity> entityType() { return BagEntity.class; }
+
+	@Override
+	public BagEntity toEntity(Bag domain) {
 		BagEntity entity = new BagEntity();
 
 		entity.setProduct_id(domain.getProductId().getProductId());
@@ -64,7 +72,8 @@ public class BagMapper {
 		return entity;
 	}
 
-	public static Bag toDomain(BagEntity entity) {
+	@Override
+	public Bag toDomain(BagEntity entity) {
 		return new Bag(new ProductId(entity.getProduct_id()), entity.isActive(), new Name(entity.getName()),
 				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getType_coin().name())),
