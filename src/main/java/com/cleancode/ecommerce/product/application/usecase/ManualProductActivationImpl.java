@@ -1,12 +1,10 @@
 package com.cleancode.ecommerce.product.application.usecase;
 
 import com.cleancode.ecommerce.product.application.dto.input.ProductStatusChangeDto;
-import com.cleancode.ecommerce.product.application.cache.ProductCacheNames;
 import com.cleancode.ecommerce.product.application.usecase.contract.ManualProductActivation;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.exception.ProductNotFound;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
-import org.springframework.cache.annotation.CacheEvict;
 
 public class ManualProductActivationImpl implements ManualProductActivation {
 
@@ -17,8 +15,6 @@ public class ManualProductActivationImpl implements ManualProductActivation {
 	}
 
 	@Override
-	@CacheEvict(cacheNames = { ProductCacheNames.BY_ID, ProductCacheNames.ACTIVE_PAGES,
-			ProductCacheNames.INACTIVE_PAGES }, allEntries = true, beforeInvocation = true)
 	public void execute(ProductStatusChangeDto dto) {
 		Product product = productRepository.findById(dto.productId())
 				.orElseThrow(() -> new ProductNotFound("Product with id : " + dto.productId() + "not found"));

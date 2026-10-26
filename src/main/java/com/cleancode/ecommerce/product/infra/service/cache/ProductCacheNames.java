@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.application.cache;
+package com.cleancode.ecommerce.product.infra.service.cache;
 
 public final class ProductCacheNames {
 

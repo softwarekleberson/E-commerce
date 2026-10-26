@@ -16,17 +16,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductRepositoryJpa implements ProductRepository {
 
 	private final ProductJpa jpa;
+	private final ProductMapper productMapper;
 
-	public ProductRepositoryJpa(ProductJpa jpa) {
+	public ProductRepositoryJpa(ProductJpa jpa, ProductMapper productMapper) {
 		this.jpa = jpa;
+		this.productMapper = productMapper;
 	}
 
 	@Transactional
 	@Override
 	public Product save(Product product) {
-		ProductEntity entity = ProductMapper.toEntity(product);
+		ProductEntity entity = productMapper.toEntity(product);
 		jpa.save(entity);
-		Product domain = ProductMapper.toDomain(entity);
+		Product domain = productMapper.toDomain(entity);
 		return domain;
 	}
 
@@ -34,19 +36,19 @@ public class ProductRepositoryJpa implements ProductRepository {
 	@Override
 	public Page<Product> ListAllProductActive(Pageable pageable) {
 	    Page<ProductEntity> entities = jpa.findByActiveTrue(pageable);
-	    return entities.map(ProductMapper::toDomain);
+	    return entities.map(productMapper::toDomain);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
 	public Page<Product> listAllProductNotActive(Pageable pageable) {
 	    Page<ProductEntity> entities = jpa.findByActiveFalse(pageable);
-	    return entities.map(ProductMapper::toDomain);
+	    return entities.map(productMapper::toDomain);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
 	public Optional<Product> findById(String productId) {
-		return jpa.findById(productId).map(ProductMapper::toDomain);
+		return jpa.findById(productId).map(productMapper::toDomain);
 	}
 }

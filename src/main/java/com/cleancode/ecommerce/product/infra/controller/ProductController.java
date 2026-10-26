@@ -1,7 +1,5 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,17 +17,8 @@ import com.cleancode.ecommerce.product.application.dto.input.ModifySellingPriceD
 import com.cleancode.ecommerce.product.application.dto.input.ProductStatusChangeDto;
 import com.cleancode.ecommerce.product.application.dto.input.ReviseDetailsDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
-import com.cleancode.ecommerce.product.application.cache.ProductCacheNames;
-import com.cleancode.ecommerce.product.application.usecase.contract.CreateProduct;
-import com.cleancode.ecommerce.product.application.usecase.contract.IncreaseSellingPriceAboveProfitMargin;
-import com.cleancode.ecommerce.product.application.usecase.contract.ListActiveProduct;
-import com.cleancode.ecommerce.product.application.usecase.contract.ListAllProductActive;
-import com.cleancode.ecommerce.product.application.usecase.contract.ListAllProductsInactive;
-import com.cleancode.ecommerce.product.application.usecase.contract.ManualProductActivation;
-import com.cleancode.ecommerce.product.application.usecase.contract.ManualProductDeactivation;
-import com.cleancode.ecommerce.product.application.usecase.contract.ReviseDetails;
+import com.cleancode.ecommerce.product.infra.service.cache.ProductCacheService;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
-import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 import jakarta.validation.Valid;
 
@@ -38,67 +27,48 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "*")
 public class ProductController {
 
-	private final CreateProduct createProduct;
-	private final ReviseDetails reviseDetails;
-	private final ManualProductDeactivation manualProductDeactivation;
-	private final ManualProductActivation manualProductActivation;
-	private final IncreaseSellingPriceAboveProfitMargin increaseSellingPriceAboveProfitMargin;
-	private final ListAllProductsInactive listAllProductsInactive;
+	private final ProductCacheService productCacheService;
 	
-	public ProductController(CreateProduct createProduct, ListAllProductActive listAllProduct, ListActiveProduct listProduct,
-			ReviseDetails reviseDetails, ManualProductDeactivation manualProductDeactivation,
-			ManualProductActivation manualProductActivation,
-			IncreaseSellingPriceAboveProfitMargin increaseSellingPriceAboveProfitMargin,
-			ListAllProductsInactive listAllProductsInactive) {
-		
-		this.createProduct = createProduct;
-		this.reviseDetails = reviseDetails;
-		this.manualProductDeactivation = manualProductDeactivation;
-		this.manualProductActivation = manualProductActivation;
-		this.increaseSellingPriceAboveProfitMargin = increaseSellingPriceAboveProfitMargin;
-		this.listAllProductsInactive = listAllProductsInactive;
+	public ProductController(ProductCacheService productCacheService) {
+		this.productCacheService = productCacheService;
 	}
 
 	@PostMapping
 	public ResponseEntity<Void> createProduct(@Valid @RequestBody CreateProductDto dto) {
-		createProduct.execute(dto);
+		productCacheService.create(dto);
 		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/inactive")
-	@Cacheable(cacheNames = ProductCacheNames.INACTIVE_PAGES,
-			key = "#p0 + ':' + T(com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests).boundedSize(#p1)")
 	public PageResponse<ListProductDto> getAllProductsInactive(
 	        @RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "10") int size) {
 
-	    Pageable pageable = PageRequests.of(page, size);
-	    var result = listAllProductsInactive.execute(pageable);
-	    return PageResponse.from(result);
+	    return productCacheService.getInactiveProducts(page, size);
 	}
 
 	@PutMapping("/{productId}")
 	public ResponseEntity<Void> reviseDetailsProduct(@Valid @RequestBody ReviseDetailsDto dto,
 			@PathVariable String productId) {
-		reviseDetails.execute(productId, dto);
+		productCacheService.revise(productId, dto);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/activate")
 	public ResponseEntity<Void> activateProduct(@Valid @RequestBody ProductStatusChangeDto dto) {
-		manualProductActivation.execute(dto);
+		productCacheService.manuallyActivate(dto);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/selling/price")
 	public ResponseEntity<Void> priceAboveProfitMargin(@Valid @RequestBody ModifySellingPriceDto dto) {
-		increaseSellingPriceAboveProfitMargin.execute(dto);
+		productCacheService.changePrice(dto);
 		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping("/disable")
 	public ResponseEntity<Void> deactivateProduct(@Valid @RequestBody ProductStatusChangeDto dto) {
-		manualProductDeactivation.execute(dto);
+		productCacheService.manuallyDeactivate(dto);
 		return ResponseEntity.noContent().build();
 	}
 }

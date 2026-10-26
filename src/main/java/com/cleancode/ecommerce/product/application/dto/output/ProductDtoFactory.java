@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.product.application.dto.output;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.books.Book;
+import com.cleancode.ecommerce.product.domain.toy.Toy;
 import com.cleancode.ecommerce.product.infra.mapper.MidiaOutputMapper;
 
 public class ProductDtoFactory {
@@ -45,6 +46,25 @@ public class ProductDtoFactory {
 			dto.setLength(book.getDimension().getLength());
 			dto.setWeight(book.getDimension().getWeight());
 			dto.setPublisherDate(book.getPublisherDate().getPublisherDate());			
+			return dto;
+		}
+
+		if (product instanceof Toy toy) {
+			ListToyDto dto = new ListToyDto();
+			dto.setId(toy.getProductId().getProductId());
+			dto.setName(toy.getName().getName());
+			dto.setDescription(toy.getDescription().getDescription());
+			dto.setPrice(toy.getPrice().getPrice());
+			dto.setTypeCoin(toy.getPrice().getCoin());
+			dto.setCategory(toy.getProductCategory());
+			dto.setBrand(toy.getBrand().getBrand());
+			dto.setMidias(MidiaOutputMapper.toOutputDtoList(toy.getMidia()));
+			dto.setToyType(toy.getToyType());
+			dto.setAgeRange(toy.getAgeRange());
+			dto.setMaterial(toy.getMaterial());
+			dto.setNumberOfPieces(toy.getNumberOfPieces());
+			dto.setBatteryRequired(toy.isBatteryRequired());
+			dto.setBatteryIncluded(toy.isBatteryIncluded());
 			return dto;
 		}
 

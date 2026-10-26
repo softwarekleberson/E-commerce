@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonSubTypes
 ({ @JsonSubTypes.Type(value = ListBookDto.class, name = "book"),
-   @JsonSubTypes.Type(value = ListBagDto.class, name = "bag") 
+   @JsonSubTypes.Type(value = ListBagDto.class, name = "bag"),
+   @JsonSubTypes.Type(value = ListToyDto.class, name = "toy")
 })
 public abstract class ListProductDto implements Serializable{
 

@@ -3,6 +3,8 @@ package com.cleancode.ecommerce.product.infra.mapper.book;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
@@ -18,6 +20,7 @@ import com.cleancode.ecommerce.product.domain.books.Page;
 import com.cleancode.ecommerce.product.domain.books.PublisherDate;
 import com.cleancode.ecommerce.product.domain.books.Synopsis;
 import com.cleancode.ecommerce.product.infra.mapper.MidiaInputMapper;
+import com.cleancode.ecommerce.product.infra.mapper.ProductSubtypeMapper;
 import com.cleancode.ecommerce.product.infra.persistence.book.BookEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductCategoryEntity;
@@ -27,9 +30,17 @@ import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
-public class BookMapper {
+@Component
+public class BookMapper implements ProductSubtypeMapper<Book, BookEntity> {
 
-	public static Book toDomain(BookEntity entity) {
+	@Override
+	public Class<Book> domainType() { return Book.class; }
+
+	@Override
+	public Class<BookEntity> entityType() { return BookEntity.class; }
+
+	@Override
+	public Book toDomain(BookEntity entity) {
 		return new Book(new ProductId(entity.getProduct_id()), entity.isActive(), new Name(entity.getName()),
 				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getType_coin().name())),
@@ -42,7 +53,8 @@ public class BookMapper {
 				new PublisherDate(entity.getPublisherDate()));
 	}
 
-	public static BookEntity toEntity(Book domain) {
+	@Override
+	public BookEntity toEntity(Book domain) {
 		BookEntity entity = new BookEntity();
 
 		entity.setProduct_id(domain.getProductId().getProductId());
