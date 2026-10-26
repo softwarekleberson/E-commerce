@@ -14,6 +14,7 @@ Use this skill for implementation and maintenance work in this repository. Treat
 - Java source is under `src/main/java/com/cleancode/ecommerce`; tests are under `src/test/java`.
 - The project uses Java 25, Spring Boot 3.5, Maven, MySQL, Flyway, Redis, and Spring Security. Prefer the Maven wrapper (`./mvnw`; `mvnw.cmd` on Windows).
 - Business code is organized by capability (`customer`, `product`, `cart`, `stock`, `order`, `payment`, `promotional`, `user`, `adm`). Most modules contain `application`, `domain`, and `infra`, but inspect the target module before choosing packages or mirroring its structure.
+- The product catalog supports the `Bag`, `Book`, and `Toy` subtypes. Their domain types live under `product/domain/bag`, `books`, and `toy`; subtype DTOs and persistence mappers/entities also have dedicated files or subfolders. `CreateToyDto` creates `Toy`, `ProductDtoFactory` selects `ListToyDto`, and `ToyMapper` maps to `ToyEntity` in `tb_toy` (Flyway migration `V36`). Check `doc/docs/architecture/product.md` and the product module README before extending this subtype flow.
 - For architecture decisions and current limitations, consult [`doc/docs/architecture.md`](../../../doc/docs/architecture.md) and relevant ADRs in `doc/docs/adr/`. Do not assume every documented pattern is consistently implemented.
 
 ## Preserve boundaries
