@@ -31,28 +31,48 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			ORDER BY month, category
 			""";
 	private static final String MONTHLY_SALES_QUERY = """
-			SELECT DATE_FORMAT(o.created_at, '%Y-%m') AS month, p.category AS category,
-			       SUM(oi.subtotal) AS total
-			FROM tb_orders o JOIN tb_order_items oi ON oi.order_id = o.order_id
-			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
-			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
-			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
-			WHERE o.status = 'PAID' AND o.created_at >= :startDate
-			  AND o.created_at < :endDateExclusive
-			  AND (:category IS NULL OR p.category = :category)
-			GROUP BY DATE_FORMAT(o.created_at, '%Y-%m'), p.category
-			ORDER BY month, category
+			SELECT sales.month, sales.category, SUM(sales.subtotal) AS total
+			FROM (
+			    SELECT DATE_FORMAT(o.created_at, '%Y-%m') AS month,
+			           CASE
+			             WHEN :category = 'BOOKS' AND p.category = 'BOOKS' THEN COALESCE(b.category_book, p.category)
+			             WHEN :category = 'TOYS' AND p.category = 'TOYS' THEN COALESCE(t.toy_type, p.category)
+			             ELSE p.category
+			           END AS category,
+			           oi.subtotal AS subtotal
+			    FROM tb_orders o JOIN tb_order_items oi ON oi.order_id = o.order_id
+			    JOIN tb_product p ON p.product_id = oi.product_ref_id OR
+			         (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
+			          (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
+			    LEFT JOIN tb_book b ON b.product_id = p.product_id
+			    LEFT JOIN tb_toy t ON t.product_id = p.product_id
+			    WHERE o.status = 'PAID' AND o.created_at >= :startDate
+			      AND o.created_at < :endDateExclusive
+			      AND (:category IS NULL OR p.category = :category)
+			) sales
+			GROUP BY sales.month, sales.category
+			ORDER BY sales.month, sales.category
 			""";
 	private static final String CATEGORY_TOTALS_QUERY = """
-			SELECT NULL AS month, p.category AS category, SUM(oi.subtotal) AS total
-			FROM tb_orders o JOIN tb_order_items oi ON oi.order_id = o.order_id
-			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
-			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
-			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
-			WHERE o.status = 'PAID' AND o.created_at >= :startDate
-			  AND o.created_at < :endDateExclusive
-			  AND (:category IS NULL OR p.category = :category)
-			GROUP BY p.category ORDER BY total DESC
+			SELECT NULL AS month, sales.category, SUM(sales.subtotal) AS total
+			FROM (
+			    SELECT CASE
+			             WHEN :category = 'BOOKS' AND p.category = 'BOOKS' THEN COALESCE(b.category_book, p.category)
+			             WHEN :category = 'TOYS' AND p.category = 'TOYS' THEN COALESCE(t.toy_type, p.category)
+			             ELSE p.category
+			           END AS category,
+			           oi.subtotal AS subtotal
+			    FROM tb_orders o JOIN tb_order_items oi ON oi.order_id = o.order_id
+			    JOIN tb_product p ON p.product_id = oi.product_ref_id OR
+			         (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
+			          (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
+			    LEFT JOIN tb_book b ON b.product_id = p.product_id
+			    LEFT JOIN tb_toy t ON t.product_id = p.product_id
+			    WHERE o.status = 'PAID' AND o.created_at >= :startDate
+			      AND o.created_at < :endDateExclusive
+			      AND (:category IS NULL OR p.category = :category)
+			) sales
+			GROUP BY sales.category ORDER BY total DESC
 			""";
 	private static final String COUNT_ORDERS_QUERY = """
 			SELECT COUNT(DISTINCT o.order_id) FROM tb_orders o

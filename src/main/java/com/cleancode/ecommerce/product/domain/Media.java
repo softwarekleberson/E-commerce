@@ -2,6 +2,8 @@ package com.cleancode.ecommerce.product.domain;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
 
@@ -12,8 +14,7 @@ public class Media {
 	private String description;
 
 	public Media(String url, String description) {
-		String regex = "\\b((https?:\\/\\/)?(www\\.)?[\\w\\-]+\\.[\\w\\-]+(\\.[\\w\\-]+)?([\\/\\w\\-\\.\\?\\=\\&\\#]*)?)\\b";
-		if (!url.matches(regex)) {
+		if (!isValidUrl(url)) {
 			throw new IllegalDomainException("Url not be valid");
 		}
 
@@ -24,6 +25,21 @@ public class Media {
 		this.id = UUID.randomUUID().toString();
 		this.url = url;
 		this.description = description;
+	}
+
+	private boolean isValidUrl(String url) {
+		if (url == null || url.isBlank()) {
+			return false;
+		}
+
+		try {
+			URI uri = new URI(url);
+			String scheme = uri.getScheme();
+			return uri.getHost() != null && ("http".equalsIgnoreCase(scheme)
+					|| "https".equalsIgnoreCase(scheme));
+		} catch (URISyntaxException exception) {
+			return false;
+		}
 	}
 
 	public Media(String id, String url, String description) {
