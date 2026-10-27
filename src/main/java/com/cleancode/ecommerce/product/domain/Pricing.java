@@ -14,7 +14,7 @@ public class Pricing {
 			throw new IllegalPricingException("Pricing cannot be null");
 		}
 		
-		if (pricing.compareTo(BigDecimal.ZERO) < 0 || pricing.compareTo(BigDecimal.ONE) > 0) {
+		if (pricing.compareTo(BigDecimal.ZERO) <= 0 || pricing.compareTo(BigDecimal.ONE) > 0) {
 		    throw new IllegalPricingException("Pricing must be between 0 and 1 inclusive");
 		}
 

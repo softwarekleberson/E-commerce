@@ -49,6 +49,6 @@ public class NumberCardTest {
 		IllegalCardException exception = assertThrows(IllegalCardException.class,
 				() -> new NumberCard("4539578763621487") // inválido
 		);
-		assertEquals("Invalid card number (Luhn check failed)", exception.getMessage());
+		assertEquals("Invalid card number", exception.getMessage());
 	}
 }
