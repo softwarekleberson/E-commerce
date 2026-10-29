@@ -12,6 +12,7 @@ import com.cleancode.ecommerce.cart.domain.CartId;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
@@ -23,10 +24,13 @@ public class AddProductToCartImpl implements AddProductToCart {
 
 	private final CartRepository cartRepository;
 	private final CartCatalogIntegrationService integrationService; 
+	private final ShippingCostStrategyFactory shippingStrategyFactory;
 
-	public AddProductToCartImpl(CartRepository cartRepository, CartCatalogIntegrationService integrationService) {
+	public AddProductToCartImpl(CartRepository cartRepository, CartCatalogIntegrationService integrationService,
+			ShippingCostStrategyFactory shippingStrategyFactory) {
 		this.cartRepository = cartRepository;
 		this.integrationService = integrationService;
+		this.shippingStrategyFactory = shippingStrategyFactory;
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 		);
 
 		cartRepository.save(cart);
-		return new CartDto(cart);
+		return new CartDto(cart, shippingStrategyFactory.calculate(cart.getTotalPrice().getPrice()));
 	}
 
 	private Cart getCartOrCreate(String customerId) {

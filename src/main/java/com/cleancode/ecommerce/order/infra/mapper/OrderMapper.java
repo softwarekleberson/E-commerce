@@ -37,6 +37,7 @@ public class OrderMapper {
 			
 			order.addOrderItem(domainItems); // Agora este método popula this.items e calcula o total!
 		}
+		order.restoreShippingCost(entity.getShippingCost());
 		
 		return order;
 	}
@@ -52,6 +53,7 @@ public class OrderMapper {
 		entity.setDelivery_Id(order.getDeliveryId());
 		entity.setCreated_At(order.getCreatedAt());
 		entity.setValue(order.getTotal() != null ? order.getTotal().getTotalValue() : null);
+		entity.setShippingCost(order.getShippingCost());
 		entity.setType_Coin(TypeCoinEntity.valueOf(order.getTotal().getTypeCoin().name()));
 		entity.setStatus(OrderStatusEntity.valueOf(order.getOrderStatus().name()));
 		entity.setDelivered(order.isDeliverd());

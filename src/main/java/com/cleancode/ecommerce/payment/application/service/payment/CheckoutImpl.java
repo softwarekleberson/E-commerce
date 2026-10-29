@@ -10,6 +10,7 @@ import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepos
 import com.cleancode.ecommerce.event.order.EventTransportPublisher;
 import com.cleancode.ecommerce.event.order.OrderEvent;
 import com.cleancode.ecommerce.order.domain.Order;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
 import com.cleancode.ecommerce.payment.application.dto.PaymentDetails;
 import com.cleancode.ecommerce.payment.application.dto.PaymentExecutionResult;
@@ -31,11 +32,23 @@ public class CheckoutImpl implements Checkout {
 	private final OrderRepository orderRepository;
 	private final PaymentMethodFactory paymentMethodFactory;
 	private final EventTransportPublisher eventTransportPublisher;
+	private final ShippingCostStrategyFactory shippingStrategyFactory;
 
 
 	public CheckoutImpl(CustomerRepository customerRepository, CartRepository cartRepository,
 			StockRepository stockRepository, PaymentRepository paymentRepository, OrderRepository orderRepository,
 			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher) {
+		this(customerRepository, cartRepository, stockRepository, paymentRepository, orderRepository, paymentMethodFactory,
+				eventTransportPublisher, new ShippingCostStrategyFactory(java.util.List.of(
+						new com.cleancode.ecommerce.order.domain.shipping.FreeShippingStrategy(),
+						new com.cleancode.ecommerce.order.domain.shipping.StandardShippingStrategy(),
+						new com.cleancode.ecommerce.order.domain.shipping.ExpensiveShippingStrategy())));
+	}
+
+	public CheckoutImpl(CustomerRepository customerRepository, CartRepository cartRepository,
+			StockRepository stockRepository, PaymentRepository paymentRepository, OrderRepository orderRepository,
+			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher,
+			ShippingCostStrategyFactory shippingStrategyFactory) {
 
 		this.customerRepository = customerRepository;
 		this.cartRepository = cartRepository;
@@ -44,6 +57,7 @@ public class CheckoutImpl implements Checkout {
 		this.orderRepository = orderRepository;
 		this.paymentMethodFactory = paymentMethodFactory;
 		this.eventTransportPublisher = eventTransportPublisher;
+		this.shippingStrategyFactory = shippingStrategyFactory;
 	}
 
 	@Override
@@ -59,7 +73,7 @@ public class CheckoutImpl implements Checkout {
 		
 		
 		// 2️⃣ Criar pedido e adicionar itens
-		Order order = new Order(customer.getId().getValue(), deliveryPublicId);
+		Order order = new Order(customer.getId().getValue(), deliveryPublicId, shippingStrategyFactory);
 		cart.getCartItens().forEach(item -> order.addItem(item.getProductName().getName(), item.getProductId().getProductId(),
 				item.getUnitPrice().getPrice(), item.getQuantity().getQuantity(), item.getReservationId()));
 

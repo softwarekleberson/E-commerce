@@ -29,6 +29,7 @@ import com.cleancode.ecommerce.cart.application.usecase.contract.ListCart;
 import com.cleancode.ecommerce.cart.application.usecase.contract.UpdateCart;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 
@@ -38,9 +39,10 @@ public class CartConfig {
 	@Bean
 	public AddProductToCart addProductToCart(
 
-			CartRepository cartRepository, CartCatalogIntegrationService integrationService) {
+			CartRepository cartRepository, CartCatalogIntegrationService integrationService,
+			ShippingCostStrategyFactory shippingStrategyFactory) {
 
-		return new AddProductToCartImpl(cartRepository, integrationService);
+		return new AddProductToCartImpl(cartRepository, integrationService, shippingStrategyFactory);
 	}
 	
 	@Bean
@@ -73,8 +75,9 @@ public class CartConfig {
 	}
 	
 	@Bean
-	public ListCart listCart(CartRepository cartRepository, CartQueryIntegrationService queryService) {
-		return new ListCartImpl(cartRepository, queryService);
+	public ListCart listCart(CartRepository cartRepository, CartQueryIntegrationService queryService,
+			ShippingCostStrategyFactory shippingStrategyFactory) {
+		return new ListCartImpl(cartRepository, queryService, shippingStrategyFactory);
 	}
 	
 	@Bean
@@ -107,7 +110,8 @@ public class CartConfig {
 	}
 	
 	@Bean
-	public UpdateCart updateCart(CartRepository cartRepository, CartUpdateIntegrationService updateService) {
-		return new UpdateCartImpl(cartRepository, updateService);
+	public UpdateCart updateCart(CartRepository cartRepository, CartUpdateIntegrationService updateService,
+			ShippingCostStrategyFactory shippingStrategyFactory) {
+		return new UpdateCartImpl(cartRepository, updateService, shippingStrategyFactory);
 	}
 }

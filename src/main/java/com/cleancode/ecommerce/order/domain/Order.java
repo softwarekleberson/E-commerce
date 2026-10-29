@@ -13,6 +13,10 @@ import com.cleancode.ecommerce.order.domain.state.itens.ItemStatus;
 import com.cleancode.ecommerce.order.domain.state.order.OrderState;
 import com.cleancode.ecommerce.order.domain.state.order.OrderStatus;
 import com.cleancode.ecommerce.order.domain.state.order.PendingState;
+import com.cleancode.ecommerce.order.domain.shipping.ExpensiveShippingStrategy;
+import com.cleancode.ecommerce.order.domain.shipping.FreeShippingStrategy;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
+import com.cleancode.ecommerce.order.domain.shipping.StandardShippingStrategy;
 import com.cleancode.ecommerce.payment.domain.Total;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
@@ -26,12 +30,18 @@ public final class Order {
 
 	private List<OrderItem> items = new ArrayList<>();
 	private Total total;
+	private BigDecimal shippingCost;
+	private final ShippingCostStrategyFactory shippingStrategyFactory;
 	private OrderState orderState;
 	private OrderStatus orderStatus;
 	private boolean deliverd;
 
 	// Construtor para CRIAÇÃO de novos pedidos (Cria ID novo e Data atual)
 	public Order(String customerId, String deliveryId) {
+		this(customerId, deliveryId, defaultShippingStrategyFactory());
+	}
+
+	public Order(String customerId, String deliveryId, ShippingCostStrategyFactory shippingStrategyFactory) {
 		this.orderId = new OrderId();
 		this.customerId = new CustomerId(customerId);
 		this.deliveryId = deliveryId;
@@ -39,6 +49,8 @@ public final class Order {
 		this.orderState = new PendingState();
 		this.orderStatus = OrderStatus.PENDING;
 		this.deliverd = false;
+		this.shippingCost = BigDecimal.ZERO;
+		this.shippingStrategyFactory = Objects.requireNonNull(shippingStrategyFactory);
 	}
 
 	// Construtor para RECONSTITUIÇÃO do banco de dados (OrderMapper)
@@ -51,6 +63,11 @@ public final class Order {
 			OrderState orderState,
 			boolean deliverd
 	) {
+		this(orderId, customerId, deliveryId, createdAt, orderStatus, orderState, deliverd, defaultShippingStrategyFactory());
+	}
+
+	public Order(String orderId, String customerId, String deliveryId, LocalDateTime createdAt, OrderStatus orderStatus,
+			OrderState orderState, boolean deliverd, ShippingCostStrategyFactory shippingStrategyFactory) {
 		this.orderId = new OrderId(orderId);
 		this.customerId = new CustomerId(customerId);
 		this.deliveryId = deliveryId;
@@ -58,6 +75,8 @@ public final class Order {
 		this.orderStatus = orderStatus;
 		this.orderState = orderState;
 		this.deliverd = deliverd;
+		this.shippingCost = BigDecimal.ZERO;
+		this.shippingStrategyFactory = Objects.requireNonNull(shippingStrategyFactory);
 	}
 	
 	public void separateItems() {
@@ -152,12 +171,30 @@ public final class Order {
 	}
 
 	public Total calculateTotal() {
-		BigDecimal totalValue = items.stream()
+		BigDecimal itemsTotal = items.stream()
 				.map(OrderItem::getSubtotal)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		this.shippingCost = shippingStrategyFactory.calculate(itemsTotal);
+		BigDecimal totalValue = itemsTotal.add(this.shippingCost);
 
 		this.total = new Total(totalValue, TypeCoin.DOLAR);
 		return this.total;
+	}
+
+	private static ShippingCostStrategyFactory defaultShippingStrategyFactory() {
+		return new ShippingCostStrategyFactory(List.of(new FreeShippingStrategy(), new StandardShippingStrategy(), new ExpensiveShippingStrategy()));
+	}
+
+	public BigDecimal getShippingCost() {
+		return shippingCost;
+	}
+
+	public void restoreShippingCost(BigDecimal shippingCost) {
+		this.shippingCost = Objects.requireNonNull(shippingCost, "Persisted shipping cost cannot be null");
+		BigDecimal itemsTotal = items.stream()
+				.map(OrderItem::getSubtotal)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		this.total = new Total(itemsTotal.add(this.shippingCost), TypeCoin.DOLAR);
 	}
 
 	public void setOrderState(OrderState orderState) {

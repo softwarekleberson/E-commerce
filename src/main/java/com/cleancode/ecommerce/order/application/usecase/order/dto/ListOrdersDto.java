@@ -11,7 +11,7 @@ import com.cleancode.ecommerce.order.domain.state.order.OrderStatus;
 public record ListOrdersDto(
 		
 		String orderId, String customerId, List<ListItensDto> itens,
-		BigDecimal total, String currency, OrderStatus orderStatus,
+		BigDecimal total, BigDecimal shippingCost, String currency, OrderStatus orderStatus,
 		LocalDateTime data
 		
 		) {
@@ -23,6 +23,7 @@ public record ListOrdersDto(
 			o.getItems() == null ? List.of() :
 			o.getItems().stream().map(ListItensDto::new).collect(Collectors.toList()),
 			o.getTotal().getTotalValue(),
+			o.getShippingCost(),
 			o.getTotal().getTypeCoin().toString(),
 			o.getOrderStatus(),
 			o.getCreatedAt()
