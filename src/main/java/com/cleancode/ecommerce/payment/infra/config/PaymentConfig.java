@@ -30,17 +30,17 @@ import com.cleancode.ecommerce.payment.application.usecase.VoucherPayment;
 import com.cleancode.ecommerce.payment.application.usecase.contract.PaymentMethod;
 import com.cleancode.ecommerce.payment.domain.repository.PaymentRepository;
 import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
-import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
+import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
 
 @Configuration
 public class PaymentConfig {
 
 	@Bean
 	public Checkout checkout(CustomerRepository customerRepository, CartRepository cartRepository,
-			StockRepository stockRepository, PaymentRepository paymentRepository,OrderRepository orderRepository,
+			ConfirmStockReservations confirmStockReservations, PaymentRepository paymentRepository,OrderRepository orderRepository,
 			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher,
 			ShippingCostStrategyFactory shippingStrategyFactory) {
-		return new CheckoutImpl(customerRepository, cartRepository, stockRepository, paymentRepository,
+		return new CheckoutImpl(customerRepository, cartRepository, confirmStockReservations, paymentRepository,
 				orderRepository ,paymentMethodFactory, eventTransportPublisher, shippingStrategyFactory);
 	}
 

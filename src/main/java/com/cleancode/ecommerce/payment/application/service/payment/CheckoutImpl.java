@@ -21,13 +21,14 @@ import com.cleancode.ecommerce.payment.domain.Payment;
 import com.cleancode.ecommerce.payment.domain.Total;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.payment.domain.repository.PaymentRepository;
-import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
+import com.cleancode.ecommerce.stock.application.dto.StockReservationConfirmation;
+import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
 
 public class CheckoutImpl implements Checkout {
 
 	private final CustomerRepository customerRepository;
 	private final CartRepository cartRepository;
-	private final StockRepository stockRepository;
+	private final ConfirmStockReservations confirmStockReservations;
 	private final PaymentRepository paymentRepository;
 	private final OrderRepository orderRepository;
 	private final PaymentMethodFactory paymentMethodFactory;
@@ -36,9 +37,9 @@ public class CheckoutImpl implements Checkout {
 
 
 	public CheckoutImpl(CustomerRepository customerRepository, CartRepository cartRepository,
-			StockRepository stockRepository, PaymentRepository paymentRepository, OrderRepository orderRepository,
+			ConfirmStockReservations confirmStockReservations, PaymentRepository paymentRepository, OrderRepository orderRepository,
 			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher) {
-		this(customerRepository, cartRepository, stockRepository, paymentRepository, orderRepository, paymentMethodFactory,
+		this(customerRepository, cartRepository, confirmStockReservations, paymentRepository, orderRepository, paymentMethodFactory,
 				eventTransportPublisher, new ShippingCostStrategyFactory(java.util.List.of(
 						new com.cleancode.ecommerce.order.domain.shipping.FreeShippingStrategy(),
 						new com.cleancode.ecommerce.order.domain.shipping.StandardShippingStrategy(),
@@ -46,13 +47,13 @@ public class CheckoutImpl implements Checkout {
 	}
 
 	public CheckoutImpl(CustomerRepository customerRepository, CartRepository cartRepository,
-			StockRepository stockRepository, PaymentRepository paymentRepository, OrderRepository orderRepository,
+			ConfirmStockReservations confirmStockReservations, PaymentRepository paymentRepository, OrderRepository orderRepository,
 			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher,
 			ShippingCostStrategyFactory shippingStrategyFactory) {
 
 		this.customerRepository = customerRepository;
 		this.cartRepository = cartRepository;
-		this.stockRepository = stockRepository;
+		this.confirmStockReservations = confirmStockReservations;
 		this.paymentRepository = paymentRepository;
 		this.orderRepository = orderRepository;
 		this.paymentMethodFactory = paymentMethodFactory;
@@ -106,7 +107,9 @@ public class CheckoutImpl implements Checkout {
 		payment.approvetPayment();
 
 		// 8️⃣ Confirmar estoque
-		confirmStock(cart);
+		confirmStockReservations.execute(cart.getCartItens().stream()
+				.map(item -> new StockReservationConfirmation(item.getReservationId(), item.getProductId().getProductId()))
+				.toList());
 
 		// 9️⃣ Persistir pedido e pagamento
 		orderRepository.save(order);
@@ -128,19 +131,6 @@ public class CheckoutImpl implements Checkout {
 		if (dto.voucherId() != null) {
 			payment.addDescriptionPayment(dto.typePayment());
 		}
-	}
-
-	private void confirmStock(Cart cart) {
-		cart.getCartItens().forEach(item -> {
-			var productId = item.getProductId().getProductId();
-			var reservationId = item.getReservationId();
-
-			var stock = stockRepository.findStockByReservationId(reservationId)
-					.orElseThrow(() -> new IllegalDomainPayment("Stock not found for reservation: " + reservationId));
-
-			stock.confirmOrder(productId, reservationId);
-			stockRepository.save(stock);
-		});
 	}
 
 	private Cart getCart(Customer customer) {

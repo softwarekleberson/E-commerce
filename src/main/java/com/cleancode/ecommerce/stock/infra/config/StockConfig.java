@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.cleancode.ecommerce.event.product.EventPublisher;
 import com.cleancode.ecommerce.stock.application.usecase.AddProductStockImpl;
+import com.cleancode.ecommerce.stock.application.usecase.ConfirmStockReservationsImpl;
 import com.cleancode.ecommerce.stock.application.usecase.CreateStockImpl;
 import com.cleancode.ecommerce.stock.application.usecase.contract.AddProductStock;
+import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
 import com.cleancode.ecommerce.stock.application.usecase.contract.CreateStock;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 
@@ -24,5 +26,10 @@ public class StockConfig {
 			StockRepository repository, EventPublisher eventPublisher) {
 
 		return new AddProductStockImpl(repository, eventPublisher);
+	}
+
+	@Bean
+	public ConfirmStockReservations confirmStockReservations(StockRepository stockRepository) {
+		return new ConfirmStockReservationsImpl(stockRepository);
 	}
 }
