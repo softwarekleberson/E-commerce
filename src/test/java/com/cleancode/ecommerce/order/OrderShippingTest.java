@@ -15,7 +15,7 @@ class OrderShippingTest {
 		Order order = new Order("customer-1", "delivery-1");
 		order.addItem("product", new BigDecimal("40.00"), 1, "reservation-1");
 
-		assertThat(order.getShippingCost()).isEqualByComparingTo("60.00");
-		assertThat(order.calculateTotal().getTotalValue()).isEqualByComparingTo("100.00");
+		assertThat(order.getShippingCost()).isEqualByComparingTo("15.00");
+		assertThat(order.calculateTotal().getTotalValue()).isEqualByComparingTo("55.00");
 	}
 }

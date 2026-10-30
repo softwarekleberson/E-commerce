@@ -24,18 +24,18 @@ class ShippingCostStrategyFactoryTest {
 	}
 
 	@Test
-	void shouldChargeSixtyWhenSubtotalIsBelowFifty() {
-		assertThat(factory.calculate(new BigDecimal("49.99"))).isEqualByComparingTo("60.00");
+	void shouldChargeFifteenWhenSubtotalIsBelowFifty() {
+		assertThat(factory.calculate(new BigDecimal("49.99"))).isEqualByComparingTo("15.00");
 	}
 
 	@Test
-	void shouldChargeThirtyWhenSubtotalIsFifty() {
-		assertThat(factory.calculate(new BigDecimal("50.00"))).isEqualByComparingTo("30.00");
+	void shouldChargeTenWhenSubtotalIsFifty() {
+		assertThat(factory.calculate(new BigDecimal("50.00"))).isEqualByComparingTo("10.00");
 	}
 
 	@Test
-	void shouldChargeThirtyWhenSubtotalIsBelowOneHundred() {
-		assertThat(factory.calculate(new BigDecimal("99.99"))).isEqualByComparingTo("30.00");
+	void shouldChargeTenWhenSubtotalIsBelowOneHundred() {
+		assertThat(factory.calculate(new BigDecimal("99.99"))).isEqualByComparingTo("10.00");
 	}
 
 	@Test

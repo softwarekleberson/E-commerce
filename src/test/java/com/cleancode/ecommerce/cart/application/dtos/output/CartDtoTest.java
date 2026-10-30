@@ -25,6 +25,6 @@ class CartDtoTest {
 		CartDto dto = new CartDto(cart, shippingStrategyFactory.calculate(cart.getTotalPrice().getPrice()));
 
 		assertThat(dto.totalPrice()).isEqualByComparingTo("0");
-		assertThat(dto.shippingCost()).isEqualByComparingTo("60.00");
+		assertThat(dto.shippingCost()).isEqualByComparingTo("15.00");
 	}
 }

@@ -18,7 +18,7 @@ class ListOrdersDtoTest {
 
 		ListOrdersDto dto = new ListOrdersDto(order);
 
-		assertThat(dto.shippingCost()).isEqualByComparingTo("60.00");
-		assertThat(dto.total()).isEqualByComparingTo("100.00");
+		assertThat(dto.shippingCost()).isEqualByComparingTo("15.00");
+		assertThat(dto.total()).isEqualByComparingTo("55.00");
 	}
 }

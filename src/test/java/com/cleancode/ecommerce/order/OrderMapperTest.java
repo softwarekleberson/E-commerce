@@ -17,7 +17,7 @@ class OrderMapperTest {
 		order.addItem("book", new BigDecimal("40.00"), 1, "reservation-1");
 
 		var entity = OrderMapper.toEntity(order);
-		assertThat(entity.getShippingCost()).isEqualByComparingTo("60.00");
+		assertThat(entity.getShippingCost()).isEqualByComparingTo("15.00");
 
 		entity.setShippingCost(new BigDecimal("12.34"));
 		Order restoredOrder = OrderMapper.toDomain(entity);
