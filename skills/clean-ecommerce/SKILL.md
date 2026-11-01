@@ -9,6 +9,16 @@ metadata:
 
 Use this skill for implementation and maintenance work in this repository. Treat the code as the source of truth: architecture documentation describes intent, while individual modules have some naming and structure variations.
 
+## Como o projeto está construído
+
+- É uma única aplicação Spring Boot/Maven, não um conjunto de microserviços. A classe de entrada e os beans são descobertos a partir do pacote `com.cleancode.ecommerce`.
+- Os módulos são agrupados por capacidade de negócio: `customer`, `product`, `cart`, `stock`, `order`, `payment`, `promotional`, `replacement`, `user` e `adm`. `event` contém eventos locais usados entre módulos; `shared` reúne configuração e componentes transversais.
+- O fluxo comum é controller/adaptador de entrada → caso de uso ou serviço de aplicação → domínio e contratos → gateway/adaptador de infraestrutura → banco ou serviço externo. Isso é uma orientação, não uma estrutura uniforme: por exemplo, `promotional` usa `usecase/`, `user` é mais enxuto e alguns pacotes têm grafias históricas como `persistencia` ou `persistece`.
+- As interfaces de persistência costumam ficar em `domain/repository`; implementações e mapeamentos JPA ficam em `infra/gateway`, `infra/mapper` e `infra/persistence` (com variações). Controllers e DTOs HTTP também ficam em `infra` nos módulos que os possuem.
+- A aplicação usa MySQL com Spring Data JPA e migrações Flyway, Redis para cache quando configurado, Spring Security/JWT para autenticação e eventos Spring no mesmo processo. O módulo `payment` inclui um adaptador fake; não presuma integração com um provedor de pagamento real.
+- A configuração compartilhada está em `shared/config` (segurança, CORS, OpenAPI e Redis), `shared/exception`, `shared/kernel` e `shared/util`. Configuração operacional adicional fica em `src/main/resources/application.properties` e `docker-compose.yml`.
+- Consulte [`doc/docs/architecture.md`](../../doc/docs/architecture.md) para o mapa do sistema e os fluxos entre módulos. As páginas [`doc/docs/architecture/`](../../doc/docs/architecture/) descrevem módulos e ligam às classes relevantes; os ADRs em [`doc/docs/adr/`](../../doc/docs/adr/) registram decisões pretendidas, que devem ser comparadas com a implementação antes de orientar uma mudança.
+
 ## Orient in the repository
 
 - Java source is under `src/main/java/com/cleancode/ecommerce`; tests are under `src/test/java`.

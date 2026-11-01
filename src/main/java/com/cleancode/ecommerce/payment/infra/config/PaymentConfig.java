@@ -9,6 +9,11 @@ import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.event.order.EventTransportPublisher;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
+import com.cleancode.ecommerce.order.domain.shipping.ExpensiveShippingStrategy;
+import com.cleancode.ecommerce.order.domain.shipping.FreeShippingStrategy;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategy;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
+import com.cleancode.ecommerce.order.domain.shipping.StandardShippingStrategy;
 import com.cleancode.ecommerce.payment.application.service.payment.CheckoutImpl;
 import com.cleancode.ecommerce.payment.application.service.payment.PaymentMethodFactoryImpl;
 import com.cleancode.ecommerce.payment.application.service.payment.contract.Checkout;
@@ -25,17 +30,25 @@ import com.cleancode.ecommerce.payment.application.usecase.VoucherPayment;
 import com.cleancode.ecommerce.payment.application.usecase.contract.PaymentMethod;
 import com.cleancode.ecommerce.payment.domain.repository.PaymentRepository;
 import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
-import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
+import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
 
 @Configuration
 public class PaymentConfig {
 
 	@Bean
 	public Checkout checkout(CustomerRepository customerRepository, CartRepository cartRepository,
-			StockRepository stockRepository, PaymentRepository paymentRepository,OrderRepository orderRepository,
-			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher) {
-		return new CheckoutImpl(customerRepository, cartRepository, stockRepository, paymentRepository,
-				orderRepository ,paymentMethodFactory, eventTransportPublisher);
+			ConfirmStockReservations confirmStockReservations, PaymentRepository paymentRepository,OrderRepository orderRepository,
+			PaymentMethodFactory paymentMethodFactory, EventTransportPublisher eventTransportPublisher,
+			ShippingCostStrategyFactory shippingStrategyFactory) {
+		return new CheckoutImpl(customerRepository, cartRepository, confirmStockReservations, paymentRepository,
+				orderRepository ,paymentMethodFactory, eventTransportPublisher, shippingStrategyFactory);
+	}
+
+	@Bean public ShippingCostStrategy freeShippingStrategy() { return new FreeShippingStrategy(); }
+	@Bean public ShippingCostStrategy standardShippingStrategy() { return new StandardShippingStrategy(); }
+	@Bean public ShippingCostStrategy expensiveShippingStrategy() { return new ExpensiveShippingStrategy(); }
+	@Bean public ShippingCostStrategyFactory shippingCostStrategyFactory(List<ShippingCostStrategy> strategies) {
+		return new ShippingCostStrategyFactory(strategies);
 	}
 	
 	@Bean

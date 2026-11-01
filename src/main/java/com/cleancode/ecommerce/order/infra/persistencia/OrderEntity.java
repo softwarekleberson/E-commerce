@@ -8,6 +8,7 @@ import java.util.List;
 import com.cleancode.ecommerce.cart.infra.persistence.TypeCoinEntity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -44,8 +45,12 @@ public class OrderEntity {
 	)
 	private List<OrderItemEntity> order_itens = new ArrayList<>();
     
+    @Column(name="total")
     private BigDecimal value;
-    
+
+    @Column(name = "shipping_cost", nullable = false, precision = 19, scale = 2)
+    private BigDecimal shippingCost;
+
     @Enumerated(EnumType.STRING)
 	private TypeCoinEntity type_Coin;	
 	

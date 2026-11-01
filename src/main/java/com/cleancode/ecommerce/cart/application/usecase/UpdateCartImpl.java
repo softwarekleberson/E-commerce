@@ -7,6 +7,7 @@ import com.cleancode.ecommerce.cart.application.usecase.contract.UpdateCart;
 import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.stock.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
 
@@ -14,10 +15,13 @@ public class UpdateCartImpl implements UpdateCart {
 
 	private final CartRepository cartRepository;
 	private final CartUpdateIntegrationService updateService; 
+	private final ShippingCostStrategyFactory shippingStrategyFactory;
 
-	public UpdateCartImpl(CartRepository cartRepository, CartUpdateIntegrationService updateService) {
+	public UpdateCartImpl(CartRepository cartRepository, CartUpdateIntegrationService updateService,
+			ShippingCostStrategyFactory shippingStrategyFactory) {
 		this.cartRepository = cartRepository;
 		this.updateService = updateService;
+		this.shippingStrategyFactory = shippingStrategyFactory;
 	}
 
 	@Override
@@ -40,6 +44,6 @@ public class UpdateCartImpl implements UpdateCart {
 
 		cartRepository.save(cart);
 
-		return new CartDto(cart);
+		return new CartDto(cart, shippingStrategyFactory.calculate(cart.getTotalPrice().getPrice()));
 	}	
 }

@@ -16,11 +16,12 @@ public record CartDto(
 		LocalDateTime createdAt,
 		LocalDateTime updatedAt,
 		BigDecimal totalPrice,
+		BigDecimal shippingCost,
 		TypeCoin coin
 		
 		) {
 
-	public CartDto (Cart cart) {
+	public CartDto (Cart cart, BigDecimal shippingCost) {
 		this(cart.getCartId().getCartId(),
 			 cart.getCustomerId().getValue(),
 			
@@ -31,6 +32,7 @@ public record CartDto(
 			 cart.getCreatedAt(),
 			 cart.getUpdatedAt(),
 			 cart.getTotalPrice().getPrice(),
+			 shippingCost,
 			 cart.getTotalPrice().getCoin());
 	}
 }

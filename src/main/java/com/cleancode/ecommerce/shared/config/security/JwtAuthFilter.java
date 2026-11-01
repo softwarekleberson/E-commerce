@@ -2,10 +2,12 @@ package com.cleancode.ecommerce.shared.config.security;
 
 import java.io.IOException;
 
+import io.jsonwebtoken.JwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -31,30 +33,59 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		final String authHeader = request.getHeader("Authorization");
-		final String jwt;
-		final String userEmail;
-
 		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 
-		jwt = authHeader.substring(7); 
-		userEmail = jwtService.extractUsername(jwt);
+		String jwt = authHeader.substring(7);
+		final String userEmail;
+		try {
+			userEmail = jwtService.extractUsername(jwt);
+		} catch (JwtException | IllegalArgumentException exception) {
+			rejectInvalidToken(response);
+			return;
+		}
 
-		if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+		if (userEmail == null || userEmail.isBlank()) {
+			rejectInvalidToken(response);
+			return;
+		}
 
-			if (jwtService.isTokenValid(jwt, userDetails)) {
-				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
-						null, userDetails.getAuthorities());
-
-				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-				SecurityContextHolder.getContext().setAuthentication(authToken);
+		if (SecurityContextHolder.getContext().getAuthentication() == null) {
+			final UserDetails userDetails;
+			try {
+				userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+			} catch (UsernameNotFoundException exception) {
+				rejectInvalidToken(response);
+				return;
 			}
+
+			final boolean tokenValid;
+			try {
+				tokenValid = jwtService.isTokenValid(jwt, userDetails);
+			} catch (JwtException | IllegalArgumentException exception) {
+				rejectInvalidToken(response);
+				return;
+			}
+
+			if (!tokenValid) {
+				rejectInvalidToken(response);
+				return;
+			}
+
+			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
+					null, userDetails.getAuthorities());
+			authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+			SecurityContextHolder.getContext().setAuthentication(authToken);
 		}
 
 		filterChain.doFilter(request, response);
+	}
+
+	private void rejectInvalidToken(HttpServletResponse response) throws IOException {
+		SecurityContextHolder.clearContext();
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired bearer token");
 	}
 }
