@@ -86,7 +86,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 	private static final String RECENT_ORDERS_QUERY = """
 			SELECT o.order_id AS orderId, c.full_name AS customerName,
 			       GROUP_CONCAT(DISTINCT p.category ORDER BY p.category SEPARATOR ', ') AS category,
-			       o.created_at AS orderDate, o.value AS orderValue, o.status AS orderStatus
+			       o.created_at AS orderDate, o.total AS orderValue, o.status AS orderStatus
 			FROM tb_orders o JOIN tb_customer c ON c.customer_id = o.customer_id
 			JOIN tb_order_items oi ON oi.order_id = o.order_id
 			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
@@ -94,7 +94,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			WHERE o.created_at >= :startDate AND o.created_at < :endDateExclusive
 			  AND (:category IS NULL OR p.category = :category)
-			GROUP BY o.order_id, c.full_name, o.created_at, o.value, o.status
+			GROUP BY o.order_id, c.full_name, o.created_at, o.total, o.status
 			ORDER BY o.created_at DESC LIMIT 10
 			""";
 
