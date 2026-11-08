@@ -67,6 +67,6 @@ INSERT INTO tb_voucher (
     'Teste para o pagamento cupom 0.',
     '2026-10-06',
     'PROMOTIONAL',
-    10,
+    23,
     1
 )
