@@ -17,7 +17,7 @@ Agrupa operações administrativas, criação de administrador e consultas de ve
 ## Casos de uso encontrados
 
 - Criar administrador: `CreateNewAdmImpl`, exposto por `AdmCreateAdm`.
-- Consultar dashboard e vendas por categoria: `SalesDashboard` e `SalesByCategoryImpl`, apoiados por `SalesReportRepository`/`SalesReportRepositoryJpa`.
+- Consultar dashboard e vendas por categoria: `SalesDashboard` e `SalesByCategoryImpl`, apoiados por `SalesReportRepository`/`SalesReportRepositoryJpa`; os indicadores, gráficos e pedidos recentes consideram apenas pedidos entregues (`delivered = true`).
 - Operações administrativas de clientes, pedidos, vouchers e substituições: pontos de entrada nos controllers indicados. A execução de negócio é delegada a contratos de outros módulos.
 - `RemoveProductCart` está declarado no domínio, mas não foi localizada implementação correspondente em `application`; não há evidência suficiente para descrever um fluxo executável.
 
