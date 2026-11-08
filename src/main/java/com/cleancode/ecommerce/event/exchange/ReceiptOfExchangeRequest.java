@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.event.ExchangeRequestAfterReview;
+package com.cleancode.ecommerce.event.exchange;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

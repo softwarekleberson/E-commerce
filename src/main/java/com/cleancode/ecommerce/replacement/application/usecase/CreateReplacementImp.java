@@ -1,8 +1,8 @@
 package com.cleancode.ecommerce.replacement.application.usecase;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.EventExchangePublish;
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.ExchangeEvent;
+import com.cleancode.ecommerce.event.exchange.EventExchangePublish;
+import com.cleancode.ecommerce.event.exchange.ExchangeEvent;
 import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.OrderId;

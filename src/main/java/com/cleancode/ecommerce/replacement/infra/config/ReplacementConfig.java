@@ -3,8 +3,8 @@ package com.cleancode.ecommerce.replacement.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.EventExchangePublish;
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.SpringEventExchangePublisher;
+import com.cleancode.ecommerce.event.exchange.EventExchangePublish;
+import com.cleancode.ecommerce.event.exchange.SpringEventExchangePublisher;
 import com.cleancode.ecommerce.event.replacement.EventReplacementPublisher;
 import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.replacement.application.service.FindOrderByIdService;
