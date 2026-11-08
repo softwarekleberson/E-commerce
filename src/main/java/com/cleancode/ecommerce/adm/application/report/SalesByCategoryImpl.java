@@ -33,7 +33,7 @@ public class SalesByCategoryImpl implements SalesByCategory {
 		var revenueByCategory = repository.findSalesTotalsByCategory(startDate, endDate, selectedCategory);
 		BigDecimal totalSales = revenueByCategory.stream().map(SalesByCategoryPoint::total)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
-		long totalOrders = repository.countPaidOrders(startDate, endDate, selectedCategory);
+		long totalOrders = repository.countDeliveredOrders(startDate, endDate, selectedCategory);
 		BigDecimal averageTicket = totalOrders == 0 ? BigDecimal.ZERO
 				: totalSales.divide(BigDecimal.valueOf(totalOrders), 2, java.math.RoundingMode.HALF_UP);
 		String leadingCategory = revenueByCategory.stream()

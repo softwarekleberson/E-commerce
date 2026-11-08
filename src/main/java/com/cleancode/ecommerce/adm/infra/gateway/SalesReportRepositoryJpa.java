@@ -24,7 +24,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
 			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
 			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
-			WHERE o.status = 'PAID'
+			WHERE o.delivered = TRUE
 			  AND o.created_at >= :startDate
 			  AND o.created_at < :endDateExclusive
 			GROUP BY DATE_FORMAT(o.created_at, '%Y-%m'), p.category
@@ -46,7 +46,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			          (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			    LEFT JOIN tb_book b ON b.product_id = p.product_id
 			    LEFT JOIN tb_toy t ON t.product_id = p.product_id
-			    WHERE o.status = 'PAID' AND o.created_at >= :startDate
+			    WHERE o.delivered = TRUE AND o.created_at >= :startDate
 			      AND o.created_at < :endDateExclusive
 			      AND (:category IS NULL OR p.category = :category)
 			) sales
@@ -68,7 +68,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			          (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
 			    LEFT JOIN tb_book b ON b.product_id = p.product_id
 			    LEFT JOIN tb_toy t ON t.product_id = p.product_id
-			    WHERE o.status = 'PAID' AND o.created_at >= :startDate
+			    WHERE o.delivered = TRUE AND o.created_at >= :startDate
 			      AND o.created_at < :endDateExclusive
 			      AND (:category IS NULL OR p.category = :category)
 			) sales
@@ -76,7 +76,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			""";
 	private static final String COUNT_ORDERS_QUERY = """
 			SELECT COUNT(DISTINCT o.order_id) FROM tb_orders o
-			WHERE o.status = 'PAID' AND o.created_at >= :startDate AND o.created_at < :endDateExclusive
+			WHERE o.delivered = TRUE AND o.created_at >= :startDate AND o.created_at < :endDateExclusive
 			  AND (:category IS NULL OR EXISTS (
 	      SELECT 1 FROM tb_order_items oi JOIN tb_product p ON p.product_id = oi.product_ref_id OR
 	          (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
@@ -92,7 +92,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 			JOIN tb_product p ON p.product_id = oi.product_ref_id OR
 			     (oi.product_ref_id IS NULL AND p.name = oi.product_id AND
 			      (SELECT COUNT(*) FROM tb_product legacy WHERE legacy.name = oi.product_id) = 1)
-			WHERE o.created_at >= :startDate AND o.created_at < :endDateExclusive
+			WHERE o.delivered = TRUE AND o.created_at >= :startDate AND o.created_at < :endDateExclusive
 			  AND (:category IS NULL OR p.category = :category)
 			GROUP BY o.order_id, c.full_name, o.created_at, o.total, o.status
 			ORDER BY o.created_at DESC LIMIT 10
@@ -128,7 +128,7 @@ public class SalesReportRepositoryJpa implements SalesReportRepository {
 	}
 
 	@Override
-	public long countPaidOrders(LocalDate startDate, LocalDate endDate, String category) {
+	public long countDeliveredOrders(LocalDate startDate, LocalDate endDate, String category) {
 		Long count = jdbcTemplate.queryForObject(COUNT_ORDERS_QUERY, parameters(startDate, endDate, category), Long.class);
 		return count == null ? 0 : count;
 	}
