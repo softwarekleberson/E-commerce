@@ -9,6 +9,6 @@ public interface SalesReportRepository {
 	List<String> findCategories();
 	List<SalesByCategoryPoint> findSalesByMonthAndCategory(LocalDate startDate, LocalDate endDate, String category);
 	List<SalesByCategoryPoint> findSalesTotalsByCategory(LocalDate startDate, LocalDate endDate, String category);
-	long countPaidOrders(LocalDate startDate, LocalDate endDate, String category);
+	long countDeliveredOrders(LocalDate startDate, LocalDate endDate, String category);
 	List<RecentOrderPoint> findRecentOrders(LocalDate startDate, LocalDate endDate, String category);
 }

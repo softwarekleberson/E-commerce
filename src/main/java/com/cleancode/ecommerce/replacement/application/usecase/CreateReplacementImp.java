@@ -1,8 +1,8 @@
 package com.cleancode.ecommerce.replacement.application.usecase;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.EventExchangePublish;
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.ExchangeEvent;
+import com.cleancode.ecommerce.event.exchange.EventExchangePublish;
+import com.cleancode.ecommerce.event.exchange.ExchangeEvent;
 import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.OrderId;
@@ -45,7 +45,7 @@ public class CreateReplacementImp implements CreateReplacement {
 		boolean itemDelivered = order.itemdelivered(dto.getReservationId());
 		
 		if(!itemDelivered) {
-			throw new IllegalReplacementException("The item must be delivered first before requesting an exchange.");
+			throw new IllegalReplacementException("The item must be delivered before an exchange is requested, or while the item is undergoing an exchange review.");
 		}
 		
 		Replacement replacement = new Replacement(

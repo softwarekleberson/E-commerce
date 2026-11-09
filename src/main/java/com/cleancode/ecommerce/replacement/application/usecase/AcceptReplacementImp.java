@@ -2,8 +2,8 @@ package com.cleancode.ecommerce.replacement.application.usecase;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.ExchangeEventAfterReviewAdm;
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.SpringEventExchangePublisher;
+import com.cleancode.ecommerce.event.exchange.ExchangeEventAfterReviewAdm;
+import com.cleancode.ecommerce.event.exchange.SpringEventExchangePublisher;
 import com.cleancode.ecommerce.event.replacement.EventReplacementPublisher;
 import com.cleancode.ecommerce.event.replacement.ReplacementEvent;
 import com.cleancode.ecommerce.replacement.application.service.ValueUnitProductService;

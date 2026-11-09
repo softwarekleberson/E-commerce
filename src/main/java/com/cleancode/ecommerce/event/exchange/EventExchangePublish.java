@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.event.ExchangeRequestAfterReview;
+package com.cleancode.ecommerce.event.exchange;
 
 public interface EventExchangePublish {
 

@@ -1,7 +1,7 @@
 package com.cleancode.ecommerce.replacement.application.usecase;
 
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.ExchangeEventAfterReviewAdm;
-import com.cleancode.ecommerce.event.ExchangeRequestAfterReview.SpringEventExchangePublisher;
+import com.cleancode.ecommerce.event.exchange.ExchangeEventAfterReviewAdm;
+import com.cleancode.ecommerce.event.exchange.SpringEventExchangePublisher;
 import com.cleancode.ecommerce.replacement.application.usecase.contract.NegateReplacement;
 import com.cleancode.ecommerce.replacement.domain.Replacement;
 import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;

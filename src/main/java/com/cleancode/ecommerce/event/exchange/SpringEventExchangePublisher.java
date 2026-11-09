@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.event.ExchangeRequestAfterReview;
+package com.cleancode.ecommerce.event.exchange;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;

@@ -2,17 +2,17 @@
 
 ## Responsabilidade
 
-Gerencia catálogo, características de livros e bolsas, preço, mídia e ativação de produtos.
+Gerencia catálogo, características de livros, bolsas e brinquedos, preço, mídia e ativação de produtos.
 
 ## Estrutura e arquitetura
 
 - `application/cache/`: nomes de cache usados pela aplicação.
-- `application/dto/input/` e `output/`: modelos de criação/alteração e respostas específicas de produto, livro e bolsa.
+- `application/dto/input/` e `output/`: modelos de criação/alteração e respostas específicas de produto, livro, bolsa e brinquedo.
 - `application/service/` e `service/contract/`: serviços e contratos de ativação/preço.
 - `application/usecase/` e `usecase/contract/`: operações de produto e contratos de entrada.
 - `domain/`: `Product`, propriedades comuns, políticas, status, exceções e repositório.
-- `domain/bag/` e `domain/books/`: atributos específicos de bolsas e livros.
-- `infra/config/`, `controller/`, `gateway/`, `mapper/`, `persistence/`: composição, HTTP, adapter, conversão e entidades. Mappers/persistências de bolsa e livro têm subpastas próprias.
+- `domain/bag/`, `domain/books/` e `domain/toy/`: atributos específicos de bolsas, livros e brinquedos (`ToyType` e `AgeRange` no caso de brinquedos).
+- `infra/config/`, `controller/`, `gateway/`, `mapper/`, `persistence/`: composição, HTTP, adapter, conversão e entidades. Mappers e persistências de bolsa, livro e brinquedo têm subpastas próprias; `ToyMapper` converte `Toy` para `ToyEntity`, armazenada em `tb_toy` pela migração Flyway V36.
 
 ## Casos de uso encontrados
 
