@@ -29,7 +29,6 @@ public class DeleteUniqueProductCartImpl implements DeleteUniqueProductCart {
 		this.wishlistRepository = wishlistRepository;
 	}
 
-	@Transactional
 	@Override
 	public void execute(String email, String cartItemId, DeleteUniqueProductToCartDto dto) {
 		String customerId = removalService.resolveCustomerIdByEmail(email);

@@ -38,7 +38,6 @@ public class AddProductToCartImpl implements AddProductToCart {
 		this.wishlistRepository = wishlistRepository;
 	}
 
-	@Transactional
 	@Override
 	public CartDto execute(CreateCartDto dto) {
 		
