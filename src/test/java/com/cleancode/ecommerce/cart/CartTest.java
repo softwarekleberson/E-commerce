@@ -130,6 +130,23 @@ class CartTest {
     }
 
     @Test
+    @DisplayName("Removing an item returns it, updates the removal timestamp, and recalculates the total")
+    void shouldReturnRemovedItemAndUpdateCartTimestamp() {
+        Cart cart = new Cart(defaultCartId, defaultCustomerId);
+        cart.addProductToCart(defaultCartItemId, defaultProductId, nameMock, defaultUrlProduct, defaultQuantity,
+                defaultPrice, defaultReservationId);
+        LocalDateTime previousUpdate = cart.getUpdatedAt();
+
+        CartItem removedItem = cart.removeProductFromCart(defaultCartItemId);
+
+        assertThat(removedItem.getProductId()).isEqualTo(defaultProductId);
+        assertThat(removedItem.getReservationId()).isEqualTo(defaultReservationId.getReservationId());
+        assertThat(cart.getCartItens()).isEmpty();
+        assertThat(cart.getTotalPrice().getPrice()).isEqualByComparingTo(BigDecimal.ZERO);
+        assertThat(cart.getUpdatedAt()).isAfterOrEqualTo(previousUpdate);
+    }
+
+    @Test
     @DisplayName("Should update quantity and track changed reservation id when modifying an active item")
     void shouldModifyProductQuantityAndReservationSuccessfully() {
         Cart cart = new Cart(defaultCartId, defaultCustomerId);

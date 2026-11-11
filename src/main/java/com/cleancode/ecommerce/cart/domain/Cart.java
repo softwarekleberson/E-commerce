@@ -103,19 +103,18 @@ public class Cart {
 		this.updatedAt = LocalDateTime.now();
 	}
 
-	public void removeProductFromCart(CartItemId cartItemId) {
+	public CartItem removeProductFromCart(CartItemId cartItemId) {
 		if (cartItemId == null) {
 			throw new IllegalCartException("Product ID cannot be null");
 		}
 
-		boolean removed = cartItens.removeIf(c -> c.getCartItemId().equals(cartItemId));
-
-		if (!removed) {
-			throw new IllegalCartException("Product not found in cart");
-		}
+		CartItem removed = cartItens.stream().filter(item -> item.getCartItemId().equals(cartItemId)).findFirst()
+				.orElseThrow(() -> new IllegalCartException("Product not found in cart"));
+		cartItens.remove(removed);
 
 		recalculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();
+		return removed;
 	}
 
 	private CartItem findItemByCartItem(CartItemId cartItemId) {
