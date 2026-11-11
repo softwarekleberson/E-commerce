@@ -1,28 +1,23 @@
 package com.cleancode.ecommerce.adm.infra.service;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.cleancode.ecommerce.order.application.usecase.order.contract.ListAllOrder;
-import com.cleancode.ecommerce.order.application.usecase.order.dto.ListOrdersDto;
+import com.cleancode.ecommerce.adm.application.order.contract.ListAdmOrders;
+import com.cleancode.ecommerce.adm.application.order.dto.AdmOrderDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
 
 @Service
 public class AdmOrdersCacheService {
 
-	private final ListAllOrder listAllOrders;
+	private final ListAdmOrders listAdmOrders;
 
-	public AdmOrdersCacheService(ListAllOrder listAllOrders) {
-		this.listAllOrders = listAllOrders;
+	public AdmOrdersCacheService(ListAdmOrders listAdmOrders) {
+		this.listAdmOrders = listAdmOrders;
 	}
 
-	@Cacheable(
-			value = "adm-orders",
-			key = "'page:' + #pageable.pageNumber + ':size:' + #pageable.pageSize + ':sort:' + #pageable.sort"
-	)
-	public PageResponse<ListOrdersDto> getOrders(Pageable pageable) {
-		var result = listAllOrders.execute(pageable);
+	public PageResponse<AdmOrderDto> getOrders(Pageable pageable) {
+		var result = listAdmOrders.execute(pageable);
 		return PageResponse.from(result);
 	}
 }

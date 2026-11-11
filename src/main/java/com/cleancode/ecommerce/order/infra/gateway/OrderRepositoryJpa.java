@@ -42,7 +42,7 @@ public class OrderRepositoryJpa implements OrderRepository, ValueUnitProductServ
 
 	@Override
 	public Page<Order> getAllOrders(Pageable pageable) {
-		return jpa.findAll(pageable)
+		return jpa.findAllWithItems(pageable)
 				.map(OrderMapper::toDomain);
 	}
 

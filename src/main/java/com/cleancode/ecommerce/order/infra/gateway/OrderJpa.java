@@ -31,6 +31,12 @@ public interface OrderJpa extends JpaRepository<OrderEntity, String>{
 	        @Param("customerId") String customerId, 
 	        Pageable pageable
 	    );
+
+	@Query(
+	        value = "SELECT DISTINCT o FROM OrderEntity o LEFT JOIN FETCH o.order_itens",
+	        countQuery = "SELECT COUNT(o) FROM OrderEntity o"
+	)
+	Page<OrderEntity> findAllWithItems(Pageable pageable);
 	
 	@Query("SELECT o FROM OrderEntity o LEFT JOIN FETCH o.order_itens WHERE o.order_Id = :orderId")
     Optional<OrderEntity> findByIdWithItems(@Param("orderId") String orderId);

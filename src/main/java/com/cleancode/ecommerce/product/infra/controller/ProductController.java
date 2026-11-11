@@ -17,7 +17,11 @@ import com.cleancode.ecommerce.product.application.dto.input.ModifySellingPriceD
 import com.cleancode.ecommerce.product.application.dto.input.ProductStatusChangeDto;
 import com.cleancode.ecommerce.product.application.dto.input.ReviseDetailsDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
+import com.cleancode.ecommerce.product.application.dto.output.CreateProductOutputDto;
+import com.cleancode.ecommerce.product.application.usecase.contract.ListAllProductActive;
+import com.cleancode.ecommerce.product.application.usecase.contract.ListAllProductsInactive;
 import com.cleancode.ecommerce.product.infra.service.cache.ProductCacheService;
+import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
 
 import jakarta.validation.Valid;
@@ -28,15 +32,28 @@ import jakarta.validation.Valid;
 public class ProductController {
 
 	private final ProductCacheService productCacheService;
+	private final ListAllProductActive listAllProductsActive;
+	private final ListAllProductsInactive listAllProductsInactive;
 	
-	public ProductController(ProductCacheService productCacheService) {
+	public ProductController(ProductCacheService productCacheService,
+			ListAllProductActive listAllProductsActive,
+			ListAllProductsInactive listAllProductsInactive) {
 		this.productCacheService = productCacheService;
+		this.listAllProductsActive = listAllProductsActive;
+		this.listAllProductsInactive = listAllProductsInactive;
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> createProduct(@Valid @RequestBody CreateProductDto dto) {
-		productCacheService.create(dto);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<CreateProductOutputDto> createProduct(@Valid @RequestBody CreateProductDto dto) {
+		String productId = productCacheService.create(dto);
+		return ResponseEntity.status(201).body(new CreateProductOutputDto(productId));
+	}
+
+	@GetMapping
+	public PageResponse<ListProductDto> getAllProducts(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "100") int size) {
+		return PageResponse.from(listAllProductsActive.execute(PageRequests.of(page, size)));
 	}
 
 	@GetMapping("/inactive")
@@ -44,7 +61,7 @@ public class ProductController {
 	        @RequestParam(defaultValue = "0") int page,
 	        @RequestParam(defaultValue = "10") int size) {
 
-	    return productCacheService.getInactiveProducts(page, size);
+	    return PageResponse.from(listAllProductsInactive.execute(PageRequests.of(page, size)));
 	}
 
 	@PutMapping("/{productId}")
