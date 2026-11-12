@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.cleancode.ecommerce.adm.domain.exception.IllegalAdmException;
-import com.cleancode.ecommerce.promotional.domain.Voucher;
 import com.cleancode.ecommerce.shared.kernel.Email;
 import com.cleancode.ecommerce.shared.kernel.Password;
 import com.cleancode.ecommerce.user.domain.User;
 import com.cleancode.ecommerce.user.domain.UserId;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
 
 public class Adm extends User {
 

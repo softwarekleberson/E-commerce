@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.payment.application.service.voucher.contract;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.promotional.domain.TypeVoucher;
+import com.cleancode.ecommerce.voucher.domain.TypeVoucher;
 
 public interface VoucherAfterUseService {
 

@@ -1,11 +1,11 @@
-package com.cleancode.ecommerce.promotional.domain.repository;
+package com.cleancode.ecommerce.voucher.domain.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.cleancode.ecommerce.promotional.domain.Voucher;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
 
 public interface VoucherRepository {
 

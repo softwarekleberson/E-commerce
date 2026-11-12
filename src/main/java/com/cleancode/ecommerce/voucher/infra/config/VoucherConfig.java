@@ -1,17 +1,17 @@
-package com.cleancode.ecommerce.promotional.infra.config;
+package com.cleancode.ecommerce.voucher.infra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
-import com.cleancode.ecommerce.promotional.usecase.CreateVoucherImpl;
-import com.cleancode.ecommerce.promotional.usecase.ListVoucherCustomerImpl;
-import com.cleancode.ecommerce.promotional.usecase.ReplacementVoucherImpl;
-import com.cleancode.ecommerce.promotional.usecase.contract.CreateVoucher;
-import com.cleancode.ecommerce.promotional.usecase.contract.ListVoucherCustomer;
-import com.cleancode.ecommerce.promotional.usecase.contract.ReplacementVoucher;
-import com.cleancode.ecommerce.promotional.usecase.service.contract.CustomerIdentityService;
+import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
+import com.cleancode.ecommerce.voucher.usecase.CreateVoucherImpl;
+import com.cleancode.ecommerce.voucher.usecase.ListVoucherCustomerImpl;
+import com.cleancode.ecommerce.voucher.usecase.ReplacementVoucherImpl;
+import com.cleancode.ecommerce.voucher.usecase.contract.CreateVoucher;
+import com.cleancode.ecommerce.voucher.usecase.contract.ListVoucherCustomer;
+import com.cleancode.ecommerce.voucher.usecase.contract.ReplacementVoucher;
+import com.cleancode.ecommerce.voucher.usecase.service.contract.CustomerIdentityService;
 
 @Configuration
 public class VoucherConfig {

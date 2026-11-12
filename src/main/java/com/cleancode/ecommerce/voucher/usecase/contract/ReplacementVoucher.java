@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.usecase.contract;
+package com.cleancode.ecommerce.voucher.usecase.contract;
 
 import java.math.BigDecimal;
 

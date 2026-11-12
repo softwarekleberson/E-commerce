@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.infra.persistence;
+package com.cleancode.ecommerce.voucher.infra.persistence;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

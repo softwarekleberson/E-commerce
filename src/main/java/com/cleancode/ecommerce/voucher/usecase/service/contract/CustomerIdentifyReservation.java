@@ -1,6 +1,6 @@
-package com.cleancode.ecommerce.promotional.usecase.service.contract;
+package com.cleancode.ecommerce.voucher.usecase.service.contract;
 
-import com.cleancode.ecommerce.promotional.usecase.dto.ValueAndCustomerIdDto;
+import com.cleancode.ecommerce.voucher.usecase.dto.ValueAndCustomerIdDto;
 
 public interface CustomerIdentifyReservation {
 

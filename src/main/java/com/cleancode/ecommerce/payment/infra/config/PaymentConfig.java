@@ -29,8 +29,8 @@ import com.cleancode.ecommerce.payment.application.usecase.TwoCardsPayment;
 import com.cleancode.ecommerce.payment.application.usecase.VoucherPayment;
 import com.cleancode.ecommerce.payment.application.usecase.contract.PaymentMethod;
 import com.cleancode.ecommerce.payment.domain.repository.PaymentRepository;
-import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
 import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
+import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
 
 @Configuration
 public class PaymentConfig {

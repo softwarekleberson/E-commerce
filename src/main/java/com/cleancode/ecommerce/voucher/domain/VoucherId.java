@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.domain;
+package com.cleancode.ecommerce.voucher.domain;
 
 import java.util.Objects;
 import java.util.UUID;

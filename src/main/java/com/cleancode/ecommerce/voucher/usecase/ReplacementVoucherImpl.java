@@ -1,13 +1,13 @@
-package com.cleancode.ecommerce.promotional.usecase;
+package com.cleancode.ecommerce.voucher.usecase;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.promotional.domain.TypeVoucher;
-import com.cleancode.ecommerce.promotional.domain.Voucher;
-import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
-import com.cleancode.ecommerce.promotional.usecase.contract.ReplacementVoucher;
-import com.cleancode.ecommerce.promotional.usecase.service.contract.CustomerIdentityService;
 import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.voucher.domain.TypeVoucher;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
+import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
+import com.cleancode.ecommerce.voucher.usecase.contract.ReplacementVoucher;
+import com.cleancode.ecommerce.voucher.usecase.service.contract.CustomerIdentityService;
 
 public class ReplacementVoucherImpl implements ReplacementVoucher{
 

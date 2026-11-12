@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import com.cleancode.ecommerce.adm.domain.exception.IllegalAdmException;
-import com.cleancode.ecommerce.promotional.domain.Discount;
+import com.cleancode.ecommerce.voucher.domain.Discount;
 
 class VoucherTest {
 

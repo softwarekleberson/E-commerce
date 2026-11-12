@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.domain.exception;
+package com.cleancode.ecommerce.voucher.domain.exception;
 
 public class IllegalVoucherException extends RuntimeException{
 

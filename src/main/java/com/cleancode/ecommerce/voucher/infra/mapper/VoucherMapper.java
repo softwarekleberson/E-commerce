@@ -1,13 +1,13 @@
-package com.cleancode.ecommerce.promotional.infra.mapper;
+package com.cleancode.ecommerce.voucher.infra.mapper;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.promotional.domain.Discount;
-import com.cleancode.ecommerce.promotional.domain.Message;
-import com.cleancode.ecommerce.promotional.domain.TypeVoucher;
-import com.cleancode.ecommerce.promotional.domain.Voucher;
-import com.cleancode.ecommerce.promotional.domain.VoucherId;
-import com.cleancode.ecommerce.promotional.infra.persistence.TypeVoucherEntity;
-import com.cleancode.ecommerce.promotional.infra.persistence.VoucherEntity;
+import com.cleancode.ecommerce.voucher.domain.Discount;
+import com.cleancode.ecommerce.voucher.domain.Message;
+import com.cleancode.ecommerce.voucher.domain.TypeVoucher;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
+import com.cleancode.ecommerce.voucher.domain.VoucherId;
+import com.cleancode.ecommerce.voucher.infra.persistence.TypeVoucherEntity;
+import com.cleancode.ecommerce.voucher.infra.persistence.VoucherEntity;
 
 public class VoucherMapper {
 

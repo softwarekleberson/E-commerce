@@ -20,10 +20,10 @@ import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.product.domain.exception.IllegalDimensionException;
 import com.cleancode.ecommerce.product.domain.exception.IllegalPricingException;
-import com.cleancode.ecommerce.promotional.domain.exception.IllegalVoucherException;
 import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalReservationException;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
+import com.cleancode.ecommerce.voucher.domain.exception.IllegalVoucherException;
 
 import jakarta.validation.ConstraintViolationException;
 

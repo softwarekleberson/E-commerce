@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.usecase.service.contract;
+package com.cleancode.ecommerce.voucher.usecase.service.contract;
 
 public interface ReplacementVoucher {
 

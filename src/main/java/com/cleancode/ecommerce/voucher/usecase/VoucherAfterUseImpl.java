@@ -1,10 +1,10 @@
-package com.cleancode.ecommerce.promotional.usecase;
+package com.cleancode.ecommerce.voucher.usecase;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.promotional.domain.TypeVoucher;
-import com.cleancode.ecommerce.promotional.domain.Voucher;
-import com.cleancode.ecommerce.promotional.usecase.service.contract.VoucherAfterUseService;
+import com.cleancode.ecommerce.voucher.domain.TypeVoucher;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
+import com.cleancode.ecommerce.voucher.usecase.service.contract.VoucherAfterUseService;
 
 public class VoucherAfterUseImpl implements VoucherAfterUseService{
 

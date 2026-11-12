@@ -3,11 +3,11 @@ package com.cleancode.ecommerce.payment.application.service.voucher;
 import java.math.BigDecimal;
 
 import com.cleancode.ecommerce.payment.application.service.voucher.contract.VoucherAfterUseService;
-import com.cleancode.ecommerce.promotional.domain.Discount;
-import com.cleancode.ecommerce.promotional.domain.TypeVoucher;
-import com.cleancode.ecommerce.promotional.domain.Voucher;
-import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
 import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.voucher.domain.Discount;
+import com.cleancode.ecommerce.voucher.domain.TypeVoucher;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
+import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
 
 public class VoucherAfterUseImpl implements VoucherAfterUseService {
 

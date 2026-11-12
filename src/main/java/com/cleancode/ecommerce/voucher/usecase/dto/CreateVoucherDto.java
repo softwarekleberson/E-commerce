@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.promotional.usecase.dto;
+package com.cleancode.ecommerce.voucher.usecase.dto;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.promotional.domain.TypeVoucher;
+import com.cleancode.ecommerce.voucher.domain.TypeVoucher;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

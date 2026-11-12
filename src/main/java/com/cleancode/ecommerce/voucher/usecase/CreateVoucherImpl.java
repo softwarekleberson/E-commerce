@@ -1,11 +1,11 @@
-package com.cleancode.ecommerce.promotional.usecase;
+package com.cleancode.ecommerce.voucher.usecase;
 
-import com.cleancode.ecommerce.promotional.domain.Voucher;
-import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
-import com.cleancode.ecommerce.promotional.usecase.contract.CreateVoucher;
-import com.cleancode.ecommerce.promotional.usecase.dto.CreateVoucherDto;
-import com.cleancode.ecommerce.promotional.usecase.service.contract.CustomerIdentityService;
 import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
+import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
+import com.cleancode.ecommerce.voucher.usecase.contract.CreateVoucher;
+import com.cleancode.ecommerce.voucher.usecase.dto.CreateVoucherDto;
+import com.cleancode.ecommerce.voucher.usecase.service.contract.CustomerIdentityService;
 
 public class CreateVoucherImpl implements CreateVoucher {
 

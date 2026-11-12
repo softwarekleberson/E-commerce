@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.domain;
+package com.cleancode.ecommerce.voucher.domain;
 
 public enum TypeVoucher {
 

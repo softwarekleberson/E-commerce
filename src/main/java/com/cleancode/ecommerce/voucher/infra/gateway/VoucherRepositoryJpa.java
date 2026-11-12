@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.infra.gateway;
+package com.cleancode.ecommerce.voucher.infra.gateway;
 
 import java.util.Optional;
 
@@ -6,10 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.cleancode.ecommerce.promotional.domain.Voucher;
-import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
-import com.cleancode.ecommerce.promotional.infra.mapper.VoucherMapper;
-import com.cleancode.ecommerce.promotional.infra.persistence.VoucherEntity;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
+import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
+import com.cleancode.ecommerce.voucher.infra.mapper.VoucherMapper;
+import com.cleancode.ecommerce.voucher.infra.persistence.VoucherEntity;
 
 @Repository
 public class VoucherRepositoryJpa implements VoucherRepository {

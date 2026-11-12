@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.promotional.usecase.dto;
+package com.cleancode.ecommerce.voucher.usecase.dto;
 
 import java.math.BigDecimal;
 
