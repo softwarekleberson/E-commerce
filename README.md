@@ -76,6 +76,18 @@ No Windows, use `mvnw.cmd spring-boot:run`.
 
 As configurações da aplicação ficam em `src/main/resources/application.properties`. O Compose publica MySQL em `3307`, Redis em `6379`, Prometheus em `9090`, Grafana em `3000` e Adminer em `8085`.
 
+### Coletar métricas protegidas da aplicação
+
+O endpoint `/actuator/prometheus` exige autenticação de um usuário ADM. Com a aplicação em execução, gere um JWT local para o Prometheus:
+
+```bash
+python3 prometheus/update_spring_boot_token.py
+```
+
+Informe o e-mail e a senha de um ADM quando solicitado. A senha não é exibida nem armazenada; o token fica em `prometheus/secrets/spring_boot_jwt`, ignorado pelo Git, e é legível pelo grupo configurado para o container Prometheus. Se o grupo primário do seu usuário não for `1000`, ajuste `PROMETHEUS_SECRET_GID` no `.env` para o valor de `id -g` antes de gerar o token.
+
+O JWT expira após uma hora (`jwt.expiration-ms`). Execute o utilitário novamente quando o alvo `spring-boot` voltar a apresentar 401 ou 403 em `http://localhost:9090/targets`.
+
 ## API e documentação
 
 Com a aplicação em execução, a interface Swagger UI fica em `http://localhost:8080/swagger-ui/index.html` e o documento OpenAPI em `http://localhost:8080/v3/api-docs`.

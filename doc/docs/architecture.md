@@ -35,6 +35,7 @@ As interfaces de repositório ficam em geral junto ao domínio, com implementaç
 | [shared](architecture/shared.md) | Segurança, kernel compartilhado, erros e utilitários |
 | [stock](architecture/stock.md) | Estoque, entradas, saídas e reservas |
 | [user](architecture/user.md) | Autenticação e representação de usuário |
+| [wishlist](architecture/wishlist.md) | Lista de desejos dos clientes e integração com o carrinho |
 
 ## Fluxo de checkout observado
 

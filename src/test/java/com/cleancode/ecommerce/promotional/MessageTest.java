@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.promotional.domain.Message;
+import com.cleancode.ecommerce.voucher.domain.Message;
 
 class MessageTest {
 

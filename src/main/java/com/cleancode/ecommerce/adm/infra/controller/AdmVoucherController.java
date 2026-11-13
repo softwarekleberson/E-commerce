@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cleancode.ecommerce.promotional.usecase.contract.CreateVoucher;
-import com.cleancode.ecommerce.promotional.usecase.dto.CreateVoucherDto;
+import com.cleancode.ecommerce.voucher.usecase.contract.CreateVoucher;
+import com.cleancode.ecommerce.voucher.usecase.dto.CreateVoucherDto;
 
 import jakarta.validation.Valid;
 

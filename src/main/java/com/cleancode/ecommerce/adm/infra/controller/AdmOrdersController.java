@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cleancode.ecommerce.adm.infra.service.AdmOrdersCacheService;
+import com.cleancode.ecommerce.adm.application.order.dto.AdmOrderDto;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.DeliveredOrder;
 import com.cleancode.ecommerce.order.application.usecase.item.contract.TransportOrder;
 import com.cleancode.ecommerce.order.application.usecase.order.contract.ListOrderByTransport;
@@ -52,7 +53,7 @@ public class AdmOrdersController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<PageResponse<ListOrdersDto>> getAllOrders(
+	public ResponseEntity<PageResponse<AdmOrderDto>> getAllOrders(
 			@PageableDefault(page = 0, size = 10) Pageable pageable) {
 		
 		return ResponseEntity.ok(ordersCacheService.getOrders(pageable));

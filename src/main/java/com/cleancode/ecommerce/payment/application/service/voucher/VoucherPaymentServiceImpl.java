@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import com.cleancode.ecommerce.payment.application.service.voucher.contract.VoucherAfterUseService;
 import com.cleancode.ecommerce.payment.application.service.voucher.contract.VoucherPaymentService;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
-import com.cleancode.ecommerce.promotional.domain.repository.VoucherRepository;
 import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
 
 public class VoucherPaymentServiceImpl implements VoucherPaymentService {
 

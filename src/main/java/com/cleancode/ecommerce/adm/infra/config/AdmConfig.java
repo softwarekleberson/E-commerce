@@ -3,6 +3,8 @@ package com.cleancode.ecommerce.adm.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.cleancode.ecommerce.adm.application.order.ListAdmOrdersImpl;
+import com.cleancode.ecommerce.adm.application.order.contract.ListAdmOrders;
 import com.cleancode.ecommerce.adm.application.CreateNewAdm;
 import com.cleancode.ecommerce.adm.application.CreateNewAdmImpl;
 import com.cleancode.ecommerce.adm.application.report.SalesByCategory;
@@ -10,6 +12,7 @@ import com.cleancode.ecommerce.adm.application.report.SalesByCategoryImpl;
 import com.cleancode.ecommerce.adm.domain.repository.AdmRepository;
 import com.cleancode.ecommerce.adm.domain.report.SalesReportRepository;
 import com.cleancode.ecommerce.customer.application.usecase.contract.PasswordValidationCheck;
+import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
 import com.cleancode.ecommerce.shared.util.passwordencoder.contract.Passwordencoder;
 
 @Configuration
@@ -23,5 +26,10 @@ public class AdmConfig {
 	@Bean
 	public SalesByCategory salesByCategory(SalesReportRepository repository) {
 		return new SalesByCategoryImpl(repository);
+	}
+
+	@Bean
+	public ListAdmOrders listAdmOrders(OrderRepository repository) {
+		return new ListAdmOrdersImpl(repository);
 	}
 }

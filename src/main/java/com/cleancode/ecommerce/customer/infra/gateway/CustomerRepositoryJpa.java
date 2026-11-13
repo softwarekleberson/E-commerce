@@ -7,7 +7,7 @@ import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepos
 import com.cleancode.ecommerce.customer.infra.mapper.CustomerMapper;
 import com.cleancode.ecommerce.customer.infra.persistence.customer.CustomerEntity;
 import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
-import com.cleancode.ecommerce.promotional.usecase.service.contract.CustomerIdentityService;
+import com.cleancode.ecommerce.voucher.usecase.service.contract.CustomerIdentityService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -18,10 +18,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.cleancode.ecommerce.adm.domain.Adm;
 import com.cleancode.ecommerce.adm.domain.exception.IllegalAdmException;
-import com.cleancode.ecommerce.promotional.domain.Voucher;
 import com.cleancode.ecommerce.shared.kernel.Email;
 import com.cleancode.ecommerce.shared.kernel.Password;
 import com.cleancode.ecommerce.user.domain.UserId;
+import com.cleancode.ecommerce.voucher.domain.Voucher;
 
 @ExtendWith(MockitoExtension.class)
 class AdmTest {

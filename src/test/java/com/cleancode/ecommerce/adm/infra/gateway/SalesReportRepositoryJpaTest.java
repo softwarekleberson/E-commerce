@@ -25,7 +25,7 @@ class SalesReportRepositoryJpaTest {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Test
-	void allSalesReportQueriesOnlyIncludeDeliveredOrders() {
+	void allSalesReportQueriesOnlyIncludeDeliveredItems() {
 		var repository = new SalesReportRepositoryJpa(jdbcTemplate);
 		LocalDate startDate = LocalDate.of(2026, 1, 1);
 		LocalDate endDate = LocalDate.of(2026, 1, 31);
@@ -42,7 +42,7 @@ class SalesReportRepositoryJpaTest {
 		verify(jdbcTemplate).queryForObject(queryCaptor.capture(), any(SqlParameterSource.class), eq(Long.class));
 
 		List<String> queries = queryCaptor.getAllValues();
-		assertThat(queries).hasSize(5).allSatisfy(query -> assertThat(query).contains("o.delivered = TRUE")
-				.doesNotContain("o.status = 'PAID'"));
+		assertThat(queries).hasSize(5).allSatisfy(query -> assertThat(query).contains("DELIVERED")
+				.doesNotContain("o.delivered = TRUE").doesNotContain("o.status = 'PAID'"));
 	}
 }

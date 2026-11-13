@@ -2,6 +2,8 @@ package com.cleancode.ecommerce.cart.application.usecase;
 
 import java.util.UUID;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.cleancode.ecommerce.cart.application.dtos.input.CreateCartDto;
 import com.cleancode.ecommerce.cart.application.dtos.output.CartDto;
 import com.cleancode.ecommerce.cart.application.service.contract.CartCatalogIntegrationService;
@@ -19,18 +21,21 @@ import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.UrlProduct;
 import com.cleancode.ecommerce.stock.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.wishlist.domain.WishlistRepository;
 
 public class AddProductToCartImpl implements AddProductToCart {
 
 	private final CartRepository cartRepository;
 	private final CartCatalogIntegrationService integrationService; 
 	private final ShippingCostStrategyFactory shippingStrategyFactory;
+	private final WishlistRepository wishlistRepository;
 
 	public AddProductToCartImpl(CartRepository cartRepository, CartCatalogIntegrationService integrationService,
-			ShippingCostStrategyFactory shippingStrategyFactory) {
+			ShippingCostStrategyFactory shippingStrategyFactory, WishlistRepository wishlistRepository) {
 		this.cartRepository = cartRepository;
 		this.integrationService = integrationService;
 		this.shippingStrategyFactory = shippingStrategyFactory;
+		this.wishlistRepository = wishlistRepository;
 	}
 
 	@Override
@@ -57,6 +62,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 		);
 
 		cartRepository.save(cart);
+		wishlistRepository.deleteByCustomerIdAndProductId(contextDetails.customerId(), contextDetails.productId());
 		return new CartDto(cart, shippingStrategyFactory.calculate(cart.getTotalPrice().getPrice()));
 	}
 

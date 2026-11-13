@@ -39,6 +39,12 @@ public class StockRepositoryJpa implements StockRepository {
 				.toList();
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public List<Stock> findAll() {
+		return jpa.findAll().stream().map(StockMapper::toDomain).toList();
+	}
+
 	@Transactional
 	@Override
 	public Optional <Stock> getStock(String id) {

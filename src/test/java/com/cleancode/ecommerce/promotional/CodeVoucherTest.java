@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import com.cleancode.ecommerce.adm.domain.exception.IllegalAdmException;
-import com.cleancode.ecommerce.promotional.domain.CodeVoucher;
+import com.cleancode.ecommerce.voucher.domain.CodeVoucher;
 
 class CodeVoucherTest {
 

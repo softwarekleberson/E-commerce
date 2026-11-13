@@ -7,6 +7,7 @@ import com.cleancode.ecommerce.cart.application.service.CancelProductStockReserv
 import com.cleancode.ecommerce.cart.application.service.CartCatalogIntegrationServiceImpl;
 import com.cleancode.ecommerce.cart.application.service.CartQueryIntegrationServiceImpl;
 import com.cleancode.ecommerce.cart.application.service.CartRemovalIntegrationServiceImpl;
+import com.cleancode.ecommerce.cart.application.service.CartReservationExpirationScheduler;
 import com.cleancode.ecommerce.cart.application.service.CartUpdateIntegrationServiceImpl;
 import com.cleancode.ecommerce.cart.application.service.UpdateNewReservationImpl;
 import com.cleancode.ecommerce.cart.application.service.ValidateProductHasStockServiceImpl;
@@ -32,6 +33,12 @@ import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepos
 import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
+import com.cleancode.ecommerce.cart.application.service.CartReservationTimeoutImpl;
+import com.cleancode.ecommerce.cart.application.service.ExpireCartReservationsImpl;
+import com.cleancode.ecommerce.cart.application.service.contract.CartReservationTimeout;
+import com.cleancode.ecommerce.cart.application.service.contract.ExpireCartReservations;
+import com.cleancode.ecommerce.cart.domain.repository.CartReservationSettingsRepository;
+import com.cleancode.ecommerce.wishlist.domain.WishlistRepository;
 
 @Configuration
 public class CartConfig {
@@ -40,9 +47,9 @@ public class CartConfig {
 	public AddProductToCart addProductToCart(
 
 			CartRepository cartRepository, CartCatalogIntegrationService integrationService,
-			ShippingCostStrategyFactory shippingStrategyFactory) {
+			ShippingCostStrategyFactory shippingStrategyFactory, WishlistRepository wishlistRepository) {
 
-		return new AddProductToCartImpl(cartRepository, integrationService, shippingStrategyFactory);
+		return new AddProductToCartImpl(cartRepository, integrationService, shippingStrategyFactory, wishlistRepository);
 	}
 	
 	@Bean
@@ -65,8 +72,28 @@ public class CartConfig {
 	}
 	
 	@Bean
-	public DeleteUniqueProductCart deleteUniqueProductCart (CartRepository cartRepository, CartRemovalIntegrationService removalService) {
-		return new DeleteUniqueProductCartImpl(cartRepository, removalService);
+	public DeleteUniqueProductCart deleteUniqueProductCart (CartRepository cartRepository,
+			CartRemovalIntegrationService removalService, WishlistRepository wishlistRepository) {
+		return new DeleteUniqueProductCartImpl(cartRepository, removalService, wishlistRepository);
+	}
+
+	@Bean
+	public CartReservationTimeout cartReservationTimeout(CartReservationSettingsRepository repository) {
+		return new CartReservationTimeoutImpl(repository);
+	}
+
+	@Bean
+	public ExpireCartReservations expireCartReservations(CartRepository cartRepository,
+			CartRemovalIntegrationService removalService, WishlistRepository wishlistRepository,
+			CartReservationTimeout cartReservationTimeout) {
+		return new ExpireCartReservationsImpl(cartRepository, removalService, wishlistRepository,
+				cartReservationTimeout);
+	}
+
+	@Bean
+	public CartReservationExpirationScheduler cartReservationExpirationScheduler(
+			ExpireCartReservations expireCartReservations) {
+		return new CartReservationExpirationScheduler(expireCartReservations);
 	}
 	
 	@Bean
