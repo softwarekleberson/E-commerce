@@ -21,22 +21,23 @@ A aplicação está organizada em módulos Java sob `com.cleancode.ecommerce`. C
 
 ## Módulos
 
-| Módulo | Responsabilidade geral |
+| Módulo | Responsabilidade geral | Guia do módulo |
 |---|---|
-| `adm` | Operações administrativas, incluindo pedidos, clientes, vouchers e relatórios |
-| `cart` | Carrinho e itens |
-| `customer` | Cadastro e dados do cliente |
-| `event` | Eventos locais usados na comunicação entre funcionalidades |
-| `order` | Pedidos e ciclo de vida |
-| `payment` | Checkout e processamento de pagamentos |
-| `product` | Catálogo de produtos |
-| `promotional` | Vouchers e descontos |
-| `replacement` | Trocas e substituições |
-| `shared` | Configuração, exceções, kernel compartilhado e utilitários |
-| `stock` | Estoque, movimentações e reservas |
-| `user` | Usuários e autenticação |
+| `adm` | Operações administrativas, incluindo pedidos, clientes, vouchers e relatórios | [README](src/main/java/com/cleancode/ecommerce/adm/README.md) |
+| `cart` | Carrinho, itens e coordenação de reservas | [README](src/main/java/com/cleancode/ecommerce/cart/README.md) |
+| `customer` | Cadastro, perfil, endereços e cartões de clientes | [README](src/main/java/com/cleancode/ecommerce/customer/README.md) |
+| `event` | Eventos locais usados na comunicação entre funcionalidades | [README](src/main/java/com/cleancode/ecommerce/event/README.md) |
+| `order` | Pedidos, itens e ciclo de vida | [README](src/main/java/com/cleancode/ecommerce/order/README.md) |
+| `payment` | Checkout e processamento de pagamentos | [README](src/main/java/com/cleancode/ecommerce/payment/README.md) |
+| `product` | Catálogo de produtos | [README](src/main/java/com/cleancode/ecommerce/product/README.md) |
+| `voucher` | Vouchers e descontos | [README](src/main/java/com/cleancode/ecommerce/voucher/README.md) |
+| `replacement` | Solicitações de troca e substituição | [README](src/main/java/com/cleancode/ecommerce/replacement/README.md) |
+| `shared` | Configuração, kernel compartilhado, exceções e utilitários | [README](src/main/java/com/cleancode/ecommerce/shared/README.md) |
+| `stock` | Estoque, entradas, saídas e reservas | [README](src/main/java/com/cleancode/ecommerce/stock/README.md) |
+| `user` | Modelo de usuário e entrada de autenticação | [README](src/main/java/com/cleancode/ecommerce/user/README.md) |
+| `wishlist` | Lista de desejos e integração com eventos do carrinho | [README](src/main/java/com/cleancode/ecommerce/wishlist/README.md) |
 
-O [guia de arquitetura](doc/docs/architecture.md) descreve a implementação e contém links para a documentação de cada módulo. As [decisões arquiteturais](doc/docs/adr/README.md) registram as decisões de projeto.
+O [guia de arquitetura](doc/docs/architecture.md) apresenta a visão do sistema e os fluxos entre módulos. As [decisões arquiteturais](doc/docs/adr/README.md) registram as decisões de projeto.
 
 ## Tecnologias e infraestrutura
 

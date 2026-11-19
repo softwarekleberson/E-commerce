@@ -21,7 +21,7 @@ O controller usa o email da autenticação como identidade e retorna `401` quand
 
 O administrador consulta e altera o prazo máximo em minutos em `GET` e `PUT /adm/cart-reservation-timeout`. O padrão é 30 minutos; somente valores positivos são aceitos. A configuração fica em `tb_cart_reservation_settings`.
 
-O carrinho é considerado expirado quando `tb_cart.updated_at` ultrapassa o prazo configurado (carrinhos legados sem `updated_at` usam `created_at`). A rotina automática cancela as reservas ativas, move os produtos para a lista de desejos e remove os itens do carrinho. A remoção manual segue o mesmo fluxo e registra a data em `updated_at`. Ao adicionar um produto novamente pelo endpoint existente do carrinho, uma nova reserva é feita e a entrada correspondente sai da lista de desejos.
+O carrinho é considerado expirado quando `tb_cart.updated_at` ultrapassa o prazo configurado (carrinhos legados sem `updated_at` usam `created_at`). A rotina automática cancela as reservas ativas, grava os produtos na lista de desejos e remove os itens do carrinho. Na remoção manual, `DeleteUniqueProductCartImpl` cancela a reserva, salva o carrinho e publica `ProductRemovedFromCartEvent`; o listener em `wishlist` grava o produto. Ao adicionar novamente pelo endpoint do carrinho, o fluxo publica `ProductAddedToCartEvent`, e o listener correspondente remove a entrada da lista.
 
 Clientes consultam a lista em `GET /customer/wishlist` e podem remover um produto com `DELETE /customer/wishlist/{productId}`. As entradas ficam em `tb_wishlist_item`; não mantêm reservas de estoque.
 

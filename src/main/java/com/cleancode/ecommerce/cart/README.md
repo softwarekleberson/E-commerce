@@ -20,11 +20,11 @@ Mantém o carrinho do cliente e coordena integrações com catálogo e estoque p
 - Remover item — `DeleteUniqueProductCartImpl`, `DELETE /customer/cart/item/{cartItemId}`.
 - Limpar carrinho — `DeleteAllCartImpl`; não há rota correspondente no `CartController` atual.
 - Configurar prazo da reserva — `GET`/`PUT /adm/cart-reservation-timeout`, em minutos (padrão de 30).
-- Expirar reservas — rotina automática; usa `tb_cart.updated_at`, cancela as reservas e move os produtos para a lista de desejos.
+- Expirar reservas — rotina automática a cada 30 segundos; usa `tb_cart.updated_at` (ou `created_at` em carrinhos legados), cancela reservas e salva os produtos na lista de desejos.
 
 O controller deriva o email da autenticação e recusa chamadas sem usuário autenticado. Serviços separados validam produto/estoque e coordenam atualização/cancelamento da reserva. Consulte as implementações para detalhes de compensação e falhas entre módulos.
 
-Ao remover um item, a reserva é cancelada e o produto é salvo na lista de desejos. Ao adicioná-lo novamente, o fluxo normal reserva o estoque e remove a entrada da lista. Consulte a [documentação da lista de desejos](../../../../../../../doc/docs/architecture/wishlist.md).
+Ao remover um item, o caso de uso cancela a reserva, salva o carrinho e publica `ProductRemovedFromCartEvent`; o módulo `wishlist` reage ao evento e salva o produto. Ao adicionar novamente, `ProductAddedToCartEvent` remove a entrada da lista. Os eventos são locais ao processo. Consulte o [guia do módulo wishlist](../wishlist/README.md) e a [visão de arquitetura](../../../../../../../doc/docs/architecture/wishlist.md).
 
 ## Referências
 

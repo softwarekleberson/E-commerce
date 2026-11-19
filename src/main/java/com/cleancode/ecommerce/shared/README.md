@@ -6,11 +6,12 @@ Oferece tipos e infraestrutura transversal usados pelos módulos de negócio. Ne
 
 ## Estrutura e arquitetura
 
-- `kernel/`: tipos compartilhados (`Cpf`, `Email`, `Name`, `Password`, `Price`, `TypeCoin`, `UrlProduct`).
+- `kernel/domain/`: tipos compartilhados e IDs (`Cpf`, `Email`, `Name`, `Password`, `Price`, `TypeCoin`, `UrlProduct` etc.).
+- `kernel/exception/`: exceções compartilhadas e `GlobalExceptionHandler`.
+- `kernel/service/` e `kernel/usecase/`: identidade do cliente e validação de senha.
 - `config/cors/`, `config/openApi/`: CORS e OpenAPI.
 - `config/redis/`: configuração de Redis e serializer.
 - `config/security/`: filtro JWT, serviço de token, serviço de detalhes do usuário e configuração de segurança; `dto/` contém DTOs de autenticação.
-- `exception/`: erros compartilhados e `GlobalExceptionHandler`.
 - `util/pagination/controller/`: adaptação de paginação e resposta paginada.
 - `util/passwordencoder/`: contrato/serviço de aplicação, configuração e adapter BCrypt.
 - `util/uuidconverter/`: conversão de UUID.
@@ -28,6 +29,6 @@ Os componentes devem permanecer genéricos; regras específicas de cliente, prod
 
 - [Configuração](config/)
 - [Kernel compartilhado](kernel/)
-- [Exceções](exception/)
+- [Exceções](kernel/exception/)
 - [Utilitários](util/)
 - [Visão geral da arquitetura](../../../../../../../doc/docs/architecture/shared.md)

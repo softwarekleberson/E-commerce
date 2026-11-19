@@ -7,10 +7,11 @@ Define eventos, publicadores e listeners que conectam reações entre módulos. 
 ## Organização das pastas
 
 - `product/`: `ProductEvent`, `StockUpdatedEvent`, contrato e adapter de publicação, além de listeners de ativação, criação de estoque e preço.
+- `cart/`: eventos e publishers para adição e remoção de produto no carrinho; o módulo `wishlist` reage a ambos.
 - `stock/`: payload de evento de atualização de estoque.
 - `order/`: `OrderEvent`, publisher de transporte e listener de separação de itens.
 - `replacement/`: evento/publicador de substituição e listener de criação de voucher.
-- `ExchangeRequestAfterReview/`: evento e componentes de publicação/reação a revisão administrativa de solicitação de troca.
+- `exchange/`: eventos e publishers para solicitação de troca e revisão administrativa.
 
 ## Fluxos/casos de uso relacionados
 

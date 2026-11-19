@@ -17,3 +17,5 @@ O fluxo de remoção do carrinho e de expiração é coordenado pelo módulo `ca
 - [Controller](../../../src/main/java/com/cleancode/ecommerce/wishlist/infra/controller/WishlistController.java)
 - [Casos de uso](../../../src/main/java/com/cleancode/ecommerce/wishlist/application/usecase/)
 - [Domínio e repositório](../../../src/main/java/com/cleancode/ecommerce/wishlist/domain/)
+- [Guia local do módulo](../../../src/main/java/com/cleancode/ecommerce/wishlist/README.md)
+- [Fluxos de integração do carrinho](cart.md)

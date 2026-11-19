@@ -2,7 +2,7 @@
 
 ## Responsabilidade
 
-Gerencia cadastro, perfil, contatos, endereços de cobrança/entrega e cartões de clientes. Os vouchers são consultados por integração com o módulo `promotional`.
+Gerencia cadastro, perfil, contatos, endereços de cobrança/entrega e cartões de clientes. Os vouchers são consultados por integração com o módulo `voucher`.
 
 ## Estrutura e arquitetura
 

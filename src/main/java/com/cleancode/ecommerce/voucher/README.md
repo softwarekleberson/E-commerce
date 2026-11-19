@@ -1,4 +1,4 @@
-# Módulo `promotional`
+# Módulo `voucher`
 
 ## Responsabilidade
 
@@ -30,4 +30,4 @@ Validade, aplicação do desconto e efeitos de uso devem ser explicados a partir
 - [Domínio](domain/)
 - [Infraestrutura](infra/)
 - [Listener relacionado à substituição](../event/replacement/CreateVoucherEventListener.java)
-- [Visão geral da arquitetura](../../../../../../../doc/docs/architecture/promotional.md)
+- [Visão geral da arquitetura](../../../../../../../doc/docs/architecture/voucher.md)
