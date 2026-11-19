@@ -15,6 +15,7 @@ import com.cleancode.ecommerce.cart.application.service.contract.CancelProductSt
 import com.cleancode.ecommerce.cart.application.service.contract.CartCatalogIntegrationService;
 import com.cleancode.ecommerce.cart.application.service.contract.CartQueryIntegrationService;
 import com.cleancode.ecommerce.cart.application.service.contract.CartRemovalIntegrationService;
+import com.cleancode.ecommerce.cart.application.service.contract.CartShippingCostCalculator;
 import com.cleancode.ecommerce.cart.application.service.contract.CartUpdateIntegrationService;
 import com.cleancode.ecommerce.cart.application.service.contract.UpdateNewReservation;
 import com.cleancode.ecommerce.cart.application.service.contract.ValidateProductHasStock;
@@ -30,6 +31,8 @@ import com.cleancode.ecommerce.cart.application.usecase.contract.ListCart;
 import com.cleancode.ecommerce.cart.application.usecase.contract.UpdateCart;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.event.cart.ProductAddedToCartEventPublisher;
+import com.cleancode.ecommerce.event.cart.ProductRemovedFromCartEventPublisher;
 import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
@@ -38,6 +41,7 @@ import com.cleancode.ecommerce.cart.application.service.ExpireCartReservationsIm
 import com.cleancode.ecommerce.cart.application.service.contract.CartReservationTimeout;
 import com.cleancode.ecommerce.cart.application.service.contract.ExpireCartReservations;
 import com.cleancode.ecommerce.cart.domain.repository.CartReservationSettingsRepository;
+import com.cleancode.ecommerce.cart.infra.gateway.CartShippingCostCalculatorAdapter;
 import com.cleancode.ecommerce.wishlist.domain.WishlistRepository;
 
 @Configuration
@@ -47,9 +51,17 @@ public class CartConfig {
 	public AddProductToCart addProductToCart(
 
 			CartRepository cartRepository, CartCatalogIntegrationService integrationService,
-			ShippingCostStrategyFactory shippingStrategyFactory, WishlistRepository wishlistRepository) {
+			CartShippingCostCalculator shippingCostCalculator,
+			ProductAddedToCartEventPublisher productAddedToCartEventPublisher) {
 
-		return new AddProductToCartImpl(cartRepository, integrationService, shippingStrategyFactory, wishlistRepository);
+		return new AddProductToCartImpl(cartRepository, integrationService, shippingCostCalculator,
+				productAddedToCartEventPublisher);
+	}
+
+	@Bean
+	public CartShippingCostCalculator cartShippingCostCalculator(
+			ShippingCostStrategyFactory shippingStrategyFactory) {
+		return new CartShippingCostCalculatorAdapter(shippingStrategyFactory);
 	}
 	
 	@Bean
@@ -73,8 +85,10 @@ public class CartConfig {
 	
 	@Bean
 	public DeleteUniqueProductCart deleteUniqueProductCart (CartRepository cartRepository,
-			CartRemovalIntegrationService removalService, WishlistRepository wishlistRepository) {
-		return new DeleteUniqueProductCartImpl(cartRepository, removalService, wishlistRepository);
+			CartRemovalIntegrationService removalService,
+			ProductRemovedFromCartEventPublisher productRemovedFromCartEventPublisher) {
+		return new DeleteUniqueProductCartImpl(cartRepository, removalService,
+				productRemovedFromCartEventPublisher);
 	}
 
 	@Bean
@@ -103,8 +117,8 @@ public class CartConfig {
 	
 	@Bean
 	public ListCart listCart(CartRepository cartRepository, CartQueryIntegrationService queryService,
-			ShippingCostStrategyFactory shippingStrategyFactory) {
-		return new ListCartImpl(cartRepository, queryService, shippingStrategyFactory);
+			CartShippingCostCalculator shippingCostCalculator) {
+		return new ListCartImpl(cartRepository, queryService, shippingCostCalculator);
 	}
 	
 	@Bean
@@ -138,7 +152,7 @@ public class CartConfig {
 	
 	@Bean
 	public UpdateCart updateCart(CartRepository cartRepository, CartUpdateIntegrationService updateService,
-			ShippingCostStrategyFactory shippingStrategyFactory) {
-		return new UpdateCartImpl(cartRepository, updateService, shippingStrategyFactory);
+			CartShippingCostCalculator shippingCostCalculator) {
+		return new UpdateCartImpl(cartRepository, updateService, shippingCostCalculator);
 	}
 }

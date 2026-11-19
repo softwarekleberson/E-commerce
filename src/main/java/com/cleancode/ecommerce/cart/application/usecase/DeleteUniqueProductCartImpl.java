@@ -1,8 +1,5 @@
 package com.cleancode.ecommerce.cart.application.usecase;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import com.cleancode.ecommerce.cart.application.dtos.input.DeleteUniqueProductToCartDto;
 import com.cleancode.ecommerce.cart.application.service.contract.CartRemovalIntegrationService;
 import com.cleancode.ecommerce.cart.application.usecase.contract.DeleteUniqueProductCart;
@@ -10,21 +7,21 @@ import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartItem;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
+import com.cleancode.ecommerce.event.cart.ProductRemovedFromCartEvent;
+import com.cleancode.ecommerce.event.cart.ProductRemovedFromCartEventPublisher;
 import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
-import com.cleancode.ecommerce.wishlist.domain.WishlistItem;
-import com.cleancode.ecommerce.wishlist.domain.WishlistRepository;
 
 public class DeleteUniqueProductCartImpl implements DeleteUniqueProductCart {
 
 	private final CartRepository cartRepository;
 	private final CartRemovalIntegrationService removalService; 
-	private final WishlistRepository wishlistRepository;
+	private final ProductRemovedFromCartEventPublisher productRemovedFromCartEventPublisher;
 
 	public DeleteUniqueProductCartImpl(CartRepository cartRepository, CartRemovalIntegrationService removalService,
-			WishlistRepository wishlistRepository) {
+			ProductRemovedFromCartEventPublisher productRemovedFromCartEventPublisher) {
 		this.cartRepository = cartRepository;
 		this.removalService = removalService;
-		this.wishlistRepository = wishlistRepository;
+		this.productRemovedFromCartEventPublisher = productRemovedFromCartEventPublisher;
 	}
 
 	@Override
@@ -40,8 +37,8 @@ public class DeleteUniqueProductCartImpl implements DeleteUniqueProductCart {
 		}
 		
 		removalService.releaseStockReservation(removedItem.getReservationId());
-		wishlistRepository.save(new WishlistItem(UUID.randomUUID().toString(), customerId,
-				removedItem.getProductId().getProductId(), LocalDateTime.now()));
 		cartRepository.save(cart);
+		productRemovedFromCartEventPublisher.publish(new ProductRemovedFromCartEvent(
+				customerId, removedItem.getProductId().getProductId()));
 	}
 }
