@@ -129,6 +129,83 @@ public class GlobalExceptionHandler {
 				ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
+
+	@ExceptionHandler(CustomerNotActivedExcepetion.class)
+	public ResponseEntity<DetailsError> handleCustomerNotActived(CustomerNotActivedExcepetion ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception customer",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(IllegalPasswordException.class)
+	public ResponseEntity<DetailsError> handleIllegalPassword(IllegalPasswordException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception password",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(IllegalTotalException.class)
+	public ResponseEntity<DetailsError> handleIllegalTotal(IllegalTotalException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception total",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(InvalidPriceValueException.class)
+	public ResponseEntity<DetailsError> handleInvalidPrice(InvalidPriceValueException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception price",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(InvalidQuantityValueException.class)
+	public ResponseEntity<DetailsError> handleInvalidQuantity(InvalidQuantityValueException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception quantity",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(InvalidValueException.class)
+	public ResponseEntity<DetailsError> handleInvalidValue(InvalidValueException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception value",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(OrderNotFoundException.class)
+	public ResponseEntity<DetailsError> handleOrderNotFound(OrderNotFoundException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Custom exception order",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<DetailsError> handleProductNotFound(ProductNotFoundException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Custom exception product",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(ReservationNotFoundException.class)
+	public ResponseEntity<DetailsError> handleReservationNotFound(ReservationNotFoundException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Custom exception reservation",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(StockNotFound.class)
+	public ResponseEntity<DetailsError> handleStockNotFound(StockNotFound ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Custom exception stock",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+
+	@ExceptionHandler(VoucherNotFoundException.class)
+	public ResponseEntity<DetailsError> handleVoucherNotFound(VoucherNotFoundException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Custom exception voucher",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
 	
 	// Invalid argument error (e.g. @Valid)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
