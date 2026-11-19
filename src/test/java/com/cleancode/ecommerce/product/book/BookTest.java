@@ -24,9 +24,9 @@ import com.cleancode.ecommerce.product.domain.books.Isbn;
 import com.cleancode.ecommerce.product.domain.books.Page;
 import com.cleancode.ecommerce.product.domain.books.PublisherDate;
 import com.cleancode.ecommerce.product.domain.books.Synopsis;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 public class BookTest {
 

@@ -5,7 +5,7 @@ import com.cleancode.ecommerce.cart.application.service.contract.CancelProductSt
 import com.cleancode.ecommerce.cart.application.service.contract.CartUpdateIntegrationService;
 import com.cleancode.ecommerce.cart.application.service.contract.UpdateNewReservation;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 import com.cleancode.ecommerce.stock.domain.Stock;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 import com.cleancode.ecommerce.stock.domain.reservation.ReserveStatus;

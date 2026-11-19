@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.shared.exception;
+package com.cleancode.ecommerce.shared.kernel.exception;
 
 public class IllegalPasswordException extends RuntimeException{
 

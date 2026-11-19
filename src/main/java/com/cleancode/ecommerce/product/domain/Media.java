@@ -2,10 +2,11 @@ package com.cleancode.ecommerce.product.domain;
 
 import java.util.Objects;
 import java.util.UUID;
+
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
 
 public class Media {
 

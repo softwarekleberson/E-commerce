@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.stock.domain.reservation;
+package com.cleancode.ecommerce.shared.kernel.domain;
 
 import java.util.Objects;
 import java.util.UUID;

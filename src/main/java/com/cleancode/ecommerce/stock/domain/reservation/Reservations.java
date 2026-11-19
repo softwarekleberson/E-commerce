@@ -3,9 +3,10 @@ package com.cleancode.ecommerce.stock.domain.reservation;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.cart.domain.CartId;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.stock.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.CartId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 
 public class Reservations {
 

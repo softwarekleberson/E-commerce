@@ -11,8 +11,8 @@ import com.cleancode.ecommerce.adm.application.report.SalesByCategory;
 import com.cleancode.ecommerce.adm.application.report.SalesByCategoryImpl;
 import com.cleancode.ecommerce.adm.domain.repository.AdmRepository;
 import com.cleancode.ecommerce.adm.domain.report.SalesReportRepository;
-import com.cleancode.ecommerce.customer.application.usecase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
+import com.cleancode.ecommerce.shared.kernel.usecase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.shared.util.passwordencoder.contract.Passwordencoder;
 
 @Configuration

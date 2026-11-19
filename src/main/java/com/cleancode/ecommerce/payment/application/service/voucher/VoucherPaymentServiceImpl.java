@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 
 import com.cleancode.ecommerce.payment.application.service.voucher.contract.VoucherAfterUseService;
 import com.cleancode.ecommerce.payment.application.service.voucher.contract.VoucherPaymentService;
-import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.InvalidValueException;
+import com.cleancode.ecommerce.shared.kernel.exception.VoucherNotFoundException;
 import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
 
 public class VoucherPaymentServiceImpl implements VoucherPaymentService {
@@ -22,7 +23,7 @@ public class VoucherPaymentServiceImpl implements VoucherPaymentService {
 	public boolean voucherPayment(String voucherId, BigDecimal totalAmount) {
 		
 		if (voucherId == null || voucherId.isBlank()) {
-			throw new IllegalDomainPayment("Voucher code must be provided");
+			throw new VoucherNotFoundException("Voucher code must be provided");
 		}
 		
 		var voucher = repository.listSingleVoucher(voucherId)
@@ -42,7 +43,7 @@ public class VoucherPaymentServiceImpl implements VoucherPaymentService {
 	@Override
 	public BigDecimal valueVoucher(String voucherId) {
 		if (voucherId == null || voucherId.isBlank()) {
-			throw new IllegalDomainPayment("Voucher code must be provided");
+			throw new InvalidValueException("Voucher code must be provided");
 		}
 		
 		var voucher = repository.listSingleVoucher(voucherId)

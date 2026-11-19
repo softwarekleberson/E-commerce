@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.voucher.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.shared.kernel.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
 import com.cleancode.ecommerce.voucher.usecase.CreateVoucherImpl;
 import com.cleancode.ecommerce.voucher.usecase.ListVoucherCustomerImpl;
@@ -22,8 +22,8 @@ public class VoucherConfig {
 	}
 	
 	@Bean
-	public ListVoucherCustomer listVoucherCustomer (VoucherRepository repository, CustomerRepository customerRepository) {
-		return new ListVoucherCustomerImpl(repository, customerRepository); 
+	public ListVoucherCustomer listVoucherCustomer (VoucherRepository repository, CustomerIdentityIdService customerIdentityIdService) {
+		return new ListVoucherCustomerImpl(repository, customerIdentityIdService); 
 	}
 	
 	@Bean

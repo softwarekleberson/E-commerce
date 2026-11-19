@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.cart.domain.Cart;
-import com.cleancode.ecommerce.cart.domain.CartId;
 import com.cleancode.ecommerce.cart.domain.CartItem;
 import com.cleancode.ecommerce.cart.infra.persistence.CartEntity;
 import com.cleancode.ecommerce.cart.infra.persistence.CartItemEntity;
 import com.cleancode.ecommerce.cart.infra.persistence.TypeCoinEntity;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.CartId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
 
 public class CartMapper {
 

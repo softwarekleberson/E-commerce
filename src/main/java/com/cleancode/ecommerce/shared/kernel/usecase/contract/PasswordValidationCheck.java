@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.application.usecase.contract;
+package com.cleancode.ecommerce.shared.kernel.usecase.contract;
 
 public interface PasswordValidationCheck {
 

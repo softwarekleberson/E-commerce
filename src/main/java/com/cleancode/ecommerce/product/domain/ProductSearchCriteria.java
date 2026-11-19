@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.product.domain;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 public record ProductSearchCriteria(
 		String id,

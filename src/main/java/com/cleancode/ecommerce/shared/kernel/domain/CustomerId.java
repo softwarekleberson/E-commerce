@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.domain.customer;
+package com.cleancode.ecommerce.shared.kernel.domain;
 
 import java.util.Objects;
 

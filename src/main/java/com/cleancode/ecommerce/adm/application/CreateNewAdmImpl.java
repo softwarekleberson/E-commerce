@@ -3,9 +3,9 @@ package com.cleancode.ecommerce.adm.application;
 import com.cleancode.ecommerce.adm.application.dto.CreateAdmDto;
 import com.cleancode.ecommerce.adm.domain.Adm;
 import com.cleancode.ecommerce.adm.domain.repository.AdmRepository;
-import com.cleancode.ecommerce.customer.application.usecase.contract.PasswordValidationCheck;
-import com.cleancode.ecommerce.shared.kernel.Email;
-import com.cleancode.ecommerce.shared.kernel.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
+import com.cleancode.ecommerce.shared.kernel.usecase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.shared.util.passwordencoder.contract.Passwordencoder;
 
 public class CreateNewAdmImpl implements CreateNewAdm {

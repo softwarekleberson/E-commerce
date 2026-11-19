@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.user.domain.UserId;
+import com.cleancode.ecommerce.shared.kernel.domain.UserId;
 
 class UserIdTest {
 

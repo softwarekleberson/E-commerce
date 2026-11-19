@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.customer.application.usecase;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.usecase.contract.ListCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
 
 public class ListCustomerImpl implements ListCustomer {
 

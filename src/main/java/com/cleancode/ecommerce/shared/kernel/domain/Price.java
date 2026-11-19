@@ -1,9 +1,9 @@
-package com.cleancode.ecommerce.shared.kernel;
+package com.cleancode.ecommerce.shared.kernel.domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public class Price {
 

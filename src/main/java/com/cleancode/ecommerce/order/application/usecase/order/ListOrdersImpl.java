@@ -1,11 +1,11 @@
 package com.cleancode.ecommerce.order.application.usecase.order;
 
-import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.order.application.usecase.order.contract.ListOrders;
 import com.cleancode.ecommerce.order.application.usecase.order.dto.ListOrdersDto;
 import com.cleancode.ecommerce.order.domain.Order;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
-import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.service.CustomerIdentityIdService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +23,7 @@ public class ListOrdersImpl implements ListOrders{
 	@Override
 	public Page<ListOrdersDto> execute(String email, Pageable pageable) {
 		
-		String customerId = service.customerId(email).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+		String customerId = service.customerIdentityIdService(email).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 		Page <Order> orders = repository.getOrdersByCustomer(customerId, pageable);
 		return orders.map(ListOrdersDto::new);
 	}

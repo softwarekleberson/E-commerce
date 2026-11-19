@@ -8,9 +8,9 @@ import com.cleancode.ecommerce.product.domain.Media;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
-import com.cleancode.ecommerce.product.domain.ProductId;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
 
 public class Toy extends Product {
 

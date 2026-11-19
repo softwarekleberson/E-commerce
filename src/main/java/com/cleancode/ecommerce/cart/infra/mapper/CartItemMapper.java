@@ -5,13 +5,13 @@ import com.cleancode.ecommerce.cart.domain.CartItem;
 import com.cleancode.ecommerce.cart.infra.persistence.CartEntity;
 import com.cleancode.ecommerce.cart.infra.persistence.CartItemEntity;
 import com.cleancode.ecommerce.cart.infra.persistence.TypeCoinEntity;
-import com.cleancode.ecommerce.product.domain.ProductId;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
-import com.cleancode.ecommerce.shared.kernel.UrlProduct;
-import com.cleancode.ecommerce.stock.domain.Quantity;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.UrlProduct;
 
 public class CartItemMapper {
 

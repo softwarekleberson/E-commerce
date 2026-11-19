@@ -6,7 +6,10 @@ import java.util.Objects;
 import com.cleancode.ecommerce.order.domain.state.itens.AwaitingPaymentState;
 import com.cleancode.ecommerce.order.domain.state.itens.ItemState;
 import com.cleancode.ecommerce.order.domain.state.itens.ItemStatus;
-import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
+import com.cleancode.ecommerce.shared.kernel.exception.InvalidPriceValueException;
+import com.cleancode.ecommerce.shared.kernel.exception.InvalidQuantityValueException;
+import com.cleancode.ecommerce.shared.kernel.exception.ProductNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.ReservationNotFoundException;
 
 public final class OrderItem {
 
@@ -24,10 +27,10 @@ public final class OrderItem {
 	}
 
 	public OrderItem(String productId, String productReferenceId, BigDecimal price, int quantity, String reservationId) {
-		if(reservationId == null) throw new IllegalDomainPayment("Stock out id is required");
-		if(productId == null) throw new IllegalDomainPayment("Name not be null");
-		if (price == null || price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalDomainPayment("Invalid Price it be greater than 0");
-        if (quantity <= 0) throw new IllegalDomainPayment("The quantity requires that it be greater than 0.");
+		if(reservationId == null) throw new ReservationNotFoundException("Stock out id is required");
+		if(productId == null) throw new ProductNotFoundException("Name not be null");
+		if (price == null || price.compareTo(BigDecimal.ZERO) < 0) throw new InvalidPriceValueException("Invalid Price it be greater than 0");
+        if (quantity <= 0) throw new InvalidQuantityValueException("The quantity requires that it be greater than 0.");
 		
 		this.productId = productId;
 		this.productReferenceId = productReferenceId;
@@ -44,10 +47,10 @@ public final class OrderItem {
 	}
 
 	public OrderItem(String productId, String productReferenceId, BigDecimal price, int quantity, String reservationId, ItemStatus itemStatus) {
-		if(reservationId == null) throw new IllegalDomainPayment("Stock out id is required");
-		if(productId == null) throw new IllegalDomainPayment("Name not be null");
-		if (price == null || price.compareTo(BigDecimal.ZERO) < 0) throw new IllegalDomainPayment("Invalid Price it be greater than 0");
-        if (quantity <= 0) throw new IllegalDomainPayment("The quantity requires that it be greater than 0.");
+		if(reservationId == null) throw new ReservationNotFoundException("Stock out id is required");
+		if(productId == null) throw new ProductNotFoundException("Name not be null");
+		if (price == null || price.compareTo(BigDecimal.ZERO) < 0) throw new InvalidPriceValueException("Invalid Price it be greater than 0");
+        if (quantity <= 0) throw new InvalidQuantityValueException("The quantity requires that it be greater than 0.");
 		
 		this.productId = productId;
 		this.productReferenceId = productReferenceId;

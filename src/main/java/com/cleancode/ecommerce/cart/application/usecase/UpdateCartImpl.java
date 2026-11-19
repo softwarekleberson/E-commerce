@@ -8,8 +8,8 @@ import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
-import com.cleancode.ecommerce.stock.domain.Quantity;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 
 public class UpdateCartImpl implements UpdateCart {
 

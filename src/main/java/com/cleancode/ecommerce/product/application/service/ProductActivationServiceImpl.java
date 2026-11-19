@@ -4,7 +4,7 @@ import com.cleancode.ecommerce.product.application.service.contract.ProductActiv
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.exception.ProductNotFound;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
-import com.cleancode.ecommerce.shared.exception.StockNotFound;
+import com.cleancode.ecommerce.shared.kernel.exception.StockNotFound;
 import com.cleancode.ecommerce.stock.domain.Stock;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 

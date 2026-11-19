@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.customer.application.usecase;
+package com.cleancode.ecommerce.shared.kernel.usecase;
 
-import com.cleancode.ecommerce.customer.application.usecase.contract.PasswordValidationCheck;
-import com.cleancode.ecommerce.shared.exception.IllegalPasswordException;
-import com.cleancode.ecommerce.shared.kernel.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalPasswordException;
+import com.cleancode.ecommerce.shared.kernel.usecase.contract.PasswordValidationCheck;
 
 public class PasswordValidationCheckImpl implements PasswordValidationCheck{
 

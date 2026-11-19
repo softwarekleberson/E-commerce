@@ -7,12 +7,12 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.cart.domain.Cart;
-import com.cleancode.ecommerce.cart.domain.CartId;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.order.domain.shipping.ExpensiveShippingStrategy;
 import com.cleancode.ecommerce.order.domain.shipping.FreeShippingStrategy;
 import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.order.domain.shipping.StandardShippingStrategy;
+import com.cleancode.ecommerce.shared.kernel.domain.CartId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
 
 class CartDtoTest {
 

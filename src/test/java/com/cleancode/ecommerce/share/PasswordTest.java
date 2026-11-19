@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import com.cleancode.ecommerce.shared.exception.IllegalPasswordException;
-import com.cleancode.ecommerce.shared.kernel.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalPasswordException;
 
 class PasswordTest {
 

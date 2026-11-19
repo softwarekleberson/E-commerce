@@ -11,10 +11,11 @@ import com.cleancode.ecommerce.customer.domain.contact.Phone;
 import com.cleancode.ecommerce.customer.domain.contact.TypePhone;
 import com.cleancode.ecommerce.customer.domain.customer.*;
 import com.cleancode.ecommerce.customer.infra.persistence.customer.*;
-import com.cleancode.ecommerce.shared.kernel.Cpf;
-import com.cleancode.ecommerce.shared.kernel.Email;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.Cpf;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
 
 public final class CustomerMapper {
 

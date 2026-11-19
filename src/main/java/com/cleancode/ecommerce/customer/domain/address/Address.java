@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.customer.domain.address;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public abstract class Address {
 

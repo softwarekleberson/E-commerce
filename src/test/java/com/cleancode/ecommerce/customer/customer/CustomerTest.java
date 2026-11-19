@@ -23,14 +23,14 @@ import com.cleancode.ecommerce.customer.domain.contact.Phone;
 import com.cleancode.ecommerce.customer.domain.contact.TypePhone;
 import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
 import com.cleancode.ecommerce.customer.domain.customer.SystemClientStatus;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
-import com.cleancode.ecommerce.shared.kernel.Cpf;
-import com.cleancode.ecommerce.shared.kernel.Email;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.Cpf;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerTest {

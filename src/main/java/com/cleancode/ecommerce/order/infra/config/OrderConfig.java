@@ -3,7 +3,6 @@ package com.cleancode.ecommerce.order.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.order.application.usecase.item.AwaitingPaymentImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.CancelledOrderImpl;
 import com.cleancode.ecommerce.order.application.usecase.item.DeliveredOrderImpl;
@@ -25,6 +24,7 @@ import com.cleancode.ecommerce.order.application.usecase.order.contract.ListAllO
 import com.cleancode.ecommerce.order.application.usecase.order.contract.ListOrderByTransport;
 import com.cleancode.ecommerce.order.application.usecase.order.contract.ListOrders;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
+import com.cleancode.ecommerce.shared.kernel.service.CustomerIdentityIdService;
 
 @Configuration
 public class OrderConfig {

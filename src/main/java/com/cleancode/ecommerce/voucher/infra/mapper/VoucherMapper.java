@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.voucher.infra.mapper;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
 import com.cleancode.ecommerce.voucher.domain.Discount;
 import com.cleancode.ecommerce.voucher.domain.Message;
 import com.cleancode.ecommerce.voucher.domain.TypeVoucher;

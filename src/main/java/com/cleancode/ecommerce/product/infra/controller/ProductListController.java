@@ -14,7 +14,7 @@ import com.cleancode.ecommerce.product.application.usecase.contract.SearchProduc
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.ProductSearchCriteria;
 import com.cleancode.ecommerce.product.infra.service.cache.ProductCacheService;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
 

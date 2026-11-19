@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.domain.Media;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

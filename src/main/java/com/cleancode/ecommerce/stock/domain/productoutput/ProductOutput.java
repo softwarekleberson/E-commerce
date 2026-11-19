@@ -2,8 +2,8 @@ package com.cleancode.ecommerce.stock.domain.productoutput;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.order.domain.OrderId;
-import com.cleancode.ecommerce.product.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
 
 public class ProductOutput {
 

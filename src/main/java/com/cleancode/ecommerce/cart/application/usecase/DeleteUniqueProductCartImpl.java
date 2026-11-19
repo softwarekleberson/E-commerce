@@ -3,8 +3,6 @@ package com.cleancode.ecommerce.cart.application.usecase;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cleancode.ecommerce.cart.application.dtos.input.DeleteUniqueProductToCartDto;
 import com.cleancode.ecommerce.cart.application.service.contract.CartRemovalIntegrationService;
 import com.cleancode.ecommerce.cart.application.usecase.contract.DeleteUniqueProductCart;
@@ -12,7 +10,7 @@ import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartItem;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 import com.cleancode.ecommerce.wishlist.domain.WishlistItem;
 import com.cleancode.ecommerce.wishlist.domain.WishlistRepository;
 

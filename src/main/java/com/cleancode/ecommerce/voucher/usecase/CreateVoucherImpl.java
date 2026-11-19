@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.voucher.usecase;
 
-import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
 import com.cleancode.ecommerce.voucher.domain.Voucher;
 import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;
 import com.cleancode.ecommerce.voucher.usecase.contract.CreateVoucher;

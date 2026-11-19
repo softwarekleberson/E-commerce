@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.shared.kernel;
+package com.cleancode.ecommerce.shared.kernel.domain;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.shared.exception.IllegalPasswordException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalPasswordException;
 
 public class Password {
 

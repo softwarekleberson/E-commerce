@@ -5,18 +5,18 @@ import java.util.UUID;
 import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.usecase.contract.CreateCustomer;
-import com.cleancode.ecommerce.customer.application.usecase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.customer.domain.contact.Contact;
 import com.cleancode.ecommerce.customer.domain.contact.Phone;
 import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.SystemClientStatus;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.kernel.Cpf;
-import com.cleancode.ecommerce.shared.kernel.Email;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.Cpf;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
+import com.cleancode.ecommerce.shared.kernel.usecase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.shared.util.passwordencoder.contract.Passwordencoder;
 
 public class CreateCustomerImpl implements CreateCustomer {

@@ -48,4 +48,20 @@ public interface OrderJpa extends JpaRepository<OrderEntity, String>{
 	
 	@Query("SELECT i.price FROM OrderEntity o JOIN o.order_itens i WHERE i.reservation_id = :reservationId")
     Optional<BigDecimal> findSubtotalByReservationId(@Param("reservationId") String reservationId);
+
+	@Query("""
+		    SELECT o.customer_Id
+		    FROM OrderEntity o
+		    WHERE o.order_Id = :orderId
+		""")
+		Optional<String> findCustomerIdByOrderId(@Param("orderId") String orderId);
+
+
+	@Query("""
+		    SELECT CASE WHEN COUNT(i) > 0 THEN true ELSE false END
+		    FROM OrderItemEntity i
+		    WHERE i.reservation_id = :reservationId
+		    AND i.itemStatus = ItemStatusEntity.DELIVERED
+		""")
+		boolean isItemDelivered(@Param("reservationId") String reservationId);
 }

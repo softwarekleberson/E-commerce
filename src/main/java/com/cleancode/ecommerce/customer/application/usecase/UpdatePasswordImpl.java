@@ -1,11 +1,11 @@
 package com.cleancode.ecommerce.customer.application.usecase;
 
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePasswordDto;
-import com.cleancode.ecommerce.customer.application.usecase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.customer.application.usecase.contract.UpdatePassword;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.usecase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.shared.util.passwordencoder.contract.Passwordencoder;
 
 public class UpdatePasswordImpl implements UpdatePassword {

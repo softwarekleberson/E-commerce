@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.customer.domain.address;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public class Delivery extends Address{
 

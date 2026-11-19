@@ -1,9 +1,6 @@
-package com.cleancode.ecommerce.user.domain;
+package com.cleancode.ecommerce.shared.kernel.domain;
 
 import java.util.Objects;
-
-import com.cleancode.ecommerce.shared.kernel.Email;
-import com.cleancode.ecommerce.shared.kernel.Password;
 
 public abstract class User {
 	

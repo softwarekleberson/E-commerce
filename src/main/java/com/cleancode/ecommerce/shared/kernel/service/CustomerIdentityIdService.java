@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.order.application.service;
+package com.cleancode.ecommerce.shared.kernel.service;
 
 import java.util.Optional;
 
 public interface CustomerIdentityIdService {
 
-	Optional<String> customerId(String email);
+	Optional<String> customerIdentityIdService(String email);
 }

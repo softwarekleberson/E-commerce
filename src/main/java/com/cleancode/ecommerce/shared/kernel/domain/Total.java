@@ -1,10 +1,9 @@
-package com.cleancode.ecommerce.payment.domain;
+package com.cleancode.ecommerce.shared.kernel.domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalTotalException;
 
 public class Total {
 
@@ -14,15 +13,15 @@ public class Total {
 	public Total(BigDecimal value, TypeCoin typeCoin) {
 
         if (value == null) {
-            throw new IllegalDomainPayment("Value cannot be null");
+            throw new IllegalTotalException("Value cannot be null");
         }
 
         if (value.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalDomainPayment("Value must be greater than zero");
+            throw new IllegalTotalException("Value must be greater than zero");
         }
 
         if (typeCoin == null) {
-            throw new IllegalDomainPayment("Currency type is required");
+            throw new IllegalTotalException("Currency type is required");
         }
 
         this.value = value;

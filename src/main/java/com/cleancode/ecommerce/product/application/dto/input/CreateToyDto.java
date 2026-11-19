@@ -11,9 +11,9 @@ import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.toy.AgeRange;
 import com.cleancode.ecommerce.product.domain.toy.Toy;
 import com.cleancode.ecommerce.product.domain.toy.ToyType;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

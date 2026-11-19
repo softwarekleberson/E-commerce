@@ -2,25 +2,23 @@ package com.cleancode.ecommerce.cart.application.usecase;
 
 import java.util.UUID;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cleancode.ecommerce.cart.application.dtos.input.CreateCartDto;
 import com.cleancode.ecommerce.cart.application.dtos.output.CartDto;
 import com.cleancode.ecommerce.cart.application.service.contract.CartCatalogIntegrationService;
 import com.cleancode.ecommerce.cart.application.service.dto.ProductReservationResult;
 import com.cleancode.ecommerce.cart.application.usecase.contract.AddProductToCart;
 import com.cleancode.ecommerce.cart.domain.Cart;
-import com.cleancode.ecommerce.cart.domain.CartId;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
-import com.cleancode.ecommerce.product.domain.ProductId;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.UrlProduct;
-import com.cleancode.ecommerce.stock.domain.Quantity;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.CartId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.UrlProduct;
 import com.cleancode.ecommerce.wishlist.domain.WishlistRepository;
 
 public class AddProductToCartImpl implements AddProductToCart {

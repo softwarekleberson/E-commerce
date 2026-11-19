@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
 import com.cleancode.ecommerce.order.domain.state.itens.ItemStatus;
 import com.cleancode.ecommerce.order.domain.state.order.OrderState;
@@ -17,9 +16,10 @@ import com.cleancode.ecommerce.order.domain.shipping.ExpensiveShippingStrategy;
 import com.cleancode.ecommerce.order.domain.shipping.FreeShippingStrategy;
 import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.order.domain.shipping.StandardShippingStrategy;
-import com.cleancode.ecommerce.payment.domain.Total;
-import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.Total;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 public final class Order {
 
@@ -204,7 +204,7 @@ public final class Order {
 
 	public void pay() {
 		if (this.total == null || this.total.getTotalValue().compareTo(BigDecimal.ZERO) <= 0) {
-			throw new IllegalDomainPayment("Order cannot be paid with zero total.");
+			throw new IllegalDomainOrder("Order cannot be paid with zero total.");
 		}
 
 		orderState.pay(this);

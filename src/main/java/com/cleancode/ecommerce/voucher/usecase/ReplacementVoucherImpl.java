@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.voucher.usecase;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
 import com.cleancode.ecommerce.voucher.domain.TypeVoucher;
 import com.cleancode.ecommerce.voucher.domain.Voucher;
 import com.cleancode.ecommerce.voucher.domain.repository.VoucherRepository;

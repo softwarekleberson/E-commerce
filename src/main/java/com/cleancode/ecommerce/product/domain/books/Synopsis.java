@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.product.domain.books;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public class Synopsis {
 

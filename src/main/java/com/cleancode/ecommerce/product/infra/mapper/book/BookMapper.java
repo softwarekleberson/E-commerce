@@ -10,7 +10,6 @@ import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
-import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.books.Author;
 import com.cleancode.ecommerce.product.domain.books.Book;
 import com.cleancode.ecommerce.product.domain.books.CategoryBook;
@@ -26,9 +25,10 @@ import com.cleancode.ecommerce.product.infra.persistence.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductStatusCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.TypeCoinEntity;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 @Component
 public class BookMapper implements ProductSubtypeMapper<Book, BookEntity> {
