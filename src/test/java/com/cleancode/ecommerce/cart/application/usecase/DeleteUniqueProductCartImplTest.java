@@ -21,6 +21,8 @@ import com.cleancode.ecommerce.cart.application.service.contract.CartRemovalInte
 import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
+import com.cleancode.ecommerce.event.cart.ProductRemovedFromCartEvent;
+import com.cleancode.ecommerce.event.cart.ProductRemovedFromCartEventPublisher;
 import com.cleancode.ecommerce.shared.kernel.domain.CartId;
 import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
 import com.cleancode.ecommerce.shared.kernel.domain.Name;
@@ -31,8 +33,6 @@ import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 import com.cleancode.ecommerce.shared.kernel.domain.UrlProduct;
 import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
-import com.cleancode.ecommerce.wishlist.domain.WishlistItem;
-import com.cleancode.ecommerce.wishlist.domain.WishlistRepository;
 
 @ExtendWith(MockitoExtension.class)
 class DeleteUniqueProductCartImplTest {
@@ -42,24 +42,21 @@ class DeleteUniqueProductCartImplTest {
 	@Mock
 	private CartRemovalIntegrationService removalService;
 	@Mock
-	private WishlistRepository wishlistRepository;
+	private ProductRemovedFromCartEventPublisher eventPublisher;
 
 	@Test
-	void cancelsReservationAndAddsRemovedProductToWishlist() {
+	void cancelsReservationAndPublishesProductRemovedEvent() {
 		Cart cart = createCart();
 		when(removalService.resolveCustomerIdByEmail("customer@example.test")).thenReturn("customer-1");
 		when(cartRepository.getCartCustomer("customer-1")).thenReturn(Optional.of(cart));
 
-		new DeleteUniqueProductCartImpl(cartRepository, removalService, wishlistRepository).execute(
+		new DeleteUniqueProductCartImpl(cartRepository, removalService, eventPublisher).execute(
 				"customer@example.test", "item-1", new DeleteUniqueProductToCartDto("reservation-1"));
 
 		assertThat(cart.getCartItens()).isEmpty();
 		verify(removalService).releaseStockReservation("reservation-1");
-		ArgumentCaptor<WishlistItem> wishlistItem = ArgumentCaptor.forClass(WishlistItem.class);
-		verify(wishlistRepository).save(wishlistItem.capture());
-		assertThat(wishlistItem.getValue().getCustomerId()).isEqualTo("customer-1");
-		assertThat(wishlistItem.getValue().getProductId()).isEqualTo("product-1");
 		verify(cartRepository).save(cart);
+		verify(eventPublisher).publish(new ProductRemovedFromCartEvent("customer-1", "product-1"));
 	}
 
 	@Test
@@ -68,14 +65,14 @@ class DeleteUniqueProductCartImplTest {
 		when(removalService.resolveCustomerIdByEmail("customer@example.test")).thenReturn("customer-1");
 		when(cartRepository.getCartCustomer("customer-1")).thenReturn(Optional.of(cart));
 
-		assertThatThrownBy(() -> new DeleteUniqueProductCartImpl(cartRepository, removalService, wishlistRepository)
+		assertThatThrownBy(() -> new DeleteUniqueProductCartImpl(cartRepository, removalService, eventPublisher)
 				.execute("customer@example.test", "item-1", new DeleteUniqueProductToCartDto("other-reservation")))
 				.isInstanceOf(IllegalDomainException.class)
 				.hasMessage("Reservation does not belong to the cart item");
 
 		verify(removalService, never()).releaseStockReservation(any());
-		verify(wishlistRepository, never()).save(any());
 		verify(cartRepository, never()).save(any(Cart.class));
+		verify(eventPublisher, never()).publish(any());
 	}
 
 	private Cart createCart() {
