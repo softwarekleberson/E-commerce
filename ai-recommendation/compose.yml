@@ -1,0 +1,16 @@
+services:
+  recommendation-rag:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY:?Set GEMINI_API_KEY}
+      GEMINI_CHAT_MODEL: ${GEMINI_CHAT_MODEL:-gemini-3.8-flash}
+      GEMINI_EMBEDDING_MODEL: ${GEMINI_EMBEDDING_MODEL:-gemini-embedding-001}
+      FAISS_DATA_DIR: /data
+    volumes:
+      - faiss_data:/data
+    restart: unless-stopped
+
+volumes:
+  faiss_data:
