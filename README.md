@@ -30,6 +30,7 @@ A aplicação está organizada em módulos Java sob `com.cleancode.ecommerce`. C
 | `order` | Pedidos, itens e ciclo de vida | [README](src/main/java/com/cleancode/ecommerce/order/README.md) |
 | `payment` | Checkout e processamento de pagamentos | [README](src/main/java/com/cleancode/ecommerce/payment/README.md) |
 | `product` | Catálogo de produtos | [README](src/main/java/com/cleancode/ecommerce/product/README.md) |
+| `recommendation` | Recomendações de produtos por regras, com base em compras e wishlist | [README](src/main/java/com/cleancode/ecommerce/recommendation/README.md) |
 | `voucher` | Vouchers e descontos | [README](src/main/java/com/cleancode/ecommerce/voucher/README.md) |
 | `replacement` | Solicitações de troca e substituição | [README](src/main/java/com/cleancode/ecommerce/replacement/README.md) |
 | `shared` | Configuração, kernel compartilhado, exceções e utilitários | [README](src/main/java/com/cleancode/ecommerce/shared/README.md) |

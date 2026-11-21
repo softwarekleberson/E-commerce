@@ -30,6 +30,7 @@ As interfaces de repositório ficam em geral junto ao domínio, com implementaç
 | [order](architecture/order.md) | Pedidos, itens, estados, listagem, cancelamento e entrega |
 | [payment](architecture/payment.md) | Checkout, pagamento e estratégias |
 | [product](architecture/product.md) | Catálogo, produtos, preço e ativação |
+| [recommendation](architecture/recommendation.md) | Recomendações iniciais baseadas em histórico, wishlist, catálogo e estoque |
 | [voucher](architecture/voucher.md) | Vouchers e descontos |
 | [replacement](architecture/replacement.md) | Solicitações de troca/substituição |
 | [shared](architecture/shared.md) | Segurança, kernel compartilhado, erros e utilitários |
