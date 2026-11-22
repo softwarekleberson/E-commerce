@@ -1,0 +1,8 @@
+## Parar o container da IA
+docker compose -f ai-recommendation/compose.yml stop recommendation-rag
+
+## Verifica se realmente parou
+docker compose -f ai-recommendation/compose.yml stop recommendation-rag
+
+## Restarta o containner
+docker compose -f ai-recommendation/compose.yml restart recommendation-rag
