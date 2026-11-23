@@ -241,8 +241,12 @@ def recommend_message(message: str):
                 "answer": "Posso ajudar apenas com buscas e recomendações de produtos da loja. O que você está procurando?",
                 "recommendations": [],
             }
-    except Exception:
-        raise HTTPException(status_code=503, detail="Não foi possível validar o tipo da solicitação")
+    except Exception as exception:
+        logger.exception("Recommendation chat intent validation failed")
+        raise HTTPException(
+            status_code=503,
+            detail="Não foi possível validar o tipo da solicitação",
+        ) from exception
     with lock:
         current_index, current_documents = index, list(documents)
     if current_index is None or not current_documents:
