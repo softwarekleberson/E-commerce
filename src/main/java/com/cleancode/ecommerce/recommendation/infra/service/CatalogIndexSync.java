@@ -30,7 +30,7 @@ public class CatalogIndexSync {
 	}
 
 	@Scheduled(initialDelayString = "${recommendation.rag.index-initial-delay-ms:10000}",
-			fixedDelayString = "${recommendation.rag.index-refresh-delay-ms:300000}")
+			fixedDelayString = "${recommendation.rag.index-refresh-delay-ms:43200000}")
 	public void synchronize() {
 		try {
 			List<RagRecommendationClient.CatalogProduct> catalog = loadCatalog();

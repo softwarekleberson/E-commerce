@@ -15,7 +15,7 @@ docker compose -f compose.yml up --build -d
 
 O serviço usa Gemini para gerar embeddings e respostas, e FAISS CPU para busca vetorial. O índice é persistido no volume Docker `faiss_data`.
 
-O backend Java deve alcançar o serviço em `http://localhost:8000`. Ajuste `RECOMMENDATION_RAG_BASE_URL` se estiver em outra rede ou endereço. O backend envia o catálogo ativo no início e atualiza o índice a cada cinco minutos quando detectar mudanças. Configure `recommendation.rag.index-refresh-delay-ms` para mudar esse intervalo.
+O backend Java deve alcançar o serviço em `http://localhost:8000`. Ajuste `RECOMMENDATION_RAG_BASE_URL` se estiver em outra rede ou endereço. O backend envia o catálogo ativo no início e verifica mudanças a cada 12 horas; só atualiza o índice se detectar alterações. Configure `recommendation.rag.index-refresh-delay-ms` para mudar esse intervalo.
 
 ## API conversacional
 
