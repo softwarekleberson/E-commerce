@@ -29,7 +29,7 @@ public class RagRecommendationClient {
 
 	public RagRecommendationClient(ObjectMapper objectMapper,
 			@Value("${recommendation.rag.base-url:http://localhost:8000}") String baseUrl) {
-		this.httpClient = HttpClient.newHttpClient();
+		this.httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
 		this.baseUrl = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
 		this.objectMapper = objectMapper;
 	}
@@ -55,13 +55,13 @@ public class RagRecommendationClient {
 		}
 	}
 
-	public RagAnswer recommend(String message) {
-		String encodedMessage = Base64.getEncoder().encodeToString(message.getBytes(StandardCharsets.UTF_8));
-		log.debug("Sending chat request to RAG service ({} encoded header characters)", encodedMessage.length());
+	public RagAnswer recommend(String message, List<PurchasePreference> purchasePreferences) {
+		log.debug("Sending chat request to RAG service with {} purchase preferences", purchasePreferences.size());
+		String requestBody = jsonBody(new RecommendRequest(message, purchasePreferences));
 		HttpRequest request = HttpRequest.newBuilder(URI.create(baseUrl + "/recommend"))
 				.header("Accept", "application/json")
-				.header("X-Recommendation-Query-Base64", encodedMessage)
-				.POST(HttpRequest.BodyPublishers.noBody())
+				.header("Content-Type", "application/json")
+				.POST(HttpRequest.BodyPublishers.ofString(requestBody, StandardCharsets.UTF_8))
 				.build();
 		String response = send(request);
 		try {
@@ -111,6 +111,10 @@ public class RagRecommendationClient {
 			String price, String currency) {
 	}
 	public record IndexRequest(List<CatalogProduct> products) {
+	}
+	public record PurchasePreference(String category, int purchaseCount) {
+	}
+	public record RecommendRequest(String message, List<PurchasePreference> purchasePreferences) {
 	}
 	public record RagProduct(String id, String reason) {
 	}

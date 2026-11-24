@@ -2,11 +2,17 @@
 
 ## Responsabilidade e fluxo
 
-Entrega recomendações determinísticas para a primeira versão do recurso conversacional. Não há integração com modelo de IA nem interpretação de texto livre nesta etapa. O endpoint `GET /customer/recommendations` recebe filtros estruturados, usa a identidade autenticada para resolver o cliente e devolve recomendações com justificativa.
+Entrega recomendações determinísticas por filtros no endpoint `GET /customer/recommendations` e oferece um chat conversacional integrado ao serviço RAG opcional. O endpoint estruturado usa a identidade autenticada para resolver o cliente e devolve recomendações com justificativa.
 
 `RecommendationServiceImpl` consulta pedidos pagos e wishlist, busca candidatos ativos no catálogo com os filtros recebidos, descarta produtos sem estoque e ordena os restantes. A wishlist tem maior peso; categorias compradas e repetição de itens em compras pagas também influenciam a pontuação. Cada resultado inclui o motivo, preço e quantidade disponível observados durante a consulta.
 
 O processamento considera até 100 pedidos e 100 candidatos por chamada e aceita entre 1 e 20 resultados. A disponibilidade pode mudar após a resposta, portanto o estoque deve ser validado novamente em operações posteriores, como adicionar ao carrinho.
+
+## Feedback do chat
+
+O endpoint conversacional retorna um `responseId` por resposta. `POST /customer/recommendations/chat/{responseId}/feedback` recebe `{"liked":true}` ou `{"liked":false}` e persiste a avaliação vinculada ao email autenticado. O usuário só pode avaliar respostas próprias; somente o identificador, email e voto são armazenados, não o texto da conversa.
+
+Para personalizar o chat, o backend consulta até 100 pedidos pagos do cliente autenticado, agrega quantidades por categoria e envia ao RAG no máximo cinco categorias, sem IDs ou nomes de produtos comprados. O histórico é um sinal secundário tanto para a busca vetorial quanto para a geração da resposta; o pedido atual continua prioritário.
 
 ## Dependências
 

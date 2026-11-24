@@ -29,6 +29,10 @@ A resposta inclui texto gerado e recomendações estruturadas. O Java verifica n
 
 Antes da busca, o serviço classifica a mensagem e só permite intenção de buscar, comparar ou pedir recomendações de produtos. Para outros assuntos, responde com uma mensagem fixa sem consultar o catálogo nem gerar uma resposta livre. Se não conseguir classificar a mensagem, recusa a solicitação.
 
+A cada chamada do chat, o backend considera até 100 pedidos pagos, agrega os produtos comprados e envia ao RAG somente as categorias mais frequentes (até cinco), com contagens. IDs de cliente/pedido e nomes dos produtos comprados não são enviados. Esse resumo influencia a busca vetorial e a geração, sempre como sinal secundário ao pedido atual.
+
+A API Java inclui um `responseId` na resposta do chat. Para registrar feedback, envie `POST /customer/recommendations/chat/{responseId}/feedback` com `{"liked":true}` (curtir) ou `{"liked":false}` (descurtir). A avaliação exige autenticação e só pode ser alterada pelo usuário que recebeu aquela resposta.
+
 ## Configuração
 
 - `GEMINI_API_KEY`: chave do Google AI Studio, necessária para embeddings e geração de respostas.
