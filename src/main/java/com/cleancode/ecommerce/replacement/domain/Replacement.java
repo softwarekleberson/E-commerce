@@ -3,10 +3,10 @@ package com.cleancode.ecommerce.replacement.domain;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.order.domain.OrderId;
 import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 
 public class Replacement {
 

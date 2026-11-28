@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.stock.application.dto;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 import com.cleancode.ecommerce.stock.domain.ProductQuality;
 
 public class CreateInputStockDto {

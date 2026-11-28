@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
-import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
 
 class EmailTest {
 

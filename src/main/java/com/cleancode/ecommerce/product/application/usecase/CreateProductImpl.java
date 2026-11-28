@@ -17,10 +17,12 @@ public class CreateProductImpl implements CreateProduct{
 		this.eventPublisher = eventPublisher;
 	}
 	
-	public void execute(CreateProductDto dto) {
+	public String execute(CreateProductDto dto) {
 		Product product = dto.toProduct();
 		
-		repository.save(product);
-		eventPublisher.publish(new ProductEvent(product.getProductId().getProductId()));
+		Product savedProduct = repository.save(product);
+		String productId = savedProduct.getProductId().getProductId();
+		eventPublisher.publish(new ProductEvent(productId));
+		return productId;
 	}
 }

@@ -81,8 +81,8 @@ public class ProductCacheService {
 
 	@CacheEvict(cacheNames = { ProductCacheNames.BY_ID, ProductCacheNames.ACTIVE_PAGES,
 			ProductCacheNames.INACTIVE_PAGES }, allEntries = true, beforeInvocation = true)
-	public void create(CreateProductDto dto) {
-		createProduct.execute(dto);
+	public String create(CreateProductDto dto) {
+		return createProduct.execute(dto);
 	}
 
 	@CacheEvict(cacheNames = { ProductCacheNames.BY_ID, ProductCacheNames.ACTIVE_PAGES,

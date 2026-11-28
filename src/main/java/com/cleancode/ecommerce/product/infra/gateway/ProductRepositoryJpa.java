@@ -3,9 +3,12 @@ package com.cleancode.ecommerce.product.infra.gateway;
 import java.util.Optional;
 
 import com.cleancode.ecommerce.product.domain.Product;
+import com.cleancode.ecommerce.product.domain.ProductSearchCriteria;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.product.infra.mapper.ProductMapper;
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductEntity;
+import com.cleancode.ecommerce.product.infra.persistence.product.ProductCategoryEntity;
+import com.cleancode.ecommerce.product.infra.persistence.product.TypeCoinEntity;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,5 +53,18 @@ public class ProductRepositoryJpa implements ProductRepository {
 	@Override
 	public Optional<Product> findById(String productId) {
 		return jpa.findById(productId).map(productMapper::toDomain);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Page<Product> search(ProductSearchCriteria criteria, Pageable pageable) {
+		Page<ProductEntity> entities = jpa.search(
+				criteria.id(), criteria.name(), criteria.description(),
+				criteria.minimumPrice(), criteria.maximumPrice(),
+				criteria.typeCoin() == null ? null : TypeCoinEntity.valueOf(criteria.typeCoin().name()),
+				criteria.category() == null ? null : ProductCategoryEntity.valueOf(criteria.category().name()),
+				criteria.brand(), criteria.mediaId(), criteria.mediaUrl(), criteria.mediaDescription(),
+				criteria.minimumPricing(), criteria.maximumPricing(), pageable);
+		return entities.map(productMapper::toDomain);
 	}
 }

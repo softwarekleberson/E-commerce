@@ -8,15 +8,16 @@ import java.util.List;
 import java.util.Objects;
 
 import com.cleancode.ecommerce.cart.domain.exception.IllegalCartException;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.product.domain.ProductId;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
-import com.cleancode.ecommerce.shared.kernel.UrlProduct;
-import com.cleancode.ecommerce.stock.domain.Quantity;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.CartId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.UrlProduct;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public class Cart {
 
@@ -103,19 +104,18 @@ public class Cart {
 		this.updatedAt = LocalDateTime.now();
 	}
 
-	public void removeProductFromCart(CartItemId cartItemId) {
+	public CartItem removeProductFromCart(CartItemId cartItemId) {
 		if (cartItemId == null) {
 			throw new IllegalCartException("Product ID cannot be null");
 		}
 
-		boolean removed = cartItens.removeIf(c -> c.getCartItemId().equals(cartItemId));
-
-		if (!removed) {
-			throw new IllegalCartException("Product not found in cart");
-		}
+		CartItem removed = cartItens.stream().filter(item -> item.getCartItemId().equals(cartItemId)).findFirst()
+				.orElseThrow(() -> new IllegalCartException("Product not found in cart"));
+		cartItens.remove(removed);
 
 		recalculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();
+		return removed;
 	}
 
 	private CartItem findItemByCartItem(CartItemId cartItemId) {

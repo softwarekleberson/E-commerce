@@ -1,7 +1,5 @@
 package com.cleancode.ecommerce.replacement.infra.mapper;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.order.domain.OrderId;
 import com.cleancode.ecommerce.replacement.domain.Explain;
 import com.cleancode.ecommerce.replacement.domain.Id;
 import com.cleancode.ecommerce.replacement.domain.Reason;
@@ -11,7 +9,9 @@ import com.cleancode.ecommerce.replacement.domain.Quantity;
 import com.cleancode.ecommerce.replacement.infra.persistece.ReasonEntity;
 import com.cleancode.ecommerce.replacement.infra.persistece.ReplacementEntity;
 import com.cleancode.ecommerce.replacement.infra.persistece.StatusEntity;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 
 public class ReplacementMapper {
 

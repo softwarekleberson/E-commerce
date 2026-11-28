@@ -15,4 +15,5 @@ public interface OrderRepository {
 	Page <Order> getAllOrders (Pageable pageable);
 	Optional<Order> getOrderWithItensId (String orderId);
 	Page<Order> findItemWithStatus(ItemStatus status, Pageable pageable);
+
 }

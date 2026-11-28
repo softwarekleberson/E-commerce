@@ -6,8 +6,8 @@ import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.customer.infra.mapper.CustomerMapper;
 import com.cleancode.ecommerce.customer.infra.persistence.customer.CustomerEntity;
-import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
-import com.cleancode.ecommerce.promotional.usecase.service.contract.CustomerIdentityService;
+import com.cleancode.ecommerce.shared.kernel.service.CustomerIdentityIdService;
+import com.cleancode.ecommerce.voucher.usecase.service.contract.CustomerIdentityService;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,8 +65,7 @@ public class CustomerRepositoryJpa implements CustomerRepository, CustomerIdenti
 	}
 
 	@Override
-	public Optional<String> customerId(String email) {
+	public Optional<String> customerIdentityIdService(String email) {
 		return jpa.findCustomerIdByEmail(email);
-	}
-
+	}	
 }

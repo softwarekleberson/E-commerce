@@ -8,7 +8,6 @@ import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Media;
 import com.cleancode.ecommerce.product.domain.Pricing;
-import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.toy.Toy;
 import com.cleancode.ecommerce.product.infra.mapper.MidiaInputMapper;
 import com.cleancode.ecommerce.product.infra.mapper.ProductSubtypeMapper;
@@ -17,9 +16,10 @@ import com.cleancode.ecommerce.product.infra.persistence.product.ProductCategory
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductStatusCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.TypeCoinEntity;
 import com.cleancode.ecommerce.product.infra.persistence.toy.ToyEntity;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 @Component
 public class ToyMapper implements ProductSubtypeMapper<Toy, ToyEntity> {

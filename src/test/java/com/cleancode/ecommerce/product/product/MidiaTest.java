@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.product.domain.Media;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public class MidiaTest {
 

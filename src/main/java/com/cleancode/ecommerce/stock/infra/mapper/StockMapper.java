@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.stock.infra.mapper;
 
 import java.util.stream.Collectors;
 
-import com.cleancode.ecommerce.product.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
 import com.cleancode.ecommerce.stock.domain.Stock;
 import com.cleancode.ecommerce.stock.domain.StockId;
 import com.cleancode.ecommerce.stock.infra.persistence.StockEntity;

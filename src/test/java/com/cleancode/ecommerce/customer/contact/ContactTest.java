@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.cleancode.ecommerce.customer.domain.contact.Contact;
 import com.cleancode.ecommerce.customer.domain.contact.Phone;
 import com.cleancode.ecommerce.customer.domain.contact.TypePhone;
-import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
 
 @ExtendWith(MockitoExtension.class)
 class ContactTest {

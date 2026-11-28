@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 import com.cleancode.ecommerce.stock.application.dto.StockReservationConfirmation;
 import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
 import com.cleancode.ecommerce.stock.domain.Stock;

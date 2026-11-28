@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.ProductQuality;
-import com.cleancode.ecommerce.stock.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.Supplier;
 import com.cleancode.ecommerce.stock.domain.productinput.ProductInput;
 

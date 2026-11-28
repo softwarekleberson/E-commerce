@@ -2,9 +2,9 @@ package com.cleancode.ecommerce.adm.infra.mapper;
 
 import com.cleancode.ecommerce.adm.domain.Adm;
 import com.cleancode.ecommerce.adm.infra.persistence.AdmEntity;
-import com.cleancode.ecommerce.shared.kernel.Email;
-import com.cleancode.ecommerce.shared.kernel.Password;
-import com.cleancode.ecommerce.user.domain.UserId;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.UserId;
 
 public final class AdmMapper {
 

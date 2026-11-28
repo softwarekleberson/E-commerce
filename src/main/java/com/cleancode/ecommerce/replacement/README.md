@@ -19,7 +19,7 @@ Gerencia solicitações de substituição/troca associadas a pedidos, incluindo 
 - Aceitar solicitação: `AcceptReplacementImp`.
 - Negar solicitação: `NegateReplacementImp`.
 
-`ControllerReplacement` é a entrada REST. Reações à decisão também atravessam eventos de `event/replacement` e `event/ExchangeRequestAfterReview`; listeners podem atualizar pedido ou solicitar voucher. A ordem e o tratamento de falhas dependem das implementações e configuração dos listeners.
+`ControllerReplacement` é a entrada REST. Reações à decisão também atravessam eventos em `event/replacement` e `event/exchange`; listeners podem atualizar pedido ou solicitar voucher. A ordem e o tratamento de falhas dependem das implementações e configuração dos listeners.
 
 ## Referências
 

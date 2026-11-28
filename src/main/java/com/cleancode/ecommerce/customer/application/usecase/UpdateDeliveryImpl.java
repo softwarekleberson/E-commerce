@@ -6,7 +6,7 @@ import com.cleancode.ecommerce.customer.application.usecase.contract.UpdateDeliv
 import com.cleancode.ecommerce.customer.domain.address.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
 
 public class UpdateDeliveryImpl implements UpdateDelivery{
 

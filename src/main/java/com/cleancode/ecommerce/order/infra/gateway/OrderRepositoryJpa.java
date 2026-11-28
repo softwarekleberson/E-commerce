@@ -42,7 +42,7 @@ public class OrderRepositoryJpa implements OrderRepository, ValueUnitProductServ
 
 	@Override
 	public Page<Order> getAllOrders(Pageable pageable) {
-		return jpa.findAll(pageable)
+		return jpa.findAllWithItems(pageable)
 				.map(OrderMapper::toDomain);
 	}
 
@@ -68,8 +68,12 @@ public class OrderRepositoryJpa implements OrderRepository, ValueUnitProductServ
 	}
 
 	@Override
-	public Optional<Order> findOrderById(String orderId) {
-		return jpa.findByIdWithItems(orderId)
-		.map(OrderMapper::toDomain);
+	public Optional<String> findCustomerIdByOrderId(String orderId) {
+	    return jpa.findCustomerIdByOrderId(orderId);
+	}
+
+	@Override
+	public boolean isItemDelivered(String reservationId) {
+	    return jpa.isItemDelivered(reservationId);
 	}
 }

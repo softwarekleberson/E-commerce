@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 
 class ReservationIdTest {
 

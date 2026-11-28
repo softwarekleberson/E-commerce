@@ -11,8 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.Mockito;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.order.domain.OrderId;
 import com.cleancode.ecommerce.replacement.domain.Explain;
 import com.cleancode.ecommerce.replacement.domain.Id;
 import com.cleancode.ecommerce.replacement.domain.Reason;
@@ -20,7 +18,9 @@ import com.cleancode.ecommerce.replacement.domain.Replacement;
 import com.cleancode.ecommerce.replacement.domain.Status;
 import com.cleancode.ecommerce.replacement.domain.Quantity;
 import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 
 class ReplacementText {
 

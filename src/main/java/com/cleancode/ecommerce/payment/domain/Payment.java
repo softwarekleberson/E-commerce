@@ -7,12 +7,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-import com.cleancode.ecommerce.order.domain.OrderId;
 import com.cleancode.ecommerce.payment.application.dto.PaymentDetails;
 import com.cleancode.ecommerce.payment.application.dto.PaymentExecutionResult;
 import com.cleancode.ecommerce.payment.application.usecase.contract.PaymentMethod;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.Total;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalTotalException;
+import com.cleancode.ecommerce.shared.kernel.exception.OrderNotFoundException;
 
 public final class Payment {
 
@@ -29,15 +33,15 @@ public final class Payment {
     public Payment(String customerId ,Total total, String orderId) {
 		
     	 if (customerId == null || customerId.isBlank()) {
-             throw new IllegalDomainPayment("Customer id is required");
+             throw new CustomerNotFoundException("Customer id is required");
          }
     	 
     	 if(orderId == null || orderId.isBlank()) {
-             throw new IllegalDomainPayment("Order id is required");
+             throw new OrderNotFoundException("Order id is required");
     	 }
     	 
          if (total == null) {
-             throw new IllegalDomainPayment("Total is required");
+             throw new IllegalTotalException("Total is required");
          }
     	
     	this.paymentId = new PaymentId();

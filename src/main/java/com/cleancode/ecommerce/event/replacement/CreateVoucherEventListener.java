@@ -4,7 +4,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.cleancode.ecommerce.promotional.usecase.contract.ReplacementVoucher;
+import com.cleancode.ecommerce.voucher.usecase.contract.ReplacementVoucher;
 
 @Component
 public class CreateVoucherEventListener {

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import com.cleancode.ecommerce.product.domain.books.Isbn;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public class IsbnTest {
 

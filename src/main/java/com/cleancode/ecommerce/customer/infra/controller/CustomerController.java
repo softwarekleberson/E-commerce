@@ -33,9 +33,9 @@ import com.cleancode.ecommerce.customer.application.usecase.contract.UpdateCharg
 import com.cleancode.ecommerce.customer.application.usecase.contract.UpdateCustomer;
 import com.cleancode.ecommerce.customer.application.usecase.contract.UpdateDelivery;
 import com.cleancode.ecommerce.customer.application.usecase.contract.UpdatePassword;
-import com.cleancode.ecommerce.promotional.usecase.contract.ListVoucherCustomer;
-import com.cleancode.ecommerce.promotional.usecase.dto.ListVoucherDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageResponse;
+import com.cleancode.ecommerce.voucher.usecase.contract.ListVoucherCustomer;
+import com.cleancode.ecommerce.voucher.usecase.dto.ListVoucherDto;
 import com.cleancode.ecommerce.shared.util.pagination.controller.PageRequests;
 
 import jakarta.validation.Valid;

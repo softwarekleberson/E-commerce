@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 class PriceTest {
 

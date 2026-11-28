@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.stock.domain.productoutput;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
+import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
 
 public class StockOutId {
 
@@ -10,7 +10,7 @@ public class StockOutId {
 	
 	public StockOutId(String stockOutId) {
 		if(stockOutId == null) {
-			throw new IllegalDomainPayment("Id stock out is required");
+			throw new IllegalStockException("Id stock out is required");
 		}
 		this.stockOutId = stockOutId;
 	}

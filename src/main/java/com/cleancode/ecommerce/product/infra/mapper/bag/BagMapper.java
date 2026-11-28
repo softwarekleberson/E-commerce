@@ -9,7 +9,6 @@ import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
-import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.bag.Color;
 import com.cleancode.ecommerce.product.domain.bag.Volume;
@@ -20,9 +19,10 @@ import com.cleancode.ecommerce.product.infra.persistence.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.ProductStatusCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.product.TypeCoinEntity;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 @Component
 public class BagMapper implements ProductSubtypeMapper<Bag, BagEntity> {

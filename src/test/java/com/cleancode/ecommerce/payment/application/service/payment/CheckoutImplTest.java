@@ -20,7 +20,6 @@ import com.cleancode.ecommerce.cart.domain.CartItem;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.address.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.event.order.EventTransportPublisher;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
@@ -31,13 +30,14 @@ import com.cleancode.ecommerce.payment.application.usecase.contract.PaymentMetho
 import com.cleancode.ecommerce.payment.domain.TypePayment;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.payment.domain.repository.PaymentRepository;
-import com.cleancode.ecommerce.product.domain.ProductId;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 import com.cleancode.ecommerce.stock.application.dto.StockReservationConfirmation;
 import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
-import com.cleancode.ecommerce.stock.domain.Quantity;
 
 class CheckoutImplTest {
 
@@ -72,6 +72,7 @@ class CheckoutImplTest {
 
 		Customer customer = mock(Customer.class);
 		when(customer.getId()).thenReturn(new CustomerId(CUSTOMER_ID));
+		when(customer.getSystemClientStatus()).thenReturn(true);
 		Delivery delivery = mock(Delivery.class);
 		when(delivery.getPublicId()).thenReturn("delivery-1");
 		when(customer.findMainDelivery()).thenReturn(delivery);
@@ -109,6 +110,20 @@ class CheckoutImplTest {
 
 		assertThrows(IllegalDomainPayment.class, () -> checkout.execute(CUSTOMER_EMAIL, paymentDetails));
 
+		verify(orderRepository, never()).save(org.mockito.ArgumentMatchers.any());
+		verify(paymentRepository, never()).save(org.mockito.ArgumentMatchers.any());
+		verify(cartRepository, never()).save(cart);
+		verify(eventPublisher, never()).publish(org.mockito.ArgumentMatchers.any());
+	}
+
+	@Test
+	void checkoutRejectsPaymentWhenCartIsEmpty() {
+		when(cart.getCartItens()).thenReturn(List.of());
+
+		assertThrows(IllegalDomainPayment.class, () -> checkout.execute(CUSTOMER_EMAIL, paymentDetails));
+
+		verify(paymentMethodFactory, never()).create(paymentDetails);
+		verify(confirmStockReservations, never()).execute(anyCollection());
 		verify(orderRepository, never()).save(org.mockito.ArgumentMatchers.any());
 		verify(paymentRepository, never()).save(org.mockito.ArgumentMatchers.any());
 		verify(cartRepository, never()).save(cart);

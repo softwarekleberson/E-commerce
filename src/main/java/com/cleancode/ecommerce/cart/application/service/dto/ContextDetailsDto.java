@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.cart.application.service.dto;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 public record ContextDetailsDto(
 		

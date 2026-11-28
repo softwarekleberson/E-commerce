@@ -57,10 +57,13 @@ services:
     image: prom/prometheus:latest
     container_name: prometheus_container
     restart: always
+    group_add:
+      - "${PROMETHEUS_SECRET_GID:-1000}"
     ports:
       - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/secrets:/etc/prometheus/secrets:ro
       - prometheus_data:/prometheus
     depends_on:
       - node_exporter

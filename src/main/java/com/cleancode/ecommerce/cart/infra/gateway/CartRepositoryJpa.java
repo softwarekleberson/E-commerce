@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.cart.infra.gateway;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -39,5 +41,11 @@ public class CartRepositoryJpa implements CartRepository {
 	@Override
 	public Optional<Cart> getCartCustomer(String customerId) {
 		return cartJpa.findByCustomerId(customerId).map(CartMapper::toDomain);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Cart> findExpiredCarts(LocalDateTime cutoff) {
+		return cartJpa.findExpiredCarts(cutoff).stream().map(CartMapper::toDomain).toList();
 	}
 }

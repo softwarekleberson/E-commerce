@@ -3,9 +3,9 @@ package com.cleancode.ecommerce.stock.domain.productinput;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.ProductQuality;
-import com.cleancode.ecommerce.stock.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.Supplier;
 
 public class ProductInput {

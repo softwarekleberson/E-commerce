@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.customer.domain.contact;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
 
 public class Contact {
 

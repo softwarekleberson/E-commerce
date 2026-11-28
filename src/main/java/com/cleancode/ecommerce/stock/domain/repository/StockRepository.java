@@ -10,6 +10,7 @@ public interface StockRepository {
 
 	Stock save(Stock stoke);
 	List<Stock> saveAll(Collection<Stock> stocks);
+	List<Stock> findAll();
 	Optional <Stock> getStock (String id);
 	Optional<Stock> findByStock (String id);
 	Optional <Stock> findStockByReservationId (String reservationId);

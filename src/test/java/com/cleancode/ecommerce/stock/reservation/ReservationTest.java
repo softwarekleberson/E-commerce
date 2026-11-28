@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.cart.domain.CartId;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.CartId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
 import com.cleancode.ecommerce.stock.domain.reservation.Reservations;
 import com.cleancode.ecommerce.stock.domain.reservation.ReserveStatus;
 

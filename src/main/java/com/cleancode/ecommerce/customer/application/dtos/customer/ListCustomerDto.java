@@ -10,7 +10,7 @@ import com.cleancode.ecommerce.customer.application.dtos.card.ListCardDto;
 import com.cleancode.ecommerce.customer.domain.contact.Phone;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
-import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
 
 public record ListCustomerDto(
 

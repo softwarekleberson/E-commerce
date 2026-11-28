@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.shared.kernel.UrlProduct;
+import com.cleancode.ecommerce.shared.kernel.domain.UrlProduct;
 
 class UrlProductTest {
 

@@ -10,17 +10,18 @@ import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepos
 import com.cleancode.ecommerce.event.order.EventTransportPublisher;
 import com.cleancode.ecommerce.event.order.OrderEvent;
 import com.cleancode.ecommerce.order.domain.Order;
-import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.order.domain.repository.OrderRepository;
+import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
 import com.cleancode.ecommerce.payment.application.dto.PaymentDetails;
 import com.cleancode.ecommerce.payment.application.dto.PaymentExecutionResult;
 import com.cleancode.ecommerce.payment.application.service.payment.contract.Checkout;
 import com.cleancode.ecommerce.payment.application.service.payment.contract.PaymentMethodFactory;
 import com.cleancode.ecommerce.payment.application.usecase.contract.PaymentMethod;
 import com.cleancode.ecommerce.payment.domain.Payment;
-import com.cleancode.ecommerce.payment.domain.Total;
 import com.cleancode.ecommerce.payment.domain.exceptions.IllegalDomainPayment;
 import com.cleancode.ecommerce.payment.domain.repository.PaymentRepository;
+import com.cleancode.ecommerce.shared.kernel.domain.Total;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotActivedExcepetion;
 import com.cleancode.ecommerce.stock.application.dto.StockReservationConfirmation;
 import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
 
@@ -66,7 +67,12 @@ public class CheckoutImpl implements Checkout {
 
 		// 1️⃣ Buscar cliente e carrinho
 		Customer customer = getCustomer(email);
+		customerIsActive(email);
+		
 		Cart cart = getCart(customer);
+		if (cart.getCartItens() == null || cart.getCartItens().isEmpty()) {
+			throw new IllegalDomainPayment("Cannot process payment with an empty cart");
+		}
 
 		// Encontra o endereço de entrega principal
 		Delivery delivery = customer.findMainDelivery();
@@ -141,5 +147,14 @@ public class CheckoutImpl implements Checkout {
 	private Customer getCustomer(String email) {
 		return customerRepository.findByEmail(email)
 				.orElseThrow(() -> new IllegalDomainPayment("Customer not found with email: " + email));
+	}
+	
+	private void customerIsActive(String email) {
+		Customer customer = customerRepository.findByEmail(email)
+		.orElseThrow(() -> new IllegalDomainPayment("Customer not found with email: " + email));
+		
+		if(!customer.getSystemClientStatus()) {
+			throw new CustomerNotActivedExcepetion("Customer need actived to buy");
+		}
 	}
 }

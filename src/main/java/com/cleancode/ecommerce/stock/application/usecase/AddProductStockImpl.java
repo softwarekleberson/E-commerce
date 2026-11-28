@@ -2,8 +2,8 @@ package com.cleancode.ecommerce.stock.application.usecase;
 
 import com.cleancode.ecommerce.event.product.EventPublisher;
 import com.cleancode.ecommerce.event.product.StockUpdatedEvent;
-import com.cleancode.ecommerce.shared.exception.StockNotFound;
-import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.exception.StockNotFound;
 import com.cleancode.ecommerce.stock.application.dto.CreateInputStockDto;
 import com.cleancode.ecommerce.stock.application.dto.ListStockDto;
 import com.cleancode.ecommerce.stock.application.usecase.contract.AddProductStock;

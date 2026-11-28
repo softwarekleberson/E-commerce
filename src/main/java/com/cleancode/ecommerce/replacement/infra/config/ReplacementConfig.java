@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import com.cleancode.ecommerce.event.exchange.EventExchangePublish;
 import com.cleancode.ecommerce.event.exchange.SpringEventExchangePublisher;
 import com.cleancode.ecommerce.event.replacement.EventReplacementPublisher;
-import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
 import com.cleancode.ecommerce.replacement.application.service.FindOrderByIdService;
 import com.cleancode.ecommerce.replacement.application.service.ValueUnitProductService;
 import com.cleancode.ecommerce.replacement.application.usecase.AcceptReplacementImp;
@@ -24,8 +23,8 @@ public class ReplacementConfig {
 
 	@Bean
 	public CreateReplacement createReplacement (ReplacementRepository repository, FindOrderByIdService findOrderById,
-			EventExchangePublish eventPublish, CustomerIdentityIdService customerIdentity) {
-		return new CreateReplacementImp(repository, findOrderById, eventPublish, customerIdentity);
+			EventExchangePublish eventPublish) {
+		return new CreateReplacementImp(repository, findOrderById, eventPublish);
 	}
 	
 	@Bean

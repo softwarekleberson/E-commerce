@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.cart.application.dtos.output;
 import java.math.BigDecimal;
 
 import com.cleancode.ecommerce.cart.domain.CartItem;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
 
 public record ListCartItensDto(
 

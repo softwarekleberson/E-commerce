@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.customer.domain.customer;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public class Birth {
 

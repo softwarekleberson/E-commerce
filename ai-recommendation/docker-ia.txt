@@ -1,0 +1,13 @@
+## Execute os comandos dentro da pasta ai-recommendation
+
+## Parar o container da IA
+docker compose -f compose.yml stop recommendation-rag
+
+## Verifica se realmente parou
+docker compose -f compose.yml ps -a recommendation-rag
+
+## Reinicia o container
+docker compose -f compose.yml restart recommendation-rag
+
+## Verifica o log apos solicitacao do cliente
+docker compose -f compose.yml logs --tail=100 recommendation-rag

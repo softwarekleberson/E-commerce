@@ -7,13 +7,20 @@ import com.cleancode.ecommerce.event.product.EventPublisher;
 import com.cleancode.ecommerce.stock.application.usecase.AddProductStockImpl;
 import com.cleancode.ecommerce.stock.application.usecase.ConfirmStockReservationsImpl;
 import com.cleancode.ecommerce.stock.application.usecase.CreateStockImpl;
+import com.cleancode.ecommerce.stock.application.usecase.ListStocksImpl;
 import com.cleancode.ecommerce.stock.application.usecase.contract.AddProductStock;
 import com.cleancode.ecommerce.stock.application.usecase.contract.ConfirmStockReservations;
 import com.cleancode.ecommerce.stock.application.usecase.contract.CreateStock;
+import com.cleancode.ecommerce.stock.application.usecase.contract.ListStocks;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 
 @Configuration
 public class StockConfig {
+
+	@Bean
+	public ListStocks listStocks(StockRepository stockRepository) {
+		return new ListStocksImpl(stockRepository);
+	}
 
 	@Bean
 	public CreateStock createStock(StockRepository stockRepository) {

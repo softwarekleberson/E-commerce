@@ -7,10 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.shared.kernel.Email;
-import com.cleancode.ecommerce.shared.kernel.Password;
-import com.cleancode.ecommerce.user.domain.User;
-import com.cleancode.ecommerce.user.domain.UserId;
+import com.cleancode.ecommerce.shared.kernel.domain.Email;
+import com.cleancode.ecommerce.shared.kernel.domain.Password;
+import com.cleancode.ecommerce.shared.kernel.domain.User;
+import com.cleancode.ecommerce.shared.kernel.domain.UserId;
 
 class UserTest {
 

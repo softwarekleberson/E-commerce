@@ -17,6 +17,7 @@ import com.cleancode.ecommerce.product.application.usecase.ListAllProductsInacti
 import com.cleancode.ecommerce.product.application.usecase.ManualProductActivationImpl;
 import com.cleancode.ecommerce.product.application.usecase.ManualProductDeactivationImpl;
 import com.cleancode.ecommerce.product.application.usecase.ReviseDetailsImpl;
+import com.cleancode.ecommerce.product.application.usecase.SearchProductsImpl;
 import com.cleancode.ecommerce.product.application.usecase.SellingPriceRelativeToInventory;
 import com.cleancode.ecommerce.product.application.usecase.contract.ActiveProduct;
 import com.cleancode.ecommerce.product.application.usecase.contract.CreateProduct;
@@ -27,6 +28,7 @@ import com.cleancode.ecommerce.product.application.usecase.contract.ListAllProdu
 import com.cleancode.ecommerce.product.application.usecase.contract.ManualProductActivation;
 import com.cleancode.ecommerce.product.application.usecase.contract.ManualProductDeactivation;
 import com.cleancode.ecommerce.product.application.usecase.contract.ReviseDetails;
+import com.cleancode.ecommerce.product.application.usecase.contract.SearchProducts;
 import com.cleancode.ecommerce.product.application.usecase.contract.SellingPriceToInventory;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
@@ -57,6 +59,11 @@ public class ProductConfig {
 	@Bean
 	public ListAllProductsInactive listAllProductsInactive(ProductRepository productRepository) {
 		return new ListAllProductsInactiveImpl(productRepository);
+	}
+
+	@Bean
+	public SearchProducts searchProducts(ProductRepository productRepository) {
+		return new SearchProductsImpl(productRepository);
 	}
 	
 	@Bean

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import com.cleancode.ecommerce.stock.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
 
 class QuantityTest {

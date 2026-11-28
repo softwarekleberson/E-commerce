@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.product.domain.ProductId;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
-import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalReservationException;
 import com.cleancode.ecommerce.stock.domain.productinput.ProductInput;
 import com.cleancode.ecommerce.stock.domain.productoutput.ProductOutput;

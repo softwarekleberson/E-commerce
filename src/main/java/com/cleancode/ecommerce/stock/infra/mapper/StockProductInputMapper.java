@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.stock.infra.mapper;
 
-import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
 import com.cleancode.ecommerce.stock.domain.ProductQuality;
 import com.cleancode.ecommerce.stock.domain.productinput.ProductInput;
 import com.cleancode.ecommerce.stock.infra.persistence.StockInputEntity;

@@ -6,8 +6,8 @@ import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.order.domain.OrderId;
-import com.cleancode.ecommerce.product.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
 import com.cleancode.ecommerce.stock.domain.productoutput.ProductOutput;
 
 class ProductOutputTest {

@@ -6,10 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
-import com.cleancode.ecommerce.shared.kernel.Name;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
-import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.Name;
+import com.cleancode.ecommerce.shared.kernel.domain.Price;
+import com.cleancode.ecommerce.shared.kernel.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.domain.TypeCoin;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 
 public abstract class Product {
 

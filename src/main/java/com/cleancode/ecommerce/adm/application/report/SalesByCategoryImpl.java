@@ -29,7 +29,10 @@ public class SalesByCategoryImpl implements SalesByCategory {
 		if (startDate == null || endDate == null || startDate.isAfter(endDate)) {
 			throw new IllegalArgumentException("O período informado é inválido.");
 		}
-		String selectedCategory = category.filter(value -> !value.isBlank()).orElse(null);
+		String selectedCategory = category
+				.map(String::trim)
+				.filter(value -> !value.isBlank() && !"all".equalsIgnoreCase(value))
+				.orElse(null);
 		var revenueByCategory = repository.findSalesTotalsByCategory(startDate, endDate, selectedCategory);
 		BigDecimal totalSales = revenueByCategory.stream().map(SalesByCategoryPoint::total)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);

@@ -5,7 +5,7 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.UpdateCustomer
 import com.cleancode.ecommerce.customer.application.usecase.contract.UpdateCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.exception.CustomerNotFoundException;
+import com.cleancode.ecommerce.shared.kernel.exception.CustomerNotFoundException;
 
 public class UpdateCustomerImpl implements UpdateCustomer {
 

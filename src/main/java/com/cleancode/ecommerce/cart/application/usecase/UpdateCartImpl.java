@@ -2,26 +2,26 @@ package com.cleancode.ecommerce.cart.application.usecase;
 
 import com.cleancode.ecommerce.cart.application.dtos.input.UpdateCartDto;
 import com.cleancode.ecommerce.cart.application.dtos.output.CartDto;
+import com.cleancode.ecommerce.cart.application.service.contract.CartShippingCostCalculator;
 import com.cleancode.ecommerce.cart.application.service.contract.CartUpdateIntegrationService;
 import com.cleancode.ecommerce.cart.application.usecase.contract.UpdateCart;
 import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
-import com.cleancode.ecommerce.order.domain.shipping.ShippingCostStrategyFactory;
-import com.cleancode.ecommerce.stock.domain.Quantity;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.Quantity;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
 
 public class UpdateCartImpl implements UpdateCart {
 
 	private final CartRepository cartRepository;
 	private final CartUpdateIntegrationService updateService; 
-	private final ShippingCostStrategyFactory shippingStrategyFactory;
+	private final CartShippingCostCalculator shippingCostCalculator;
 
 	public UpdateCartImpl(CartRepository cartRepository, CartUpdateIntegrationService updateService,
-			ShippingCostStrategyFactory shippingStrategyFactory) {
+			CartShippingCostCalculator shippingCostCalculator) {
 		this.cartRepository = cartRepository;
 		this.updateService = updateService;
-		this.shippingStrategyFactory = shippingStrategyFactory;
+		this.shippingCostCalculator = shippingCostCalculator;
 	}
 
 	@Override
@@ -44,6 +44,6 @@ public class UpdateCartImpl implements UpdateCart {
 
 		cartRepository.save(cart);
 
-		return new CartDto(cart, shippingStrategyFactory.calculate(cart.getTotalPrice().getPrice()));
+		return new CartDto(cart, shippingCostCalculator.calculate(cart.getTotalPrice().getPrice()));
 	}	
 }

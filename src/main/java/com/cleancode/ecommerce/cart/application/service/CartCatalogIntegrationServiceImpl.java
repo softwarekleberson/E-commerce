@@ -8,7 +8,7 @@ import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
-import com.cleancode.ecommerce.shared.exception.IllegalDomainException;
+import com.cleancode.ecommerce.shared.kernel.exception.IllegalDomainException;
 import com.cleancode.ecommerce.stock.domain.Stock;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 

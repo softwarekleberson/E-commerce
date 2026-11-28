@@ -21,22 +21,24 @@ A aplicação está organizada em módulos Java sob `com.cleancode.ecommerce`. C
 
 ## Módulos
 
-| Módulo | Responsabilidade geral |
+| Módulo | Responsabilidade geral | Guia do módulo |
 |---|---|
-| `adm` | Operações administrativas, incluindo pedidos, clientes, vouchers e relatórios |
-| `cart` | Carrinho e itens |
-| `customer` | Cadastro e dados do cliente |
-| `event` | Eventos locais usados na comunicação entre funcionalidades |
-| `order` | Pedidos e ciclo de vida |
-| `payment` | Checkout e processamento de pagamentos |
-| `product` | Catálogo de produtos |
-| `promotional` | Vouchers e descontos |
-| `replacement` | Trocas e substituições |
-| `shared` | Configuração, exceções, kernel compartilhado e utilitários |
-| `stock` | Estoque, movimentações e reservas |
-| `user` | Usuários e autenticação |
+| `adm` | Operações administrativas, incluindo pedidos, clientes, vouchers e relatórios | [README](src/main/java/com/cleancode/ecommerce/adm/README.md) |
+| `cart` | Carrinho, itens e coordenação de reservas | [README](src/main/java/com/cleancode/ecommerce/cart/README.md) |
+| `customer` | Cadastro, perfil, endereços e cartões de clientes | [README](src/main/java/com/cleancode/ecommerce/customer/README.md) |
+| `event` | Eventos locais usados na comunicação entre funcionalidades | [README](src/main/java/com/cleancode/ecommerce/event/README.md) |
+| `order` | Pedidos, itens e ciclo de vida | [README](src/main/java/com/cleancode/ecommerce/order/README.md) |
+| `payment` | Checkout e processamento de pagamentos | [README](src/main/java/com/cleancode/ecommerce/payment/README.md) |
+| `product` | Catálogo de produtos | [README](src/main/java/com/cleancode/ecommerce/product/README.md) |
+| `recommendation` | Recomendações de produtos por regras, com base em compras e wishlist | [README](src/main/java/com/cleancode/ecommerce/recommendation/README.md) |
+| `voucher` | Vouchers e descontos | [README](src/main/java/com/cleancode/ecommerce/voucher/README.md) |
+| `replacement` | Solicitações de troca e substituição | [README](src/main/java/com/cleancode/ecommerce/replacement/README.md) |
+| `shared` | Configuração, kernel compartilhado, exceções e utilitários | [README](src/main/java/com/cleancode/ecommerce/shared/README.md) |
+| `stock` | Estoque, entradas, saídas e reservas | [README](src/main/java/com/cleancode/ecommerce/stock/README.md) |
+| `user` | Modelo de usuário e entrada de autenticação | [README](src/main/java/com/cleancode/ecommerce/user/README.md) |
+| `wishlist` | Lista de desejos e integração com eventos do carrinho | [README](src/main/java/com/cleancode/ecommerce/wishlist/README.md) |
 
-O [guia de arquitetura](doc/docs/architecture.md) descreve a implementação e contém links para a documentação de cada módulo. As [decisões arquiteturais](doc/docs/adr/README.md) registram as decisões de projeto.
+O [guia de arquitetura](doc/docs/architecture.md) apresenta a visão do sistema e os fluxos entre módulos. As [decisões arquiteturais](doc/docs/adr/README.md) registram as decisões de projeto.
 
 ## Tecnologias e infraestrutura
 
@@ -75,6 +77,18 @@ Inicie a aplicação em outro terminal:
 No Windows, use `mvnw.cmd spring-boot:run`.
 
 As configurações da aplicação ficam em `src/main/resources/application.properties`. O Compose publica MySQL em `3307`, Redis em `6379`, Prometheus em `9090`, Grafana em `3000` e Adminer em `8085`.
+
+### Coletar métricas protegidas da aplicação
+
+O endpoint `/actuator/prometheus` exige autenticação de um usuário ADM. Com a aplicação em execução, gere um JWT local para o Prometheus:
+
+```bash
+python3 prometheus/update_spring_boot_token.py
+```
+
+Informe o e-mail e a senha de um ADM quando solicitado. A senha não é exibida nem armazenada; o token fica em `prometheus/secrets/spring_boot_jwt`, ignorado pelo Git, e é legível pelo grupo configurado para o container Prometheus. Se o grupo primário do seu usuário não for `1000`, ajuste `PROMETHEUS_SECRET_GID` no `.env` para o valor de `id -g` antes de gerar o token.
+
+O JWT expira após uma hora (`jwt.expiration-ms`). Execute o utilitário novamente quando o alvo `spring-boot` voltar a apresentar 401 ou 403 em `http://localhost:9090/targets`.
 
 ## API e documentação
 

@@ -1,12 +1,7 @@
 package com.cleancode.ecommerce.replacement.application.usecase;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.event.exchange.EventExchangePublish;
 import com.cleancode.ecommerce.event.exchange.ExchangeEvent;
-import com.cleancode.ecommerce.order.application.service.CustomerIdentityIdService;
-import com.cleancode.ecommerce.order.domain.Order;
-import com.cleancode.ecommerce.order.domain.OrderId;
-import com.cleancode.ecommerce.order.domain.exceptions.IllegalDomainOrder;
 import com.cleancode.ecommerce.replacement.application.dto.CreateReplacementDto;
 import com.cleancode.ecommerce.replacement.application.service.FindOrderByIdService;
 import com.cleancode.ecommerce.replacement.application.usecase.contract.CreateReplacement;
@@ -15,34 +10,30 @@ import com.cleancode.ecommerce.replacement.domain.Replacement;
 import com.cleancode.ecommerce.replacement.domain.exception.IllegalReplacementException;
 import com.cleancode.ecommerce.replacement.domain.Quantity;
 import com.cleancode.ecommerce.replacement.domain.repository.ReplacementRepository;
-import com.cleancode.ecommerce.stock.domain.reservation.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.domain.CustomerId;
+import com.cleancode.ecommerce.shared.kernel.domain.OrderId;
+import com.cleancode.ecommerce.shared.kernel.domain.ReservationId;
+import com.cleancode.ecommerce.shared.kernel.exception.OrderNotFoundException;
 
 public class CreateReplacementImp implements CreateReplacement {
 
 	private final ReplacementRepository repository;
 	private final FindOrderByIdService findOrderById;
 	private final EventExchangePublish eventPublish;
-	private final CustomerIdentityIdService customerIdentity;
 	
 	public CreateReplacementImp(ReplacementRepository repository, FindOrderByIdService findOrderById,
-			EventExchangePublish eventPublish, CustomerIdentityIdService customerIdentity) {
+			EventExchangePublish eventPublish) {
 		this.repository = repository;
 		this.findOrderById = findOrderById;
 		this.eventPublish = eventPublish;
-		this.customerIdentity = customerIdentity;
 	}
 	
 	public void execute (CreateReplacementDto dto, String customerEmail) {
-		String customerId = customerIdentity.customerId(customerEmail)
-				.orElseThrow(() -> new IllegalDomainOrder("Order not found"));
 		
-		Order order = findOrderById.findOrderById(dto.getOrderId())
-				.orElseThrow(() -> new IllegalDomainOrder("Order not found"));
-		if (!order.getCustomerId().getValue().equals(customerId)) {
-			throw new IllegalDomainOrder("Order not found");
-		}
-		
-		boolean itemDelivered = order.itemdelivered(dto.getReservationId());
+		String orderCustomerId = findOrderById.findCustomerIdByOrderId(dto.getOrderId())
+				.orElseThrow(() -> new OrderNotFoundException("customer id not found on Order"));
+			
+		boolean itemDelivered = findOrderById.isItemDelivered(dto.getReservationId());
 		
 		if(!itemDelivered) {
 			throw new IllegalReplacementException("The item must be delivered before an exchange is requested, or while the item is undergoing an exchange review.");
@@ -53,7 +44,7 @@ public class CreateReplacementImp implements CreateReplacement {
 			    new ReservationId(dto.getReservationId()),
 			    dto.getReason(),
 			    new Explain(dto.getExplain()),
-			    new CustomerId(customerId),
+			    new CustomerId(orderCustomerId),
 			    new Quantity(dto.getQuantity())
 		);
 		

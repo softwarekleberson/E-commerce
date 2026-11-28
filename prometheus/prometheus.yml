@@ -13,6 +13,7 @@ scrape_configs:
 
   - job_name: 'spring-boot'
     metrics_path: '/actuator/prometheus'
+    bearer_token_file: /etc/prometheus/secrets/spring_boot_jwt
     static_configs:
       - targets: ['172.17.0.1:8080']
 
